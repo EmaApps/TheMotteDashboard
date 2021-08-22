@@ -11,6 +11,7 @@ import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
 import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
 import qualified Data.Text as T
+import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
@@ -30,7 +31,7 @@ data CWTop = CWTop
   { cWTopKind :: Text,
     cWTopId :: Text,
     cWTopAuthor :: Text,
-    cWTopCreatedUtc :: Int,
+    cWTopCreatedUtc :: Integer,
     cWTopBody :: Text,
     cWTopPermalink :: Text
   }
@@ -70,6 +71,7 @@ main =
         "CWR-sanitizied.json" -> do
           case action of
             FileSystem.Update () -> do
+              log $ "Reading " <> toText fp
               liftIO (eitherDecodeFileStrict @[CWTop] fp) >>= \case
                 Left err -> error $ show err
                 Right cwtops ->
@@ -93,9 +95,9 @@ render emaAction model Index =
                 "u/"
                 H.em $ H.toHtml cWTopAuthor
                 let url = "http://old.reddit.com" <> cWTopPermalink
-                H.a ! A.class_ "text-blue-600 hover:underline" ! A.href (H.toValue url) $ do
-                  " on "
-                  H.span $ H.toHtml cWTopCreatedUtc
+                " on "
+                H.a ! A.class_ "text-xs text-blue-600 hover:underline" ! A.target "blank" ! A.href (H.toValue url) $ do
+                  H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ cWTopCreatedUtc
               H.blockquote $ do
                 let n = 80
                 H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n cWTopBody
