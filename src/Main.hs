@@ -11,7 +11,7 @@ import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
 import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
 import qualified Data.Text as T
-import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
+import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
@@ -19,6 +19,7 @@ import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
 import System.Directory
 import System.Environment (lookupEnv)
+import System.IO.Unsafe (unsafePerformIO)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -118,6 +119,7 @@ extraHead emaAction = do
 
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
+  let now = unsafePerformIO getCurrentTime
   Tailwind.layout emaAction (H.title "TheMotte overview" >> extraHead emaAction) $
     H.div ! A.class_ "container mx-auto" $ do
       let routeBg = \case
@@ -127,6 +129,10 @@ render emaAction model r = do
             R_SQ -> "bg-gray-50"
             R_FF -> "bg-purple-100"
       H.div ! A.class_ "my-6 p-4" $ do
+        H.div ! A.class_ "flex items-center justify-center" $ do
+          H.div ! A.class_ "text-sm text-gray-400" $ do
+            "Generated on "
+            H.toHtml $ show @Text now
         case r of
           R_Index -> do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do

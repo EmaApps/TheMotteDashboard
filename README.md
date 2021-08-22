@@ -1,5 +1,6 @@
 # TMD
 
+Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run the dashboard site using that data. Run `bin/fetch` at any point, and the site will hot reload.
 
 ## Tasks
 
@@ -12,3 +13,4 @@
 Final,
 
 - [ ] Avoid nix and reuse the built binary (or docker image) for scheduled updates
+- [ ] "N mins ago" client-side JS replacement on UTC times
