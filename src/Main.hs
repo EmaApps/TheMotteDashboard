@@ -184,10 +184,10 @@ instance Ema Model (Either FilePath MarkdownRoute) where
 -- ------------------------
 
 log :: MonadLogger m => Text -> m ()
-log = logInfoNS "ema-template"
+log = logInfoNS "TheMotteDashboard"
 
 logD :: MonadLogger m => Text -> m ()
-logD = logDebugNS "ema-template"
+logD = logDebugNS "TheMotteDashboard"
 
 main :: IO ()
 main =
@@ -259,7 +259,7 @@ headHtml emaAction r doc = do
       -- Since our URLs are all relative, and GitHub Pages uses a non-root base
       -- URL, we should specify it explicitly. Note that this is not necessary if
       -- you are using a CNAME.
-      H.base ! A.href "https://srid.github.io/ema-template/"
+      H.base ! A.href "https://srid.github.io/TheMotteDashboard/"
     _ ->
       H.base ! A.href "/"
   H.title $
@@ -336,7 +336,7 @@ bodyHtml model r doc = do
                   else throw $ BadRoute target
             )
       H.footer ! A.class_ "flex justify-center items-center space-x-4 my-8 text-center text-gray-500" $ do
-        let editUrl = fromString $ "https://github.com/srid/ema-template/edit/master/content/" <> markdownRouteSourcePath r
+        let editUrl = fromString $ "https://github.com/srid/TheMotteDashboard/edit/master/content/" <> markdownRouteSourcePath r
         H.a ! A.href editUrl ! A.title "Edit this page on GitHub" $ editIcon
         H.div $ do
           "Powered by "

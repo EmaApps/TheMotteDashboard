@@ -23,7 +23,7 @@ jobs:
           mkdir ./output
           export TARGET=$(pwd)/output
           cd ./content
-          ../result/bin/ema-template gen $TARGET
+          ../result/bin/TheMotteDashboard gen $TARGET
       - name: Deploy to gh-pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:

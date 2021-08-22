@@ -2,7 +2,7 @@
 
 This repository represents a simple example of [Ema](https://ema.srid.ca/) — it generates a basic site with sidebar from a directory of Markdown files using Pandoc & Blaze HTML — and as such acts as a **template repository** to use for bootstrapping your next static site using Ema.
 
-The generated HTML site can be previewed here: https://srid.github.io/ema-template/
+The generated HTML site can be previewed here: https://srid.github.io/TheMotteDashboard/
 
 ## Getting Started
 
@@ -28,5 +28,5 @@ All but the final step need to be done only once. Check [the Ema tutorial](https
   - To change the CLI arguments used by bin/run, see file .ghcid
   - To update Ema to latest Git revision, run `nix flake lock --update-input ema`
   - To add/remove Haskell dependencies, see the .cabal file. If a dependency is unavailable in nixpkgs, you can override it (to point to say a Git repo) in the `overrides` attribute of flake.nix. You can imitate the manner in which the `ema` (or `lvar`) package itself is overriden.
-- To generate static site, run: `nix build; mkdir ./output && (cd ./content  && ../result/bin/ema-template gen $(pwd)/output)`
+- To generate static site, run: `nix build; mkdir ./output && (cd ./content  && ../result/bin/TheMotteDashboard gen $(pwd)/output)`
   - You might want to change or remove the `<base>` tag in `Main.hs` depending where you will be deploying the site.
