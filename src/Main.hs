@@ -25,6 +25,8 @@ data Route
   = R_Index
   | R_CW
   | R_WW
+  | R_SQ
+  | R_FF
   deriving (Show, Enum, Bounded)
 
 -- | Represents a top-level post in the Culture War Roundup thread
@@ -42,12 +44,14 @@ instance FromJSON Post where parseJSON = genericParseJSONStripType
 
 data Model = Model
   { modelCWPosts :: [Post],
-    modelWWPosts :: [Post]
+    modelWWPosts :: [Post],
+    modelSQPosts :: [Post],
+    modelFFPosts :: [Post]
   }
   deriving (Show)
 
 instance Default Model where
-  def = Model mempty mempty
+  def = Model mempty mempty mempty mempty
 
 instance Ema Model Route where
   encodeRoute _model =
@@ -55,10 +59,14 @@ instance Ema Model Route where
       R_Index -> "index.html"
       R_CW -> "cw.html"
       R_WW -> "ww.html"
+      R_FF -> "ff.html"
+      R_SQ -> "sq.html"
   decodeRoute _model = \case
     "index.html" -> Just R_Index
     "cw.html" -> Just R_CW
     "ww.html" -> Just R_WW
+    "ff.html" -> Just R_FF
+    "sq.html" -> Just R_SQ
     _ -> Nothing
 
 log :: MonadLogger m => Text -> m ()
@@ -76,6 +84,8 @@ main =
       let mSetPosts = case fp of
             "CWR-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
             "WW-sanitizied.json" -> Just $ \posts m -> m {modelWWPosts = posts}
+            "SQ-sanitizied.json" -> Just $ \posts m -> m {modelSQPosts = posts}
+            "FF-sanitizied.json" -> Just $ \posts m -> m {modelFFPosts = posts}
             _ -> Nothing
       case mSetPosts of
         Just setPosts -> do
@@ -109,13 +119,18 @@ render emaAction model r = do
             H.ul $ do
               H.li $ routeElem R_CW "CW"
               H.li $ routeElem R_WW "WW"
+              H.li $ routeElem R_FF "FF"
+              H.li $ routeElem R_SQ "SQ"
           _ -> do
             let (rName, rContent) = case r of
                   R_CW -> ("CW", modelCWPosts model)
                   R_WW -> ("WW", modelWWPosts model)
+                  R_SQ -> ("SQ", modelSQPosts model)
+                  R_FF -> ("FF", modelFFPosts model)
                   R_Index -> ("", mempty) -- FIXME: hack
+            routeElem R_Index "Home"
             H.h1 ! A.class_ "text-5xl font-bold" $ do
-              H.a ! A.href "https://old.reddit.com/r/TheMotte/" $ do
+              H.a $ do
                 "r/TheMotte " <> rName
               " - recent"
             H.ul ! A.class_ "" $

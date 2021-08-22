@@ -5,8 +5,9 @@
 
 - [x] Nixify the script to fetch reddit JSON data (using jq) and put it in ./content
 - [x] Generate HTML
+- [x] the same for WW and FF
 - [ ] BLR
-- [ ] the same for WW and FF
+- [ ] Generate RSS feeds (and test in Mailbrew)
 
 Final,
 
