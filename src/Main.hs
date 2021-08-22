@@ -113,34 +113,35 @@ render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
   Tailwind.layout emaAction (H.title "TheMotte overview" >> extraHead emaAction) $
     H.div ! A.class_ "container mx-auto" $ do
-      let bgStyle = case r of
+      let routeBg = \case
             R_Index -> ""
             R_CW -> "bg-red-50"
             R_WW -> "bg-green-50"
             R_SQ -> "bg-gray-50"
             R_FF -> "bg-purple-100"
-      H.div ! A.class_ ("my-6 p-4 rounded " <> bgStyle) $ do
+      H.div ! A.class_ "my-6 p-4" $ do
         case r of
           R_Index -> do
-            H.ul $ do
-              H.li $ routeElem R_CW "CW"
-              H.li $ routeElem R_WW "WW"
-              H.li $ routeElem R_FF "FF"
-              H.li $ routeElem R_SQ "SQ"
+            H.div ! A.class_ "flex flex-wrap items-stretch" $ do
+              forM_ [R_CW, R_WW, R_FF, R_SQ] $ \sectionR ->
+                H.div ! A.class_ "w-full md:w-1/2 xl:w-1/4 overflow-hidden flex-grow" $ do
+                  H.div ! A.class_ (routeBg sectionR <> " my-2 mx-2 p-2 rounded") $ renderSection sectionR
           _ -> do
-            let (rName, rContent) = case r of
-                  R_CW -> ("CW", modelCWPosts model)
-                  R_WW -> ("WW", modelWWPosts model)
-                  R_SQ -> ("SQ", modelSQPosts model)
-                  R_FF -> ("FF", modelFFPosts model)
-                  R_Index -> ("", mempty) -- FIXME: hack
-            routeElem R_Index "Home"
-            renderSection rName rContent
+            H.div ! A.class_ "my-2" $ do
+              routeElem R_Index "View All"
+            renderSection r
   where
-    renderSection rName rContent = do
+    renderSection sectionRoute = do
+      let (rName, rContent) = case sectionRoute of
+            R_CW -> ("CW", modelCWPosts model)
+            R_WW -> ("WW", modelWWPosts model)
+            R_SQ -> ("SQ", modelSQPosts model)
+            R_FF -> ("FF", modelFFPosts model)
+            R_Index -> ("", mempty) -- FIXME: hack
       H.h1 ! A.class_ "text-5xl font-bold" $ do
-        "r/TheMotte " <> rName
-        " - recent"
+        H.a ! routeHref sectionRoute $ do
+          rName
+          " - recent"
       H.ul $
         forM_ rContent $ \Post {..} -> do
           let url = "http://old.reddit.com" <> postPermalink
