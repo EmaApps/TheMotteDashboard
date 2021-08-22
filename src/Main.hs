@@ -6,12 +6,15 @@
 module Main where
 
 import Control.Monad.Logger
+import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
+import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
+import Shower (shower)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -21,10 +24,24 @@ data Route
   | About
   deriving (Show, Enum, Bounded)
 
-newtype Model = Model {unModel :: Text}
+data CWTop = CWTop
+  { cWTopKind :: Text,
+    cWTopId :: Text,
+    cWTopAuthor :: Text,
+    cWTopCreatedUtc :: Int,
+    cWTopBody :: Text
+  }
+  deriving (Eq, Show, Generic)
+
+instance FromJSON CWTop where parseJSON = genericParseJSONStripType
+
+data Model = Model
+  { modelCWTops :: [CWTop]
+  }
+  deriving (Show)
 
 instance Default Model where
-  def = Model "Unknown"
+  def = Model mempty
 
 instance Ema Model Route where
   encodeRoute _model =
@@ -52,12 +69,19 @@ main =
     --
     -- We use the FileSystem helper to directly "mount" our files on to the
     -- LVar.
-    let pats = [((), "**/*.json")]
+    let pats = [((), "*.json")]
         ignorePats = [".*"]
     FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
       case action of
         FileSystem.Update () -> do
-          pure id
+          case fp of
+            "CWR-sanitizied.json" -> do
+              liftIO (eitherDecodeFileStrict @[CWTop] fp) >>= \case
+                Left err -> error $ show err
+                Right cwtops ->
+                  pure $ \m -> m {modelCWTops = cwtops}
+            _ ->
+              pure id
         FileSystem.Delete ->
           pure id
 
@@ -65,12 +89,12 @@ render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r =
   Tailwind.layout emaAction (H.title "Basic site" >> H.base ! A.href "/") $
     H.div ! A.class_ "container mx-auto" $ do
-      H.div ! A.class_ "mt-8 p-2 text-center" $ do
+      H.div ! A.class_ "mt-8 p-2" $ do
         case r of
           Index -> do
-            H.toHtml (unModel model)
             "You are on the index page. "
             routeElem About "Go to About"
+            H.pre $ H.toHtml (shower model)
           About -> do
             "You are on the about page. "
             routeElem Index "Go to Index"

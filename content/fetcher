@@ -19,5 +19,5 @@ wget $CWR_JSON_URL -O CWR.json
 cat CWR.json \
         | jq 'map (select (.data.dist != 1)) | first' \
         | jq '.data.children' \
-        | jq 'map(select (.data.author != "AutoModerator" and .kind == "t1") | {kind: .kind, id: .data.id, author: .data.author, score: .data.score, created_utc: .data.created_utc, body: .data.body, permalink: .data.permalink})' \
+        | jq 'map(select (.data.author != "AutoModerator" and .kind == "t1") | {kind: .kind, id: .data.id, author: .data.author, score: .data.score, createdUtc: .data.created_utc, body: .data.body, permalink: .data.permalink})' \
         > CWR-sanitizied.json
