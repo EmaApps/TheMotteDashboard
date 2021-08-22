@@ -34,14 +34,11 @@ executable TheMotteDashboard
     , filepath
     , lvar
     , monad-logger
-    , neat-interpolation
-    , pandoc-types
     , relude
     , shower
     , tagged
     , text
     , time
-    , unliftio
 
   mixins:
     base hiding (Prelude),
