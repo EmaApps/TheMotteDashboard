@@ -13,9 +13,9 @@ cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Cu
 cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Wellness Wednesday for"))) | first' > WW-meta.json
 
 # Get the original threads
-CWR_JSON_URL="$(cat CWR-meta.json | jq -r .data.url).json?limit=20&depth=1"
+CWR_JSON_URL="$(cat CWR-meta.json | jq -r .data.url).json?depth=1"
 wget $CWR_JSON_URL -O CWR.json
-WW_JSON_URL="$(cat WW-meta.json | jq -r .data.url).json?limit=20&depth=1"
+WW_JSON_URL="$(cat WW-meta.json | jq -r .data.url).json?depth=1"
 wget $WW_JSON_URL -O WW.json
 
 # Clean up

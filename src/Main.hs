@@ -91,9 +91,17 @@ main =
         Nothing ->
           pure id
 
+extraHead :: Ema.CLI.Action -> H.Html
+extraHead emaAction = do
+  case emaAction of
+    Ema.CLI.Generate _ ->
+      H.base ! A.href "https://srid.github.io/TheMotteDashboard/"
+    _ ->
+      H.base ! A.href "/"
+
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
-  Tailwind.layout emaAction (H.title "TheMotte overview" >> H.base ! A.href "/") $
+  Tailwind.layout emaAction (H.title "TheMotte overview" >> extraHead emaAction) $
     H.div ! A.class_ "container mx-auto" $ do
       H.div ! A.class_ "my-8 p-2" $ do
         case r of
@@ -111,23 +119,25 @@ render emaAction model r = do
                 "r/TheMotte " <> rName
               " - recent"
             H.ul ! A.class_ "" $
-              forM_ rContent $ \Post {..} ->
+              forM_ rContent $ \Post {..} -> do
+                let url = "http://old.reddit.com" <> postPermalink
+                    goto = mconcat [A.target "blank", A.href (H.toValue url)]
                 H.li ! A.class_ "mt-4" $ do
                   H.div ! A.class_ "text-sm" $ do
                     H.code $ do
                       "u/"
                       H.toHtml postAuthor
-                    let url = "http://old.reddit.com" <> postPermalink
                     " on "
-                    H.a ! A.class_ "text-xs text-black-600 underline" ! A.target "blank" ! A.href (H.toValue url) $ do
+                    H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
                       H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
-                  H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
-                    let n = 80
-                        nn = 400
-                    H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
-                    H.span ! A.class_ "text-gray-500" $ do
-                      H.toHtml $ T.take nn $ T.drop n postBody
-                      "..."
+                  H.a ! goto $
+                    H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
+                      let n = 80
+                          nn = 400
+                      H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
+                      H.span ! A.class_ "text-gray-500" $ do
+                        H.toHtml $ T.take nn $ T.drop n postBody
+                        "..."
   where
     -- H.pre $ H.toHtml (shower model)
 
