@@ -17,7 +17,6 @@ import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
-import Shower (shower)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -25,6 +24,7 @@ import qualified Text.Blaze.Html5.Attributes as A
 data Route
   = R_Index
   | R_CW
+  | R_WW
   deriving (Show, Enum, Bounded)
 
 -- | Represents a top-level post in the Culture War Roundup thread
@@ -41,21 +41,24 @@ data Post = Post
 instance FromJSON Post where parseJSON = genericParseJSONStripType
 
 data Model = Model
-  { modelCWPosts :: [Post]
+  { modelCWPosts :: [Post],
+    modelWWPosts :: [Post]
   }
   deriving (Show)
 
 instance Default Model where
-  def = Model mempty
+  def = Model mempty mempty
 
 instance Ema Model Route where
   encodeRoute _model =
     \case
       R_Index -> "index.html"
       R_CW -> "cw.html"
+      R_WW -> "ww.html"
   decodeRoute _model = \case
     "index.html" -> Just R_Index
     "cw.html" -> Just R_CW
+    "ww.html" -> Just R_WW
     _ -> Nothing
 
 log :: MonadLogger m => Text -> m ()
@@ -70,18 +73,22 @@ main =
     let pats = [((), "*.json")]
         ignorePats = [".*"]
     FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
-      case fp of
-        "CWR-sanitizied.json" -> do
+      let mSetPosts = case fp of
+            "CWR-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
+            "WW-sanitizied.json" -> Just $ \posts m -> m {modelWWPosts = posts}
+            _ -> Nothing
+      case mSetPosts of
+        Just setPosts -> do
           case action of
             FileSystem.Update () -> do
               log $ "Reading " <> toText fp
               liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
                 Left err -> error $ show err
                 Right posts ->
-                  pure $ \m -> m {modelCWPosts = posts}
+                  pure $ setPosts posts
             FileSystem.Delete ->
               pure id
-        _ ->
+        Nothing ->
           pure id
 
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
@@ -90,10 +97,15 @@ render emaAction model r = do
     H.div ! A.class_ "container mx-auto" $ do
       H.div ! A.class_ "my-8 p-2" $ do
         case r of
-          R_Index ->
-            routeElem R_CW "CW"
-          R_CW -> do
-            let (rName, rContent) = ("CW", modelCWPosts model)
+          R_Index -> do
+            H.ul $ do
+              H.li $ routeElem R_CW "CW"
+              H.li $ routeElem R_WW "WW"
+          _ -> do
+            let (rName, rContent) = case r of
+                  R_CW -> ("CW", modelCWPosts model)
+                  R_WW -> ("WW", modelWWPosts model)
+                  R_Index -> ("", mempty) -- FIXME: hack
             H.h1 ! A.class_ "text-5xl font-bold" $ do
               H.a ! A.href "https://old.reddit.com/r/TheMotte/" $ do
                 "r/TheMotte " <> rName
