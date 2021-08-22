@@ -50,6 +50,10 @@
                 haskell-language-server
                 ormolu
                 pkgs.nixpkgs-fmt
+
+                # For data processing
+                pkgs.jq
+                pkgs.wget
               ]);
           };
       in

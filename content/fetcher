@@ -1,0 +1,23 @@
+# A script to fetch new content.
+# Run this using bin/fetch
+
+set -xe
+
+cd ./content
+
+# TODO: Fetch only if not fetched in last 30 minutes or so, to avoid API rate limit.
+wget https://old.reddit.com/r/TheMotte/.json -O TheMotte.json
+
+# Filter out relevant data
+cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Culture War Roundup"))) | first' > CWR-meta.json
+
+CWR_JSON_URL="$(cat CWR-meta.json | jq -r .data.url).json?limit=20&depth=1"
+
+wget $CWR_JSON_URL -O CWR.json
+
+# - Ignore dist==1 which is the submission text.
+cat CWR.json \
+        | jq 'map (select (.data.dist != 1)) | first' \
+        | jq '.data.children' \
+        | jq 'map(select (.data.author != "AutoModerator" and .kind == "t1") | {kind: .kind, id: .data.id, author: .data.author, score: .data.score, created_utc: .data.created_utc, body: .data.body, permalink: .data.permalink})' \
+        > CWR-sanitizied.json
