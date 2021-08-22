@@ -18,6 +18,9 @@ jobs:
       - name: Build sources 🔧
         run: |
           nix build
+      - name: Fetch
+        run: |
+          bin/fetch
       - name: Generate HTML 🔧
         run: |
           mkdir ./output
