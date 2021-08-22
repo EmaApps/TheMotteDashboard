@@ -26,21 +26,21 @@ data Route
   = Index
   deriving (Show, Enum, Bounded)
 
--- | Represents a top-level post in the Culture War Roundeup thread
-data CWTop = CWTop
-  { cWTopKind :: Text,
-    cWTopId :: Text,
-    cWTopAuthor :: Text,
-    cWTopCreatedUtc :: Integer,
-    cWTopBody :: Text,
-    cWTopPermalink :: Text
+-- | Represents a top-level post in the Culture War Roundup thread
+data Post = Post
+  { postKind :: Text,
+    postId :: Text,
+    postAuthor :: Text,
+    postCreatedUtc :: Integer,
+    postBody :: Text,
+    postPermalink :: Text
   }
   deriving (Eq, Show, Generic)
 
-instance FromJSON CWTop where parseJSON = genericParseJSONStripType
+instance FromJSON Post where parseJSON = genericParseJSONStripType
 
 data Model = Model
-  { modelCWTops :: [CWTop]
+  { modelCWPosts :: [Post]
   }
   deriving (Show)
 
@@ -72,10 +72,10 @@ main =
           case action of
             FileSystem.Update () -> do
               log $ "Reading " <> toText fp
-              liftIO (eitherDecodeFileStrict @[CWTop] fp) >>= \case
+              liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
                 Left err -> error $ show err
-                Right cwtops ->
-                  pure $ \m -> m {modelCWTops = cwtops}
+                Right posts ->
+                  pure $ \m -> m {modelCWPosts = posts}
             FileSystem.Delete ->
               pure id
         _ ->
@@ -86,26 +86,32 @@ render emaAction model Index =
   Tailwind.layout emaAction (H.title "TheMotte overview" >> H.base ! A.href "/") $
     H.div ! A.class_ "container mx-auto" $ do
       H.div ! A.class_ "mt-8 p-2" $ do
-        "You are on the "
-        routeElem Index "index page"
-        H.ul ! A.class_ "list-disc" $
-          forM_ (modelCWTops model) $ \CWTop {..} ->
-            H.li $ do
-              H.div $ do
-                "u/"
-                H.em $ H.toHtml cWTopAuthor
-                let url = "http://old.reddit.com" <> cWTopPermalink
+        H.h1 ! A.class_ "text-5xl font-bold" $ do
+          H.a ! A.href "https://old.reddit.com/r/TheMotte/" $ "r/TheMotte CW"
+          " - recent"
+        H.ul ! A.class_ "" $
+          forM_ (modelCWPosts model) $ \Post {..} ->
+            H.li ! A.class_ "mt-4" $ do
+              H.div ! A.class_ "text-sm" $ do
+                H.code $ do
+                  "u/"
+                  H.toHtml postAuthor
+                let url = "http://old.reddit.com" <> postPermalink
                 " on "
-                H.a ! A.class_ "text-xs text-blue-600 hover:underline" ! A.target "blank" ! A.href (H.toValue url) $ do
-                  H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ cWTopCreatedUtc
-              H.blockquote $ do
+                H.a ! A.class_ "text-xs text-black-600 underline" ! A.target "blank" ! A.href (H.toValue url) $ do
+                  H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+              H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
                 let n = 80
-                H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n cWTopBody
-                H.span ! A.class_ "text-gray-500" $ H.toHtml $ T.drop n cWTopBody
-              "..."
-        H.pre $ H.toHtml (shower model)
+                    nn = 400
+                H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
+                H.span ! A.class_ "text-gray-500" $ do
+                  H.toHtml $ T.take nn $ T.drop n postBody
+                  "..."
+        H.div ! A.class_ "mt-8 text-gray-300" $ do
+          routeElem Index "Debug"
+          H.pre $ H.toHtml (shower model)
   where
     routeElem r' w =
-      H.a ! A.class_ "text-red-500 hover:underline" ! routeHref r' $ w
+      H.a ! A.class_ "text-blue-500 hover:underline" ! routeHref r' $ w
     routeHref r' =
       A.href (fromString . toString $ Ema.routeUrl model r')
