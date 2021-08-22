@@ -29,6 +29,7 @@ jobs:
         mkdir ./output
         export TARGET=$(pwd)/output
         cd ./content
+        export NIX_BUNDLE_CWD=$(pwd)
         ../TheMotteDashboard gen $TARGET
         cp *.json $TARGET
     - name: Deploy to gh-pages 🚀

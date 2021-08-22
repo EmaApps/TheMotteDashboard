@@ -17,6 +17,8 @@ import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
+import System.Directory
+import System.Environment (lookupEnv)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -77,30 +79,34 @@ logD :: MonadLogger m => Text -> m ()
 logD = logDebugNS "TheMotteDashboard"
 
 main :: IO ()
-main =
-  Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
-    let pats = [((), "*.json")]
-        ignorePats = [".*"]
-    FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
-      let mSetPosts = case fp of
-            "CWR-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
-            "WW-sanitizied.json" -> Just $ \posts m -> m {modelWWPosts = posts}
-            "SQ-sanitizied.json" -> Just $ \posts m -> m {modelSQPosts = posts}
-            "FF-sanitizied.json" -> Just $ \posts m -> m {modelFFPosts = posts}
-            _ -> Nothing
-      case mSetPosts of
-        Just setPosts -> do
-          case action of
-            FileSystem.Update () -> do
-              log $ "Reading " <> toText fp
-              liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
-                Left err -> error $ show err
-                Right posts ->
-                  pure $ setPosts posts
-            FileSystem.Delete ->
-              pure id
-        Nothing ->
-          pure id
+main = do
+  -- Nix bundle CWD hack
+  contentDir <- fromMaybe "." <$> lookupEnv "NIX_BUNDLE_CWD"
+  putStrLn $ "CWD = " <> contentDir
+  withCurrentDirectory contentDir $ do
+    Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
+      let pats = [((), "*.json")]
+          ignorePats = [".*"]
+      FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
+        let mSetPosts = case fp of
+              "CWR-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
+              "WW-sanitizied.json" -> Just $ \posts m -> m {modelWWPosts = posts}
+              "SQ-sanitizied.json" -> Just $ \posts m -> m {modelSQPosts = posts}
+              "FF-sanitizied.json" -> Just $ \posts m -> m {modelFFPosts = posts}
+              _ -> Nothing
+        case mSetPosts of
+          Just setPosts -> do
+            case action of
+              FileSystem.Update () -> do
+                log $ "Reading " <> toText fp
+                liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
+                  Left err -> error $ show err
+                  Right posts ->
+                    pure $ setPosts posts
+              FileSystem.Delete ->
+                pure id
+          Nothing ->
+            pure id
 
 extraHead :: Ema.CLI.Action -> H.Html
 extraHead emaAction = do
