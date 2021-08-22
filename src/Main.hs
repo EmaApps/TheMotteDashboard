@@ -113,7 +113,13 @@ render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
   Tailwind.layout emaAction (H.title "TheMotte overview" >> extraHead emaAction) $
     H.div ! A.class_ "container mx-auto" $ do
-      H.div ! A.class_ "my-8 p-2" $ do
+      let bgStyle = case r of
+            R_Index -> ""
+            R_CW -> "bg-red-50"
+            R_WW -> "bg-green-50"
+            R_SQ -> "bg-gray-50"
+            R_FF -> "bg-purple-100"
+      H.div ! A.class_ ("my-6 p-4 rounded " <> bgStyle) $ do
         case r of
           R_Index -> do
             H.ul $ do
@@ -129,32 +135,32 @@ render emaAction model r = do
                   R_FF -> ("FF", modelFFPosts model)
                   R_Index -> ("", mempty) -- FIXME: hack
             routeElem R_Index "Home"
-            H.h1 ! A.class_ "text-5xl font-bold" $ do
-              H.a $ do
-                "r/TheMotte " <> rName
-              " - recent"
-            H.ul ! A.class_ "" $
-              forM_ rContent $ \Post {..} -> do
-                let url = "http://old.reddit.com" <> postPermalink
-                    goto = mconcat [A.target "blank", A.href (H.toValue url)]
-                H.li ! A.class_ "mt-4" $ do
-                  H.div ! A.class_ "text-sm" $ do
-                    H.code $ do
-                      "u/"
-                      H.toHtml postAuthor
-                    " on "
-                    H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
-                      H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
-                  H.a ! goto $
-                    H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
-                      let n = 80
-                          nn = 400
-                      H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
-                      H.span ! A.class_ "text-gray-500" $ do
-                        H.toHtml $ T.take nn $ T.drop n postBody
-                        "..."
+            renderSection rName rContent
   where
-    -- H.pre $ H.toHtml (shower model)
+    renderSection rName rContent = do
+      H.h1 ! A.class_ "text-5xl font-bold" $ do
+        "r/TheMotte " <> rName
+        " - recent"
+      H.ul $
+        forM_ rContent $ \Post {..} -> do
+          let url = "http://old.reddit.com" <> postPermalink
+              goto = mconcat [A.target "blank", A.href (H.toValue url)]
+          H.li ! A.class_ "mt-4" $ do
+            H.div ! A.class_ "text-sm" $ do
+              H.code $ do
+                "u/"
+                H.toHtml postAuthor
+              " on "
+              H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
+                H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+            H.a ! goto $
+              H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
+                let n = 80
+                    nn = 400
+                H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
+                H.span ! A.class_ "text-gray-500" $ do
+                  H.toHtml $ T.take nn $ T.drop n postBody
+                  "..."
 
     routeElem r' w =
       H.a ! A.class_ "text-blue-500 hover:underline" ! routeHref r' $ w
