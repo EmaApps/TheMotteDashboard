@@ -25,6 +25,7 @@ data Route
   = Index
   deriving (Show, Enum, Bounded)
 
+-- | Represents a top-level post in the Culture War Roundeup thread
 data CWTop = CWTop
   { cWTopKind :: Text,
     cWTopId :: Text,
@@ -62,32 +63,25 @@ logD = logDebugNS "TheMotteDashboard"
 main :: IO ()
 main =
   Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
-    -- This is the place where we can load and continue to modify our "model".
-    -- You will use `LVar.set` and `LVar.modify` to modify the model.
-    --
-    -- It is a run in a (long-running) thread of its own.
-    --
-    -- We use the FileSystem helper to directly "mount" our files on to the
-    -- LVar.
     let pats = [((), "*.json")]
         ignorePats = [".*"]
     FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
-      case action of
-        FileSystem.Update () -> do
-          case fp of
-            "CWR-sanitizied.json" -> do
+      case fp of
+        "CWR-sanitizied.json" -> do
+          case action of
+            FileSystem.Update () -> do
               liftIO (eitherDecodeFileStrict @[CWTop] fp) >>= \case
                 Left err -> error $ show err
                 Right cwtops ->
                   pure $ \m -> m {modelCWTops = cwtops}
-            _ ->
+            FileSystem.Delete ->
               pure id
-        FileSystem.Delete ->
+        _ ->
           pure id
 
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model Index =
-  Tailwind.layout emaAction (H.title "Basic site" >> H.base ! A.href "/") $
+  Tailwind.layout emaAction (H.title "TheMotte overview" >> H.base ! A.href "/") $
     H.div ! A.class_ "container mx-auto" $ do
       H.div ! A.class_ "mt-8 p-2" $ do
         "You are on the "
