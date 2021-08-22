@@ -1,4 +1,4 @@
-name: "Publish site"
+name: "Build"
 on:
   # Run only when pushing to master branch
   push:
@@ -21,21 +21,6 @@ jobs:
           nix -j 4 bundle .
           ./TheMotteDashboard -h
           echo "::set-output name=bundle-file::TheMotteDashboard"
-      - name: Fetch
-        run: |
-          bin/fetch
-      - name: Generate HTML 🔧
-        run: |
-          mkdir ./output
-          export TARGET=$(pwd)/output
-          cd ./content
-          ../TheMotteDashboard gen $TARGET
-          cp *.json $TARGET
-      - name: Deploy to gh-pages 🚀
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: output
       - name: Upload nix bundle
         uses: actions/upload-artifact@v2
         with:

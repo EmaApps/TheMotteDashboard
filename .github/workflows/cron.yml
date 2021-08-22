@@ -1,0 +1,34 @@
+name: "Scheduled run"
+on:
+  schedule:
+  - cron: "0 */6 * * *"
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v
+    - name: Download bundle
+      run: |
+        curl --silent https://api.github.com/repos/srid/TheMotteDashboard/actions/artifacts \
+          | jq 'first(.artifacts | .[] | select(.name == "bundle") | .archive_download_url)' -r \
+          | xargs curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --silent -L -o bundle.zip
+        unzip bundle.zip
+        chmod +x TheMotteDashboard
+        ./TheMotteDashboard --help  # This extracts the bundle; should take a while
+    - name: Fetch data
+      run: |
+        # Cannot use Nix in a fast workflow; let's hope jq/wget is installed
+        bash ./content/fetcher
+    - name: Build HTML 🔧
+      run: |
+        mkdir ./output
+        export TARGET=$(pwd)/output
+        cd ./content
+        ../TheMotteDashboard gen $TARGET
+        cp *.json $TARGET
+    - name: Deploy to gh-pages 🚀
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: output
