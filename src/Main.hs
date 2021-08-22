@@ -23,7 +23,8 @@ import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
 data Route
-  = Index
+  = R_Index
+  | R_CW
   deriving (Show, Enum, Bounded)
 
 -- | Represents a top-level post in the Culture War Roundup thread
@@ -50,9 +51,11 @@ instance Default Model where
 instance Ema Model Route where
   encodeRoute _model =
     \case
-      Index -> "index.html"
+      R_Index -> "index.html"
+      R_CW -> "cw.html"
   decodeRoute _model = \case
-    "index.html" -> Just Index
+    "index.html" -> Just R_Index
+    "cw.html" -> Just R_CW
     _ -> Nothing
 
 log :: MonadLogger m => Text -> m ()
@@ -82,35 +85,40 @@ main =
           pure id
 
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
-render emaAction model Index =
+render emaAction model r = do
   Tailwind.layout emaAction (H.title "TheMotte overview" >> H.base ! A.href "/") $
     H.div ! A.class_ "container mx-auto" $ do
-      H.div ! A.class_ "mt-8 p-2" $ do
-        H.h1 ! A.class_ "text-5xl font-bold" $ do
-          H.a ! A.href "https://old.reddit.com/r/TheMotte/" $ "r/TheMotte CW"
-          " - recent"
-        H.ul ! A.class_ "" $
-          forM_ (modelCWPosts model) $ \Post {..} ->
-            H.li ! A.class_ "mt-4" $ do
-              H.div ! A.class_ "text-sm" $ do
-                H.code $ do
-                  "u/"
-                  H.toHtml postAuthor
-                let url = "http://old.reddit.com" <> postPermalink
-                " on "
-                H.a ! A.class_ "text-xs text-black-600 underline" ! A.target "blank" ! A.href (H.toValue url) $ do
-                  H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
-              H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
-                let n = 80
-                    nn = 400
-                H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
-                H.span ! A.class_ "text-gray-500" $ do
-                  H.toHtml $ T.take nn $ T.drop n postBody
-                  "..."
-        H.div ! A.class_ "mt-8 text-gray-300" $ do
-          routeElem Index "Debug"
-          H.pre $ H.toHtml (shower model)
+      H.div ! A.class_ "my-8 p-2" $ do
+        case r of
+          R_Index ->
+            routeElem R_CW "CW"
+          R_CW -> do
+            let (rName, rContent) = ("CW", modelCWPosts model)
+            H.h1 ! A.class_ "text-5xl font-bold" $ do
+              H.a ! A.href "https://old.reddit.com/r/TheMotte/" $ do
+                "r/TheMotte " <> rName
+              " - recent"
+            H.ul ! A.class_ "" $
+              forM_ rContent $ \Post {..} ->
+                H.li ! A.class_ "mt-4" $ do
+                  H.div ! A.class_ "text-sm" $ do
+                    H.code $ do
+                      "u/"
+                      H.toHtml postAuthor
+                    let url = "http://old.reddit.com" <> postPermalink
+                    " on "
+                    H.a ! A.class_ "text-xs text-black-600 underline" ! A.target "blank" ! A.href (H.toValue url) $ do
+                      H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+                  H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
+                    let n = 80
+                        nn = 400
+                    H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
+                    H.span ! A.class_ "text-gray-500" $ do
+                      H.toHtml $ T.take nn $ T.drop n postBody
+                      "..."
   where
+    -- H.pre $ H.toHtml (shower model)
+
     routeElem r' w =
       H.a ! A.class_ "text-blue-500 hover:underline" ! routeHref r' $ w
     routeHref r' =
