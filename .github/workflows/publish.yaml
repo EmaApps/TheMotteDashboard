@@ -15,9 +15,12 @@ jobs:
           install_options: "--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve"
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - name: Build sources 🔧
+      - name: Build bundle 🔧
+        id: build
         run: |
-          nix build
+          nix -j 4 bundle .
+          ./TheMotteDashboard -h
+          echo "::set-output name=bundle-file::TheMotteDashboard"
       - name: Fetch
         run: |
           bin/fetch
@@ -26,10 +29,17 @@ jobs:
           mkdir ./output
           export TARGET=$(pwd)/output
           cd ./content
-          ../result/bin/TheMotteDashboard gen $TARGET
+          ../TheMotteDashboard gen $TARGET
           cp *.json $TARGET
       - name: Deploy to gh-pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: output
+      - name: Upload nix bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: bundle
+          retention-days: 3
+          path: |
+            ${{ steps.build.outputs.bundle-file }}

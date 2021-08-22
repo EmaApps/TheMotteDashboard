@@ -29,7 +29,7 @@ data Route
   | R_FF
   deriving (Show, Enum, Bounded)
 
--- | Represents a top-level post in the Culture War Roundup thread
+-- | Represents a reddit post
 data Post = Post
   { postKind :: Text,
     postId :: Text,
@@ -40,7 +40,8 @@ data Post = Post
   }
   deriving (Eq, Show, Generic)
 
-instance FromJSON Post where parseJSON = genericParseJSONStripType
+instance FromJSON Post where
+  parseJSON = genericParseJSONStripType
 
 data Model = Model
   { modelCWPosts :: [Post],
@@ -125,7 +126,8 @@ render emaAction model r = do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
               forM_ [R_CW, R_WW, R_FF, R_SQ] $ \sectionR ->
                 H.div ! A.class_ "w-full md:w-1/2 xl:w-1/4 overflow-hidden flex-grow" $ do
-                  H.div ! A.class_ (routeBg sectionR <> " my-2 mx-2 p-2 rounded") $ renderSection sectionR
+                  H.div ! A.class_ (routeBg sectionR <> " my-2 mx-2 p-2 rounded") $
+                    renderSection sectionR
           _ -> do
             H.div ! A.class_ "my-2" $ do
               routeElem R_Index "View All"
@@ -137,7 +139,7 @@ render emaAction model r = do
             R_WW -> ("WW", modelWWPosts model)
             R_SQ -> ("SQ", modelSQPosts model)
             R_FF -> ("FF", modelFFPosts model)
-            R_Index -> ("", mempty) -- FIXME: hack
+            R_Index -> error "Bad route passed" -- FIXME: hack
       H.h1 ! A.class_ "text-5xl font-bold" $ do
         H.a ! routeHref sectionRoute $ do
           rName
