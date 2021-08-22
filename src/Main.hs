@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TypeApplications #-}
 
 module Main where
@@ -9,6 +10,7 @@ import Control.Monad.Logger
 import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
 import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
+import qualified Data.Text as T
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
@@ -21,7 +23,6 @@ import qualified Text.Blaze.Html5.Attributes as A
 
 data Route
   = Index
-  | About
   deriving (Show, Enum, Bounded)
 
 data CWTop = CWTop
@@ -29,7 +30,8 @@ data CWTop = CWTop
     cWTopId :: Text,
     cWTopAuthor :: Text,
     cWTopCreatedUtc :: Int,
-    cWTopBody :: Text
+    cWTopBody :: Text,
+    cWTopPermalink :: Text
   }
   deriving (Eq, Show, Generic)
 
@@ -47,10 +49,8 @@ instance Ema Model Route where
   encodeRoute _model =
     \case
       Index -> "index.html"
-      About -> "about.html"
   decodeRoute _model = \case
     "index.html" -> Just Index
-    "about.html" -> Just About
     _ -> Nothing
 
 log :: MonadLogger m => Text -> m ()
@@ -86,18 +86,28 @@ main =
           pure id
 
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
-render emaAction model r =
+render emaAction model Index =
   Tailwind.layout emaAction (H.title "Basic site" >> H.base ! A.href "/") $
     H.div ! A.class_ "container mx-auto" $ do
       H.div ! A.class_ "mt-8 p-2" $ do
-        case r of
-          Index -> do
-            "You are on the index page. "
-            routeElem About "Go to About"
-            H.pre $ H.toHtml (shower model)
-          About -> do
-            "You are on the about page. "
-            routeElem Index "Go to Index"
+        "You are on the "
+        routeElem Index "index page"
+        H.ul ! A.class_ "list-disc" $
+          forM_ (modelCWTops model) $ \CWTop {..} ->
+            H.li $ do
+              H.div $ do
+                "u/"
+                H.em $ H.toHtml cWTopAuthor
+                let url = "http://old.reddit.com" <> cWTopPermalink
+                H.a ! A.class_ "text-blue-600 hover:underline" ! A.href (H.toValue url) $ do
+                  " on "
+                  H.span $ H.toHtml cWTopCreatedUtc
+              H.blockquote $ do
+                let n = 80
+                H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n cWTopBody
+                H.span ! A.class_ "text-gray-500" $ H.toHtml $ T.drop n cWTopBody
+              "..."
+        H.pre $ H.toHtml (shower model)
   where
     routeElem r' w =
       H.a ! A.class_ "text-red-500 hover:underline" ! routeHref r' $ w
