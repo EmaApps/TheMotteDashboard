@@ -9,7 +9,7 @@ Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run th
 - [x] Nixify the script to fetch reddit JSON data (using jq) and put it in ./content
 - [x] Generate HTML
 - [x] the same for WW and FF
-- [ ] BLR
+- [x] BLR
 - [ ] Generate RSS feeds (and test in Mailbrew)
 
 Initial announcement,

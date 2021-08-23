@@ -49,3 +49,16 @@ cat FF.json \
         | jq '.data.children' \
         | jq 'map(select (.data.author != "AutoModerator" and .kind == "t1") | {kind: .kind, id: .data.id, author: .data.author, score: .data.score, createdUtc: .data.created_utc, body: .data.body, permalink: .data.permalink})' \
         > FF-sanitizied.json
+
+# BLR
+BLR_JSON_URL=https://old.reddit.com$(cat CW.json \
+        | jq 'map (select (.data.dist != 1)) | first' \
+        | jq '.data.children' \
+        | jq -r 'map(select (.data.author == "AutoModerator" and .kind == "t1")) | first | .data.permalink').json?depth=2
+wget $BLR_JSON_URL -O BLR.json
+
+cat BLR.json \
+        | jq 'map (select (.data.dist != 1)) | first' \
+        | jq '.data.children | first | .data.replies.data.children'  \
+        | jq 'map(select (.data.author != "AutoModerator" and .kind == "t1") | {kind: .kind, id: .data.id, author: .data.author, score: .data.score, createdUtc: .data.created_utc, body: .data.body, permalink: .data.permalink})' \
+        > BLR-sanitizied.json

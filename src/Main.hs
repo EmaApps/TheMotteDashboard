@@ -27,6 +27,7 @@ import qualified Text.Blaze.Html5.Attributes as A
 
 data MotteSticky
   = MS_CultureWar
+  | MS_BareLinkRepository
   | MS_WellnessWednesday
   | MS_FridayFun
   | MS_SmallScaleQuestions
@@ -35,6 +36,7 @@ data MotteSticky
 motteStickyName :: MotteSticky -> Text
 motteStickyName = \case
   MS_CultureWar -> "CW"
+  MS_BareLinkRepository -> "BLR"
   MS_WellnessWednesday -> "WW"
   MS_FridayFun -> "FF"
   MS_SmallScaleQuestions -> "SQ"
@@ -42,9 +44,10 @@ motteStickyName = \case
 motteStickyLongName :: MotteSticky -> Text
 motteStickyLongName = \case
   MS_CultureWar -> "Culture War"
+  MS_BareLinkRepository -> "Culture War Links"
   MS_WellnessWednesday -> "Wellness Wednesday"
   MS_FridayFun -> "Friday Fun"
-  MS_SmallScaleQuestions -> "Small-scale Questions"
+  MS_SmallScaleQuestions -> "Small-Scale Question"
 
 -- | Inverse of `motteStickyName`
 readMotteSticky :: Text -> Maybe MotteSticky
@@ -73,6 +76,7 @@ instance FromJSON Post where
 
 data Model = Model
   { modelCWPosts :: [Post],
+    modelBLRPosts :: [Post],
     modelWWPosts :: [Post],
     modelFFPosts :: [Post],
     modelSQPosts :: [Post]
@@ -82,6 +86,7 @@ data Model = Model
 modelSetPosts :: MotteSticky -> [Post] -> Model -> Model
 modelSetPosts ms xs model = case ms of
   MS_CultureWar -> model {modelCWPosts = xs}
+  MS_BareLinkRepository -> model {modelBLRPosts = xs}
   MS_WellnessWednesday -> model {modelWWPosts = xs}
   MS_FridayFun -> model {modelFFPosts = xs}
   MS_SmallScaleQuestions -> model {modelSQPosts = xs}
@@ -89,12 +94,13 @@ modelSetPosts ms xs model = case ms of
 modelGetPosts :: Model -> MotteSticky -> [Post]
 modelGetPosts Model {..} = \case
   MS_CultureWar -> modelCWPosts
+  MS_BareLinkRepository -> modelBLRPosts
   MS_WellnessWednesday -> modelWWPosts
   MS_FridayFun -> modelFFPosts
   MS_SmallScaleQuestions -> modelSQPosts
 
 instance Default Model where
-  def = Model mempty mempty mempty mempty
+  def = Model mempty mempty mempty mempty mempty
 
 instance Ema Model Route where
   encodeRoute _model =
@@ -174,7 +180,7 @@ render emaAction model r = do
           R_Index -> do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
               forM_ [minBound .. maxBound] $ \ms ->
-                H.div ! A.class_ "w-full md:w-1/2 xl:w-1/4 overflow-hidden flex-grow" $ do
+                H.div ! A.class_ "w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 overflow-hidden flex-grow" $ do
                   H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
                     renderSection ms (R_MotteSticky ms)
           R_MotteSticky ms -> do
@@ -183,6 +189,7 @@ render emaAction model r = do
   where
     sectionClr = \case
       MS_CultureWar -> "red"
+      MS_BareLinkRepository -> "yellow"
       MS_WellnessWednesday -> "green"
       MS_SmallScaleQuestions -> "gray"
       MS_FridayFun -> "purple"
@@ -212,7 +219,7 @@ render emaAction model r = do
                   H.toHtml $ T.take nn $ T.drop n postBody
                   "..."
 
-    routeElem r' w =
-      H.a ! A.class_ "text-blue-500 hover:underline" ! routeHref r' $ w
+    --routeElem r' w =
+    -- H.a ! A.class_ "text-blue-500 hover:underline" ! routeHref r' $ w
     routeHref r' =
       A.href (fromString . toString $ Ema.routeUrl model r')
