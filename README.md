@@ -10,7 +10,12 @@ Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run th
 - [ ] BLR
 - [ ] Generate RSS feeds (and test in Mailbrew)
 
-Final,
+Initial announcement,
 
 - [ ] Avoid nix and reuse the built binary (or docker image) for scheduled updates
 - [ ] "N mins ago" client-side JS replacement on UTC times
+
+Perfect it,
+
+- [ ] Include latest thread *and* the one before (to account for the latest thread having zero or minimal postings)
+- [ ] Show non-sticky posts in separate section (and market this as a bird's eye alternative view)

@@ -120,14 +120,8 @@ extraHead emaAction = do
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
   let now = unsafePerformIO getCurrentTime
-  Tailwind.layout emaAction (H.title "TheMotte overview" >> extraHead emaAction) $
-    H.div ! A.class_ "container mx-auto" $ do
-      let routeBg = \case
-            R_Index -> ""
-            R_CW -> "bg-red-50"
-            R_WW -> "bg-green-50"
-            R_SQ -> "bg-gray-50"
-            R_FF -> "bg-purple-100"
+  Tailwind.layout emaAction (H.title "r/TheMotte dashboard" >> extraHead emaAction) $
+    H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-6 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center" $ do
           H.div ! A.class_ "text-sm text-gray-400" $ do
@@ -138,13 +132,19 @@ render emaAction model r = do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
               forM_ [R_CW, R_WW, R_FF, R_SQ] $ \sectionR ->
                 H.div ! A.class_ "w-full md:w-1/2 xl:w-1/4 overflow-hidden flex-grow" $ do
-                  H.div ! A.class_ (routeBg sectionR <> " my-2 mx-2 p-2 rounded") $
+                  H.div ! A.class_ ("bg-" <> sectionClr sectionR <> "-50 my-2 mx-2 p-2") $
                     renderSection sectionR
           _ -> do
             H.div ! A.class_ "my-2" $ do
               routeElem R_Index "View All"
             renderSection r
   where
+    sectionClr = \case
+      R_Index -> error "Bad section route"
+      R_CW -> "red"
+      R_WW -> "green"
+      R_SQ -> "gray"
+      R_FF -> "purple"
     renderSection sectionRoute = do
       let (rName, rContent) = case sectionRoute of
             R_CW -> ("CW", modelCWPosts model)
@@ -152,7 +152,7 @@ render emaAction model r = do
             R_SQ -> ("SQ", modelSQPosts model)
             R_FF -> ("FF", modelFFPosts model)
             R_Index -> error "Bad route passed" -- FIXME: hack
-      H.h1 ! A.class_ "text-5xl font-bold" $ do
+      H.h1 ! A.class_ "text-4xl font-bold" $ do
         H.a ! routeHref sectionRoute $ do
           rName
           " - recent"
@@ -169,10 +169,10 @@ render emaAction model r = do
               H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
                 H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
             H.a ! goto $
-              H.blockquote ! A.class_ "mt-2 ml-2 pl-2 border-l-2" $ do
+              H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr sectionRoute <> "-600") $ do
                 let n = 80
                     nn = 400
-                H.span ! A.class_ "font-bold" $ H.toHtml $ T.take n postBody
+                H.span ! A.class_ "font-bold visited:font-normal" $ H.toHtml $ T.take n postBody
                 H.span ! A.class_ "text-gray-500" $ do
                   H.toHtml $ T.take nn $ T.drop n postBody
                   "..."
