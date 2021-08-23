@@ -12,7 +12,9 @@ import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
+import Data.Time (UTCTime)
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
+import Data.Time.Format
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
@@ -179,7 +181,7 @@ render emaAction model r = do
         H.div ! A.class_ "flex items-center justify-center" $ do
           H.div ! A.class_ "text-sm text-gray-400" $ do
             "Generated on "
-            H.toHtml $ show @Text now
+            renderTime now
         case r of
           R_Index -> do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
@@ -190,7 +192,20 @@ render emaAction model r = do
           R_MotteSticky ms -> do
             H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
               renderSection ms R_Index
+        H.div ! A.class_ "flex items-center justify-center" $ do
+          H.div ! A.class_ "text-sm text-gray-500" $ do
+            H.p $ do
+              "Powered by "
+              H.a ! A.class_ "font-semibold" ! A.href "https://ema.srid.ca" $ "Ema"
+              " ("
+              H.a ! A.href "https://github.com/srid/TheMotteDashboard" $ "View Source"
+              ")"
   where
+    showTime :: UTCTime -> Text
+    showTime =
+      toText . formatTime defaultTimeLocale "%b %d, %R UTC"
+    renderTime t = do
+      H.span ! A.title (H.toValue $ show @Text t) $ H.toHtml $ showTime t
     sectionClr = \case
       MS_CultureWar -> "red"
       MS_BareLinkRepository -> "yellow"
@@ -214,7 +229,7 @@ render emaAction model r = do
                   H.toHtml postAuthor
               H.div $
                 H.a ! A.class_ "text-xs text-gray-400" ! goto $ do
-                  H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+                  renderTime $ posixSecondsToUTCTime . fromInteger $ postCreatedUtc
             H.div $
               H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> clr <> "-600") $ do
                 let n = 80
