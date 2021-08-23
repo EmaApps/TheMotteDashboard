@@ -39,6 +39,12 @@ motteStickyName = \case
   MS_FridayFun -> "FF"
   MS_SmallScaleQuestions -> "SQ"
 
+-- | Inverse of `motteStickyName`
+readMotteSticky :: Text -> Maybe MotteSticky
+readMotteSticky (T.toUpper -> s) =
+  let nameMap = Map.fromList $ [minBound .. maxBound] <&> \ms -> (motteStickyName ms, ms)
+   in Map.lookup (toText s) nameMap
+
 data Route
   = R_Index
   | R_MotteSticky MotteSticky
@@ -66,6 +72,20 @@ data Model = Model
   }
   deriving (Show)
 
+modelSetPosts :: MotteSticky -> [Post] -> Model -> Model
+modelSetPosts ms xs model = case ms of
+  MS_CultureWar -> model {modelCWPosts = xs}
+  MS_WellnessWednesday -> model {modelWWPosts = xs}
+  MS_FridayFun -> model {modelFFPosts = xs}
+  MS_SmallScaleQuestions -> model {modelSQPosts = xs}
+
+modelGetPosts :: Model -> MotteSticky -> [Post]
+modelGetPosts Model {..} = \case
+  MS_CultureWar -> modelCWPosts
+  MS_WellnessWednesday -> modelWWPosts
+  MS_FridayFun -> modelFFPosts
+  MS_SmallScaleQuestions -> modelSQPosts
+
 instance Default Model where
   def = Model mempty mempty mempty mempty
 
@@ -77,8 +97,7 @@ instance Ema Model Route where
   decodeRoute _model = \case
     "index.html" -> Just R_Index
     (T.stripSuffix ".html" . toText -> Just baseName) ->
-      let nameMap = Map.fromList $ [minBound .. maxBound] <&> \ms -> (T.toLower $ motteStickyName ms, ms)
-       in R_MotteSticky <$> Map.lookup (toText baseName) nameMap
+      R_MotteSticky <$> readMotteSticky baseName
     _ -> Nothing
   allRoutes _ =
     R_Index : (R_MotteSticky <$> [minBound .. maxBound])
@@ -94,30 +113,28 @@ main = do
   -- Nix bundle CWD hack
   contentDir <- fromMaybe "." <$> lookupEnv "NIX_BUNDLE_CWD"
   putStrLn $ "CWD = " <> contentDir
-  withCurrentDirectory contentDir $ do
-    Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
-      let pats = [((), "*.json")]
-          ignorePats = [".*"]
-      FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
-        let mSetPosts = case fp of
-              "CW-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
-              "WW-sanitizied.json" -> Just $ \posts m -> m {modelWWPosts = posts}
-              "SQ-sanitizied.json" -> Just $ \posts m -> m {modelSQPosts = posts}
-              "FF-sanitizied.json" -> Just $ \posts m -> m {modelFFPosts = posts}
-              _ -> Nothing
-        case mSetPosts of
-          Just setPosts -> do
-            case action of
-              FileSystem.Update () -> do
-                log $ "Reading " <> toText fp
-                liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
-                  Left err -> error $ show err
-                  Right posts ->
-                    pure $ setPosts posts
-              FileSystem.Delete ->
-                pure id
-          Nothing ->
-            pure id
+  withCurrentDirectory contentDir appMain
+
+appMain :: IO ()
+appMain = do
+  Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
+    let pats = [((), "*.json")]
+        ignorePats = [".*"]
+    FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
+      -- Consume foo-sanitizied.json
+      case T.stripSuffix "-sanitizied.json" (toText fp) >>= readMotteSticky of
+        Just ms ->
+          case action of
+            FileSystem.Update () -> do
+              log $ "Reading " <> toText fp
+              liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
+                Left err -> error $ show err
+                Right posts ->
+                  pure $ modelSetPosts ms posts
+            FileSystem.Delete ->
+              pure id
+        Nothing ->
+          pure id
 
 extraHead :: Ema.CLI.Action -> H.Html
 extraHead emaAction = do
@@ -154,18 +171,13 @@ render emaAction model r = do
       MS_WellnessWednesday -> "green"
       MS_SmallScaleQuestions -> "gray"
       MS_FridayFun -> "purple"
-    renderSection sectionRoute = do
-      let rContent = case sectionRoute of
-            MS_CultureWar -> modelCWPosts model
-            MS_WellnessWednesday -> modelWWPosts model
-            MS_SmallScaleQuestions -> modelSQPosts model
-            MS_FridayFun -> modelFFPosts model
+    renderSection motteSticky = do
       H.h1 ! A.class_ "text-4xl font-bold" $ do
-        H.a ! routeHref (R_MotteSticky sectionRoute) $ do
-          H.toHtml $ motteStickyName sectionRoute
+        H.a ! routeHref (R_MotteSticky motteSticky) $ do
+          H.toHtml $ motteStickyName motteSticky
           " - recent"
       H.ul $
-        forM_ rContent $ \Post {..} -> do
+        forM_ (modelGetPosts model motteSticky) $ \Post {..} -> do
           let url = "http://old.reddit.com" <> postPermalink
               goto = mconcat [A.target "blank", A.href (H.toValue url)]
           H.li ! A.class_ "mt-4" $ do
@@ -177,7 +189,7 @@ render emaAction model r = do
               H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
                 H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
             H.a ! goto $
-              H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr sectionRoute <> "-600") $ do
+              H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
                 let n = 80
                     nn = 200
                 H.span ! A.class_ "font-semibold visited:font-normal" $ H.toHtml $ T.take n postBody
