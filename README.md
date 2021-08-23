@@ -1,4 +1,6 @@
-# TMD
+# WIP dashboard for r/TheMotte
+
+https://themotte.srid.ca
 
 Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run the dashboard site using that data. Run `bin/fetch` at any point, and the site will hot reload.
 
@@ -19,3 +21,7 @@ Perfect it,
 
 - [ ] Include latest thread *and* the one before (to account for the latest thread having zero or minimal postings)
 - [ ] Show regular non-sticky submissions in separate section (and market this as a bird's eye alternative view)
+
+Final announcement,
+
+- Post in next WW thread
