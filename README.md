@@ -18,4 +18,4 @@ Initial announcement,
 Perfect it,
 
 - [ ] Include latest thread *and* the one before (to account for the latest thread having zero or minimal postings)
-- [ ] Show non-sticky posts in separate section (and market this as a bird's eye alternative view)
+- [ ] Show regular non-sticky submissions in separate section (and market this as a bird's eye alternative view)

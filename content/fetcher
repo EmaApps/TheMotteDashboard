@@ -9,14 +9,14 @@ cd ./content
 wget https://old.reddit.com/r/TheMotte/.json -O TheMotte.json
 
 # Filter out relevant data
-cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Culture War Roundup"))) | first' > CWR-meta.json
+cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Culture War Roundup"))) | first' > CW-meta.json
 cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Wellness Wednesday for"))) | first' > WW-meta.json
 cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Small-Scale Question Sunday"))) | first' > SQ-meta.json
 cat TheMotte.json | jq '.data.children | map (select (.data.title | contains("Friday Fun Thread"))) | first' > FF-meta.json
 
 # Get the original threads
-CWR_JSON_URL="$(cat CWR-meta.json | jq -r .data.url).json?depth=1"
-wget $CWR_JSON_URL -O CWR.json
+CW_JSON_URL="$(cat CW-meta.json | jq -r .data.url).json?depth=1"
+wget $CW_JSON_URL -O CW.json
 WW_JSON_URL="$(cat WW-meta.json | jq -r .data.url).json?depth=1"
 wget $WW_JSON_URL -O WW.json
 SQ_JSON_URL="$(cat SQ-meta.json | jq -r .data.url).json?depth=1"
@@ -26,11 +26,11 @@ wget $FF_JSON_URL -O FF.json
 
 # Clean up
 # - Ignore dist==1 which is the submission text.
-cat CWR.json \
+cat CW.json \
         | jq 'map (select (.data.dist != 1)) | first' \
         | jq '.data.children' \
         | jq 'map(select (.data.author != "AutoModerator" and .kind == "t1") | {kind: .kind, id: .data.id, author: .data.author, score: .data.score, createdUtc: .data.created_utc, body: .data.body, permalink: .data.permalink})' \
-        > CWR-sanitizied.json
+        > CW-sanitizied.json
 
 cat WW.json \
         | jq 'map (select (.data.dist != 1)) | first' \

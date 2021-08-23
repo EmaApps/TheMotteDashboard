@@ -10,6 +10,7 @@ import Control.Monad.Logger
 import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
 import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
+import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Ema (Ema (..))
@@ -17,20 +18,31 @@ import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
-import System.Directory
+import System.Directory (withCurrentDirectory)
 import System.Environment (lookupEnv)
 import System.IO.Unsafe (unsafePerformIO)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
+data MotteSticky
+  = MS_CultureWar
+  | MS_WellnessWednesday
+  | MS_FridayFun
+  | MS_SmallScaleQuestions
+  deriving (Eq, Show, Enum, Bounded)
+
+motteStickyName :: MotteSticky -> Text
+motteStickyName = \case
+  MS_CultureWar -> "CW"
+  MS_WellnessWednesday -> "WW"
+  MS_FridayFun -> "FF"
+  MS_SmallScaleQuestions -> "SQ"
+
 data Route
   = R_Index
-  | R_CW
-  | R_WW
-  | R_SQ
-  | R_FF
-  deriving (Show, Enum, Bounded)
+  | R_MotteSticky MotteSticky
+  deriving (Eq, Show)
 
 -- | Represents a reddit post
 data Post = Post
@@ -49,8 +61,8 @@ instance FromJSON Post where
 data Model = Model
   { modelCWPosts :: [Post],
     modelWWPosts :: [Post],
-    modelSQPosts :: [Post],
-    modelFFPosts :: [Post]
+    modelFFPosts :: [Post],
+    modelSQPosts :: [Post]
   }
   deriving (Show)
 
@@ -61,17 +73,15 @@ instance Ema Model Route where
   encodeRoute _model =
     \case
       R_Index -> "index.html"
-      R_CW -> "cw.html"
-      R_WW -> "ww.html"
-      R_FF -> "ff.html"
-      R_SQ -> "sq.html"
+      R_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
   decodeRoute _model = \case
     "index.html" -> Just R_Index
-    "cw.html" -> Just R_CW
-    "ww.html" -> Just R_WW
-    "ff.html" -> Just R_FF
-    "sq.html" -> Just R_SQ
+    (T.stripSuffix ".html" . toText -> Just baseName) ->
+      let nameMap = Map.fromList $ [minBound .. maxBound] <&> \ms -> (T.toLower $ motteStickyName ms, ms)
+       in R_MotteSticky <$> Map.lookup (toText baseName) nameMap
     _ -> Nothing
+  allRoutes _ =
+    R_Index : (R_MotteSticky <$> [minBound .. maxBound])
 
 log :: MonadLogger m => Text -> m ()
 log = logInfoNS "TheMotteDashboard"
@@ -90,7 +100,7 @@ main = do
           ignorePats = [".*"]
       FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
         let mSetPosts = case fp of
-              "CWR-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
+              "CW-sanitizied.json" -> Just $ \posts m -> m {modelCWPosts = posts}
               "WW-sanitizied.json" -> Just $ \posts m -> m {modelWWPosts = posts}
               "SQ-sanitizied.json" -> Just $ \posts m -> m {modelSQPosts = posts}
               "FF-sanitizied.json" -> Just $ \posts m -> m {modelFFPosts = posts}
@@ -130,31 +140,29 @@ render emaAction model r = do
         case r of
           R_Index -> do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
-              forM_ [R_CW, R_WW, R_FF, R_SQ] $ \sectionR ->
+              forM_ [minBound .. maxBound] $ \sectionR ->
                 H.div ! A.class_ "w-full md:w-1/2 xl:w-1/4 overflow-hidden flex-grow" $ do
                   H.div ! A.class_ ("bg-" <> sectionClr sectionR <> "-50 my-2 mx-2 p-2") $
                     renderSection sectionR
-          _ -> do
+          R_MotteSticky ms -> do
             H.div ! A.class_ "my-2" $ do
               routeElem R_Index "View All"
-            renderSection r
+            renderSection ms
   where
     sectionClr = \case
-      R_Index -> error "Bad section route"
-      R_CW -> "red"
-      R_WW -> "green"
-      R_SQ -> "gray"
-      R_FF -> "purple"
+      MS_CultureWar -> "red"
+      MS_WellnessWednesday -> "green"
+      MS_SmallScaleQuestions -> "gray"
+      MS_FridayFun -> "purple"
     renderSection sectionRoute = do
-      let (rName, rContent) = case sectionRoute of
-            R_CW -> ("CW", modelCWPosts model)
-            R_WW -> ("WW", modelWWPosts model)
-            R_SQ -> ("SQ", modelSQPosts model)
-            R_FF -> ("FF", modelFFPosts model)
-            R_Index -> error "Bad route passed" -- FIXME: hack
+      let rContent = case sectionRoute of
+            MS_CultureWar -> modelCWPosts model
+            MS_WellnessWednesday -> modelWWPosts model
+            MS_SmallScaleQuestions -> modelSQPosts model
+            MS_FridayFun -> modelFFPosts model
       H.h1 ! A.class_ "text-4xl font-bold" $ do
-        H.a ! routeHref sectionRoute $ do
-          rName
+        H.a ! routeHref (R_MotteSticky sectionRoute) $ do
+          H.toHtml $ motteStickyName sectionRoute
           " - recent"
       H.ul $
         forM_ rContent $ \Post {..} -> do
@@ -171,8 +179,8 @@ render emaAction model r = do
             H.a ! goto $
               H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr sectionRoute <> "-600") $ do
                 let n = 80
-                    nn = 400
-                H.span ! A.class_ "font-bold visited:font-normal" $ H.toHtml $ T.take n postBody
+                    nn = 200
+                H.span ! A.class_ "font-semibold visited:font-normal" $ H.toHtml $ T.take n postBody
                 H.span ! A.class_ "text-gray-500" $ do
                   H.toHtml $ T.take nn $ T.drop n postBody
                   "..."
