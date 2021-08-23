@@ -21,6 +21,7 @@ Perfect it,
 
 - [ ] Include latest thread *and* the one before (to account for the latest thread having zero or minimal postings)
 - [ ] Show regular non-sticky submissions in separate section (and market this as a bird's eye alternative view)
+- [ ] Compile using windicss, instead of using twind (upstream this to Ema)
 
 Final announcement,
 
