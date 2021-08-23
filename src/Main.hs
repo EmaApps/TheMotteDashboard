@@ -39,6 +39,13 @@ motteStickyName = \case
   MS_FridayFun -> "FF"
   MS_SmallScaleQuestions -> "SQ"
 
+motteStickyLongName :: MotteSticky -> Text
+motteStickyLongName = \case
+  MS_CultureWar -> "Culture War"
+  MS_WellnessWednesday -> "Wellness Wednesday"
+  MS_FridayFun -> "Friday Fun"
+  MS_SmallScaleQuestions -> "Small-scale Questions"
+
 -- | Inverse of `motteStickyName`
 readMotteSticky :: Text -> Maybe MotteSticky
 readMotteSticky (T.toUpper -> s) =
@@ -149,7 +156,7 @@ render emaAction model r = do
   let now = unsafePerformIO getCurrentTime
   Tailwind.layout emaAction (H.title "r/TheMotte dashboard" >> extraHead emaAction) $
     H.main ! A.class_ "mx-auto" $ do
-      H.div ! A.class_ "my-6 p-4" $ do
+      H.div ! A.class_ "my-2 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center" $ do
           H.div ! A.class_ "text-sm text-gray-400" $ do
             "Generated on "
@@ -157,25 +164,24 @@ render emaAction model r = do
         case r of
           R_Index -> do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
-              forM_ [minBound .. maxBound] $ \sectionR ->
+              forM_ [minBound .. maxBound] $ \ms ->
                 H.div ! A.class_ "w-full md:w-1/2 xl:w-1/4 overflow-hidden flex-grow" $ do
-                  H.div ! A.class_ ("bg-" <> sectionClr sectionR <> "-50 my-2 mx-2 p-2") $
-                    renderSection sectionR
+                  H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
+                    renderSection ms (R_MotteSticky ms)
           R_MotteSticky ms -> do
-            H.div ! A.class_ "my-2" $ do
-              routeElem R_Index "View All"
-            renderSection ms
+            H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2 container mx-auto") $
+              renderSection ms R_Index
   where
     sectionClr = \case
       MS_CultureWar -> "red"
       MS_WellnessWednesday -> "green"
       MS_SmallScaleQuestions -> "gray"
       MS_FridayFun -> "purple"
-    renderSection motteSticky = do
-      H.h1 ! A.class_ "text-4xl font-bold" $ do
-        H.a ! routeHref (R_MotteSticky motteSticky) $ do
-          H.toHtml $ motteStickyName motteSticky
-          " - recent"
+    renderSection motteSticky otherRoute = do
+      let clr = sectionClr motteSticky
+      H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> clr <> "-200") $ do
+        H.a ! routeHref otherRoute ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
+          H.toHtml $ motteStickyLongName motteSticky
       H.ul $
         forM_ (modelGetPosts model motteSticky) $ \Post {..} -> do
           let url = "http://old.reddit.com" <> postPermalink
@@ -189,7 +195,7 @@ render emaAction model r = do
               H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
                 H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
             H.a ! goto $
-              H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
+              H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> clr <> "-600") $ do
                 let n = 80
                     nn = 200
                 H.span ! A.class_ "font-semibold visited:font-normal" $ H.toHtml $ T.take n postBody
