@@ -188,7 +188,7 @@ render emaAction model r = do
                   H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
                     renderSection ms (R_MotteSticky ms)
           R_MotteSticky ms -> do
-            H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2 container mx-auto") $
+            H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
               renderSection ms R_Index
   where
     sectionClr = \case

@@ -22,7 +22,3 @@ Perfect it,
 - [ ] Show regular non-sticky submissions in separate section (and market this as a bird's eye alternative view)
 - [ ] "N mins ago" client-side JS replacement on UTC times
 - [ ] Compile using windicss, instead of using twind (upstream this to Ema)
-
-Final announcement,
-
-- Post in next WW thread
