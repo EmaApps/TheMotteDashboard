@@ -151,10 +151,19 @@ extraHead emaAction = do
     _ ->
       H.base ! A.href "/"
 
+headTitle :: Route -> H.Html
+headTitle r = do
+  let siteTitle = "r/TheMotte dashboard"
+  case r of
+    R_Index ->
+      H.title $ H.toHtml siteTitle
+    R_MotteSticky ms ->
+      H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
+
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
   let now = unsafePerformIO getCurrentTime
-  Tailwind.layout emaAction (H.title "r/TheMotte dashboard" >> extraHead emaAction) $
+  Tailwind.layout emaAction (headTitle r >> extraHead emaAction) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center" $ do
