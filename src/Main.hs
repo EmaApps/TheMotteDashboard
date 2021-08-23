@@ -156,6 +156,14 @@ extraHead emaAction = do
       H.base ! A.href "https://srid.github.io/TheMotteDashboard/"
     _ ->
       H.base ! A.href "/"
+  -- TODO: until we get windicss compilation
+  H.style
+    " .extlink:visited { \
+    \   color: dimgray; \
+    \ } \
+    \ .extlink:link { \
+    \  font-weight: 600; \
+    \ } "
 
 headTitle :: Route -> H.Html
 headTitle r = do
@@ -203,19 +211,21 @@ render emaAction model r = do
           let url = "http://old.reddit.com" <> postPermalink
               goto = mconcat [A.target "blank", A.href (H.toValue url)]
           H.li ! A.class_ "mt-4" $ do
-            H.div ! A.class_ "text-sm" $ do
-              H.code $ do
-                "u/"
-                H.toHtml postAuthor
-              " on "
-              H.a ! A.class_ "text-xs text-black-600 underline" ! goto $ do
-                H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
-            H.a ! goto $
+            H.div ! A.class_ "text-sm flex flex-row flex-nowrap justify-between pr-1" $ do
+              H.div $
+                H.code $ do
+                  "u/"
+                  H.toHtml postAuthor
+              H.div $
+                H.a ! A.class_ "text-xs text-gray-400" ! goto $ do
+                  H.span $ H.toHtml $ show @Text . posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+            H.div $
               H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> clr <> "-600") $ do
                 let n = 80
                     nn = 200
-                H.span ! A.class_ "font-semibold visited:font-normal" $ H.toHtml $ T.take n postBody
-                H.span ! A.class_ "text-gray-500" $ do
+                -- TODO: After moving to windicss, replace extlink with visited:text-gray-500
+                H.a ! goto ! A.class_ "extlink" $ H.toHtml $ T.take n postBody
+                H.a ! goto ! A.class_ "text-gray-500" $ do
                   H.toHtml $ T.take nn $ T.drop n postBody
                   "..."
 
