@@ -149,13 +149,9 @@ appMain = do
         Nothing ->
           pure id
 
-extraHead :: Ema.CLI.Action -> H.Html
-extraHead emaAction = do
-  case emaAction of
-    Ema.CLI.Generate _ ->
-      H.base ! A.href "https://srid.github.io/TheMotteDashboard/"
-    _ ->
-      H.base ! A.href "/"
+extraHead :: H.Html
+extraHead = do
+  H.base ! A.href "/"
   -- TODO: until we get windicss compilation
   H.style
     " .extlink:visited { \
@@ -177,7 +173,7 @@ headTitle r = do
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
   let now = unsafePerformIO getCurrentTime
-  Tailwind.layout emaAction (headTitle r >> extraHead emaAction) $
+  Tailwind.layout emaAction (headTitle r >> extraHead) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center" $ do
