@@ -172,6 +172,11 @@ headTitle r = do
     R_MotteSticky ms ->
       H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
 
+data ViewMode
+  = ViewGrid
+  | ViewFull
+  deriving (Eq, Show)
+
 render :: Ema.CLI.Action -> Model -> Route -> LByteString
 render emaAction model r = do
   let now = unsafePerformIO getCurrentTime
@@ -188,10 +193,10 @@ render emaAction model r = do
               forM_ [minBound .. maxBound] $ \ms ->
                 H.div ! A.class_ "w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 overflow-hidden flex-grow" $ do
                   H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
-                    renderSection ms (R_MotteSticky ms)
+                    renderSection ms ViewGrid
           R_MotteSticky ms -> do
             H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
-              renderSection ms R_Index
+              renderSection ms ViewFull
         H.div ! A.class_ "flex items-center justify-center" $ do
           H.div ! A.class_ "text-sm text-gray-500" $ do
             H.p $ do
@@ -212,8 +217,11 @@ render emaAction model r = do
       MS_WellnessWednesday -> "green"
       MS_SmallScaleQuestions -> "gray"
       MS_FridayFun -> "purple"
-    renderSection motteSticky otherRoute = do
+    renderSection motteSticky viewMode = do
       let clr = sectionClr motteSticky
+          otherRoute = case viewMode of
+            ViewGrid -> R_MotteSticky motteSticky
+            ViewFull -> R_Index
       H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> clr <> "-200") $ do
         H.a ! routeHref otherRoute ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
           H.toHtml $ motteStickyLongName motteSticky
@@ -233,7 +241,7 @@ render emaAction model r = do
             H.div $
               H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> clr <> "-600") $ do
                 let n = 80
-                    nn = 200
+                    nn = if viewMode == ViewGrid then 200 else 700
                 -- TODO: After moving to windicss, replace extlink with visited:text-gray-500
                 H.a ! goto ! A.class_ "extlink" $ H.toHtml $ T.take n postBody
                 H.a ! goto ! A.class_ "text-gray-500" $ do

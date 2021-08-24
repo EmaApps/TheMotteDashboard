@@ -22,3 +22,10 @@ Perfect it,
 - [ ] Show regular non-sticky submissions in separate section (and market this as a bird's eye alternative view)
 - [ ] "N mins ago" client-side JS replacement on UTC times
 - [ ] Compile using windicss, instead of using twind (upstream this to Ema)
+- [ ] In ViewFull mode, render full Markdown comment?
+
+[Reddit feedback](https://old.reddit.com/r/TheMotte/comments/p9tvxl/culture_war_roundup_for_the_week_of_august_23_2021/ha2mhmd/),
+
+- [ ] "count number of replies to the top level comments"
+    - "find the time since the last comment reply to the top level comments, and display those things"
+- [x] "expand the length of the preview field for the expanded view when clicking on one of the categories"
