@@ -14,7 +14,7 @@ import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import Data.Time (UTCTime)
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
-import Data.Time.Format
+import Data.Time.Format (defaultTimeLocale, formatTime)
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
@@ -38,7 +38,7 @@ data MotteSticky
 motteStickyName :: MotteSticky -> Text
 motteStickyName = \case
   MS_CultureWar -> "CW"
-  MS_BareLinkRepository -> "BLR"
+  MS_BareLinkRepository -> "BL"
   MS_WellnessWednesday -> "WW"
   MS_FridayFun -> "FF"
   MS_SmallScaleQuestions -> "SQ"
@@ -101,6 +101,14 @@ modelGetPosts Model {..} = \case
   MS_WellnessWednesday -> modelWWPosts
   MS_FridayFun -> modelFFPosts
   MS_SmallScaleQuestions -> modelSQPosts
+
+-- | Return all posts in reverse chronological order
+modelGetPostTimeline :: Model -> [(MotteSticky, Post)]
+modelGetPostTimeline model =
+  sortOn (Down . postCreatedUtc . snd) $
+    mconcat $
+      [minBound .. maxBound] <&> \ms ->
+        (ms,) <$> modelGetPosts model ms
 
 instance Default Model where
   def = Model mempty mempty mempty mempty mempty
@@ -200,8 +208,8 @@ render emaAction model r = do
                   H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
                     renderSection ms ViewGrid
           R_Timeline -> do
-            H.div ! A.class_ ("my-2 p-2 container mx-auto") $
-              "timeline"
+            H.div ! A.class_ "my-2 p-2 container mx-auto" $
+              renderTimeline $ modelGetPostTimeline model
           R_MotteSticky ms -> do
             H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
               renderSection ms ViewFull
@@ -234,8 +242,6 @@ render emaAction model r = do
           H.toHtml $ motteStickyLongName motteSticky
       H.ul $
         forM_ (modelGetPosts model motteSticky) $ \p@Post {..} -> do
-          let url = "http://old.reddit.com" <> postPermalink
-              goto = mconcat [A.target "blank", A.href (H.toValue url)]
           H.li ! A.class_ "mt-4" $ do
             H.div ! A.class_ "text-sm flex flex-row flex-nowrap justify-between pr-1" $ do
               H.div $
@@ -243,13 +249,12 @@ render emaAction model r = do
                   "u/"
                   H.toHtml postAuthor
               H.div $
-                H.a ! A.class_ "text-xs text-gray-400" ! goto $ do
-                  renderTime $ posixSecondsToUTCTime . fromInteger $ postCreatedUtc
-            H.div $
+                renderPostTime p
+            H.div ! A.class_ "pt-2" $
               renderPostBody motteSticky viewMode p
 
     renderPostBody motteSticky viewMode p@Post {..} =
-      H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
+      H.blockquote ! A.class_ ("ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
         let n = 80
             nn = if viewMode == ViewGrid then 200 else 700
         -- TODO: After moving to windicss, replace extlink with visited:text-gray-500
@@ -257,6 +262,18 @@ render emaAction model r = do
         H.a ! postLinkAttr p ! A.class_ "text-gray-500" $ do
           H.toHtml $ T.take nn $ T.drop n postBody
           "..."
+
+    renderPostTime p@Post {..} =
+      H.a ! A.class_ "text-xs text-gray-400" ! postLinkAttr p $ do
+        renderTime $ posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+
+    renderTimeline :: [(MotteSticky, Post)] -> H.Html
+    renderTimeline posts =
+      forM_ posts $ \(ms, post) -> do
+        H.div ! A.class_ ("p-2 flex flex-row bg-" <> sectionClr ms <> "-50") ! A.title (H.toValue $ motteStickyLongName ms) $ do
+          H.div ! A.class_ "font-mono " $ do
+            renderPostTime post
+          H.div ! A.class_ "flex-1" $ renderPostBody ms ViewFull post
 
     postLinkAttr Post {..} =
       let url = "http://old.reddit.com" <> postPermalink
