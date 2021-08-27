@@ -150,7 +150,9 @@ instance Ema Model Route where
   allRoutes model =
     mconcat
       [ [R_Index],
+        [R_Timeline],
         R_MotteSticky <$> [minBound .. maxBound],
+        [R_Users],
         R_User <$> (modelGetUsers model <&> fst)
       ]
 
