@@ -10,6 +10,7 @@ import Control.Monad.Logger
 import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
 import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
+import Data.List (nub)
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import Data.Time (UTCTime)
@@ -61,7 +62,16 @@ data Route
   = R_Index
   | R_Timeline
   | R_MotteSticky MotteSticky
+  | R_Users
+  | R_User Text
   deriving (Eq, Show)
+
+-- FIXME: A hack that can be removed by using inner ADT for user Route
+isUserRoute :: Route -> Bool
+isUserRoute = \case
+  R_Users -> True
+  R_User _ -> True
+  _ -> False
 
 -- | Represents a reddit post
 data Post = Post
@@ -110,6 +120,11 @@ modelGetPostTimeline model =
       [minBound .. maxBound] <&> \ms ->
         (ms,) <$> modelGetPosts model ms
 
+modelGetUsers :: Model -> [(Text, [Post])]
+modelGetUsers model =
+  let m :: Map Text [Post] = Map.fromListWith (<>) $ modelGetPostTimeline model <&> (postAuthor . snd &&& one . snd)
+   in Map.toAscList m
+
 instance Default Model where
   def = Model mempty mempty mempty mempty mempty
 
@@ -119,14 +134,25 @@ instance Ema Model Route where
       R_Index -> "index.html"
       R_Timeline -> "timeline.html"
       R_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
+      R_Users -> "u.html"
+      R_User name -> "u/" <> toString name <> ".html"
   decodeRoute _model = \case
     "index.html" -> Just R_Index
     "timeline.html" -> Just R_Timeline
+    "u.html" -> Just R_Users
     (T.stripSuffix ".html" . toText -> Just baseName) ->
-      R_MotteSticky <$> readMotteSticky baseName
+      case T.stripPrefix "u/" baseName of
+        Just userName ->
+          Just $ R_User userName
+        Nothing ->
+          R_MotteSticky <$> readMotteSticky baseName
     _ -> Nothing
-  allRoutes _ =
-    R_Index : (R_MotteSticky <$> [minBound .. maxBound])
+  allRoutes model =
+    mconcat
+      [ [R_Index],
+        R_MotteSticky <$> [minBound .. maxBound],
+        R_User <$> (modelGetUsers model <&> fst)
+      ]
 
 log :: MonadLogger m => Text -> m ()
 log = logInfoNS "TheMotteDashboard"
@@ -184,6 +210,10 @@ headTitle r = do
       H.title $ H.toHtml $ "Timeline - " <> siteTitle
     R_MotteSticky ms ->
       H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
+    R_Users ->
+      H.title $ H.toHtml $ "Users - " <> siteTitle
+    R_User name ->
+      H.title $ H.toHtml $ "u/" <> name <> " - " <> siteTitle
 
 data ViewMode
   = ViewGrid
@@ -196,10 +226,12 @@ render emaAction model r = do
   Tailwind.layout emaAction (headTitle r >> extraHead) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
-        H.div ! A.class_ "flex items-center justify-center" $ do
-          H.div ! A.class_ "text-sm text-gray-400" $ do
-            "Generated on "
-            renderTime now
+        H.div ! A.class_ "flex items-center justify-center gap-4" $ do
+          let linkBg tr = if tr == r || (tr == R_Users && isUserRoute r) then "bg-blue-300" else ""
+              mkLink tr = H.a ! A.class_ (linkBg tr <> " px-1 py-0.5 rounded") ! routeHref tr
+          mkLink R_Timeline "Timeline View"
+          mkLink R_Index "Dashboard View"
+          mkLink R_Users "User View"
         case r of
           R_Index -> do
             H.div ! A.class_ "flex flex-wrap items-stretch" $ do
@@ -213,6 +245,22 @@ render emaAction model r = do
           R_MotteSticky ms -> do
             H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
               renderSection ms ViewFull
+          R_Users -> do
+            H.div ! A.class_ "my-2 p-2 container mx-auto" $ do
+              H.div ! A.class_ "flex flex-col gap-2" $ do
+                forM_ (modelGetUsers model & sortOn (Down . length . snd)) $ \(user, posts) -> do
+                  H.div ! A.class_ "flex flex-nowrap items-center gap-2" $ do
+                    renderPostAuthor user
+                    H.span ! A.class_ "text-gray-500 text-xs font-mono" $ H.toHtml $ length posts
+          R_User name -> do
+            H.div ! A.class_ "my-2 p-2 container mx-auto" $ do
+              renderRouteHeading R_Users "blue" $ H.toHtml $ "u/" <> name
+              renderTimeline $
+                modelGetPostTimeline model & filter ((== name) . postAuthor . snd)
+        H.div ! A.class_ "flex items-center justify-center" $ do
+          H.div ! A.class_ "text-sm text-gray-400" $ do
+            "Generated on "
+            renderTime now
         H.div ! A.class_ "flex items-center justify-center" $ do
           H.div ! A.class_ "text-sm text-gray-500" $ do
             H.p $ do
@@ -241,17 +289,24 @@ render emaAction model r = do
         H.a ! routeHref otherRoute ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
           H.toHtml $ motteStickyLongName motteSticky
       H.ul $
-        forM_ (modelGetPosts model motteSticky) $ \p@Post {..} -> do
+        forM_ (modelGetPosts model motteSticky) $ \post@Post {..} -> do
           H.li ! A.class_ "mt-4" $ do
             H.div ! A.class_ "text-sm flex flex-row flex-nowrap justify-between pr-1" $ do
               H.div $
-                H.code $ do
-                  "u/"
-                  H.toHtml postAuthor
+                renderPostAuthor postAuthor
               H.div $
-                renderPostTime p
+                renderPostTime post
             H.div ! A.class_ "pt-2" $
-              renderPostBody motteSticky viewMode p
+              renderPostBody motteSticky viewMode post
+
+    renderPostAuthor author =
+      H.code $ do
+        H.a ! routeHref (R_User author) $
+          "u/" <> H.toHtml author
+    renderRouteHeading headingR clr w =
+      H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> clr <> "-200") $ do
+        H.a ! routeHref headingR ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
+          w
 
     renderPostBody motteSticky viewMode p@Post {..} =
       H.blockquote ! A.class_ ("ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
@@ -269,10 +324,11 @@ render emaAction model r = do
 
     renderTimeline :: [(MotteSticky, Post)] -> H.Html
     renderTimeline posts =
-      forM_ posts $ \(ms, post) -> do
+      forM_ posts $ \(ms, post@Post {..}) -> do
         H.div ! A.class_ ("p-2 flex flex-row bg-" <> sectionClr ms <> "-50") ! A.title (H.toValue $ motteStickyLongName ms) $ do
-          H.div ! A.class_ "font-mono " $ do
+          H.div ! A.class_ "font-mono flex flex-col w-32" $ do
             renderPostTime post
+            H.div ! A.class_ "mt-0.5 text-xs overflow-hidden text-gray-600" $ renderPostAuthor postAuthor
           H.div ! A.class_ "flex-1" $ renderPostBody ms ViewFull post
 
     postLinkAttr Post {..} =
