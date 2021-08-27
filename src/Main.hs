@@ -311,7 +311,7 @@ render emaAction model r = do
           w
 
     renderPostBody motteSticky viewMode p@Post {..} =
-      H.blockquote ! A.class_ ("ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
+      H.blockquote ! A.class_ ("ml-2 pl-2 border-l-2 overflow-hidden hover:border-" <> sectionClr motteSticky <> "-600") $ do
         let n = 80
             nn = if viewMode == ViewGrid then 200 else 700
         -- TODO: After moving to windicss, replace extlink with visited:text-gray-500
@@ -327,7 +327,7 @@ render emaAction model r = do
     renderTimeline :: [(MotteSticky, Post)] -> H.Html
     renderTimeline posts =
       forM_ posts $ \(ms, post@Post {..}) -> do
-        H.div ! A.class_ ("p-2 flex flex-row bg-" <> sectionClr ms <> "-50") ! A.title (H.toValue $ motteStickyLongName ms) $ do
+        H.div ! A.class_ ("p-2 flex flex-col md:flex-row  bg-" <> sectionClr ms <> "-50") ! A.title (H.toValue $ motteStickyLongName ms) $ do
           H.div ! A.class_ "font-mono flex flex-col w-32" $ do
             renderPostTime post
             H.div ! A.class_ "mt-0.5 text-xs overflow-hidden text-gray-600" $ renderPostAuthor postAuthor
