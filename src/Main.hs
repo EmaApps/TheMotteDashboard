@@ -59,6 +59,7 @@ readMotteSticky (T.toUpper -> s) =
 
 data Route
   = R_Index
+  | R_Timeline
   | R_MotteSticky MotteSticky
   deriving (Eq, Show)
 
@@ -108,9 +109,11 @@ instance Ema Model Route where
   encodeRoute _model =
     \case
       R_Index -> "index.html"
+      R_Timeline -> "timeline.html"
       R_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
   decodeRoute _model = \case
     "index.html" -> Just R_Index
+    "timeline.html" -> Just R_Timeline
     (T.stripSuffix ".html" . toText -> Just baseName) ->
       R_MotteSticky <$> readMotteSticky baseName
     _ -> Nothing
@@ -169,6 +172,8 @@ headTitle r = do
   case r of
     R_Index ->
       H.title $ H.toHtml siteTitle
+    R_Timeline ->
+      H.title $ H.toHtml $ "Timeline - " <> siteTitle
     R_MotteSticky ms ->
       H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
 
@@ -194,6 +199,9 @@ render emaAction model r = do
                 H.div ! A.class_ "w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 overflow-hidden flex-grow" $ do
                   H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
                     renderSection ms ViewGrid
+          R_Timeline -> do
+            H.div ! A.class_ ("my-2 p-2 container mx-auto") $
+              "timeline"
           R_MotteSticky ms -> do
             H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
               renderSection ms ViewFull
@@ -218,15 +226,14 @@ render emaAction model r = do
       MS_SmallScaleQuestions -> "gray"
       MS_FridayFun -> "purple"
     renderSection motteSticky viewMode = do
-      let clr = sectionClr motteSticky
-          otherRoute = case viewMode of
+      let otherRoute = case viewMode of
             ViewGrid -> R_MotteSticky motteSticky
             ViewFull -> R_Index
-      H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> clr <> "-200") $ do
+      H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> sectionClr motteSticky <> "-200") $ do
         H.a ! routeHref otherRoute ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
           H.toHtml $ motteStickyLongName motteSticky
       H.ul $
-        forM_ (modelGetPosts model motteSticky) $ \Post {..} -> do
+        forM_ (modelGetPosts model motteSticky) $ \p@Post {..} -> do
           let url = "http://old.reddit.com" <> postPermalink
               goto = mconcat [A.target "blank", A.href (H.toValue url)]
           H.li ! A.class_ "mt-4" $ do
@@ -239,16 +246,21 @@ render emaAction model r = do
                 H.a ! A.class_ "text-xs text-gray-400" ! goto $ do
                   renderTime $ posixSecondsToUTCTime . fromInteger $ postCreatedUtc
             H.div $
-              H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> clr <> "-600") $ do
-                let n = 80
-                    nn = if viewMode == ViewGrid then 200 else 700
-                -- TODO: After moving to windicss, replace extlink with visited:text-gray-500
-                H.a ! goto ! A.class_ "extlink" $ H.toHtml $ T.take n postBody
-                H.a ! goto ! A.class_ "text-gray-500" $ do
-                  H.toHtml $ T.take nn $ T.drop n postBody
-                  "..."
+              renderPostBody motteSticky viewMode p
 
-    --routeElem r' w =
-    -- H.a ! A.class_ "text-blue-500 hover:underline" ! routeHref r' $ w
+    renderPostBody motteSticky viewMode p@Post {..} =
+      H.blockquote ! A.class_ ("mt-2 ml-2 pl-2 border-l-2 hover:border-" <> sectionClr motteSticky <> "-600") $ do
+        let n = 80
+            nn = if viewMode == ViewGrid then 200 else 700
+        -- TODO: After moving to windicss, replace extlink with visited:text-gray-500
+        H.a ! postLinkAttr p ! A.class_ "extlink" $ H.toHtml $ T.take n postBody
+        H.a ! postLinkAttr p ! A.class_ "text-gray-500" $ do
+          H.toHtml $ T.take nn $ T.drop n postBody
+          "..."
+
+    postLinkAttr Post {..} =
+      let url = "http://old.reddit.com" <> postPermalink
+       in mconcat [A.target "blank", A.href (H.toValue url)]
+
     routeHref r' =
       A.href (fromString . toString $ Ema.routeUrl model r')
