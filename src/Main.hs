@@ -38,7 +38,7 @@ data MotteSticky
 motteStickyName :: MotteSticky -> Text
 motteStickyName = \case
   MS_CultureWar -> "CW"
-  MS_BareLinkRepository -> "BL"
+  MS_BareLinkRepository -> "BLR"
   MS_WellnessWednesday -> "WW"
   MS_FridayFun -> "FF"
   MS_SmallScaleQuestions -> "SQ"
