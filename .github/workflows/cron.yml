@@ -18,12 +18,12 @@ jobs:
         bash ./content/fetcher
     - name: Build HTML 🔧
       run: |
-        mkdir ./output
-        export TARGET=$(pwd)/output
         cd ./content
+        mkdir ./.output
+        export TARGET=$(pwd)/.output
         mkdir -p ${TARGET}/
         cp *.json $TARGET
-        docker run -v $PWD:/data sridca/themottedashboard TheMotteDashboard gen /data/output
+        docker run -v $PWD:/data sridca/themottedashboard TheMotteDashboard gen /data/.output
     - name: Deploy to gh-pages 🚀
       uses: peaceiris/actions-gh-pages@v3
       with:
