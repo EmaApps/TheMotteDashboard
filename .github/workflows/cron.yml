@@ -2,9 +2,6 @@ name: "Scheduled run"
 on:
   schedule:
   - cron: "0 * * * *"
-  push:
-    branches:
-      - master
   workflow_run:
     workflows: ["Build"]
     types:
