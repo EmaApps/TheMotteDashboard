@@ -2,9 +2,6 @@ name: "Scheduled run"
 on:
   schedule:
   - cron: "0 * * * *"
-  push:
-    branches:
-      - master
   workflow_run:
     workflows: ["Build"]
     types:
@@ -22,7 +19,6 @@ jobs:
     - name: Build HTML 🔧
       run: |
         cd ./content
-        mkdir ./.output
         export TARGET=$(pwd)/.output
         mkdir -p ${TARGET}/
         cp *.json $TARGET

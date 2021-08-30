@@ -20,8 +20,6 @@ import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
-import System.Directory (withCurrentDirectory)
-import System.Environment (lookupEnv)
 import System.IO.Unsafe (unsafePerformIO)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
@@ -163,13 +161,6 @@ logD = logDebugNS "TheMotteDashboard"
 
 main :: IO ()
 main = do
-  -- Nix bundle CWD hack
-  contentDir <- fromMaybe "." <$> lookupEnv "NIX_BUNDLE_CWD"
-  putStrLn $ "CWD = " <> contentDir
-  withCurrentDirectory contentDir appMain
-
-appMain :: IO ()
-appMain = do
   Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
     let pats = [((), "*.json")]
         ignorePats = [".*"]
