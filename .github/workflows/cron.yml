@@ -12,14 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Download bundle
-      run: |
-        curl --silent https://api.github.com/repos/srid/TheMotteDashboard/actions/artifacts \
-          | jq 'first(.artifacts | .[] | select(.name == "bundle") | .archive_download_url)' -r \
-          | xargs curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" --silent -L -o bundle.zip
-        unzip bundle.zip
-        chmod +x TheMotteDashboard
-        ./TheMotteDashboard --help  # This extracts the bundle; should take a while
     - name: Fetch data
       run: |
         # Cannot use Nix in a fast workflow; let's hope jq/wget is installed
@@ -29,9 +21,9 @@ jobs:
         mkdir ./output
         export TARGET=$(pwd)/output
         cd ./content
-        export NIX_BUNDLE_CWD=$(pwd)
-        ../TheMotteDashboard gen $TARGET
+        mkdir -p ${TARGET}/
         cp *.json $TARGET
+        docker run -v $PWD:/data sridca/themottedashboard TheMotteDashboard gen /data/output
     - name: Deploy to gh-pages 🚀
       uses: peaceiris/actions-gh-pages@v3
       with:

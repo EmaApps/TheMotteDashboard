@@ -10,7 +10,6 @@ import Control.Monad.Logger
 import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
 import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
-import Data.List (nub)
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import Data.Time (UTCTime)

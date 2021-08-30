@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - docker
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -18,13 +19,31 @@ jobs:
       - name: Build bundle 🔧
         id: build
         run: |
-          nix -j 4 bundle .
-          ./TheMotteDashboard -h
-          echo "::set-output name=bundle-file::TheMotteDashboard"
-      - name: Upload nix bundle
+          nix-build -j 4 docker.nix --argstr tag latest -o docker-img
+          export DOCKERIMG=$(readlink ./docker-img)
+          echo "::set-output name=docker-img::${DOCKERIMG}"
+      - name: Upload docker image tgz
         uses: actions/upload-artifact@v2
         with:
-          name: bundle
-          retention-days: 7
+          name: docker-img
+          retention-days: 1
           path: |
-            ${{ steps.build.outputs.bundle-file }}
+            ${{ steps.build.outputs.docker-img }}
+
+  docker:
+    needs: ci
+    runs-on: ubuntu-latest
+    env:
+      DOCKERTAG: latest
+    steps:
+      - name: Download docker img
+        uses: actions/download-artifact@v2
+        with:
+          name: docker-img
+      - name: Build & Publish Docker image to Docker Hub
+        run: |
+          ls
+          docker load -i *docker-image-*.tar.gz
+          echo ${{ secrets.DOCKER_PASS }} | docker login -u sridca --password-stdin
+          set -x
+          docker push sridca/themottedashboard:latest
