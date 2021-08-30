@@ -2,6 +2,9 @@ name: "Scheduled run"
 on:
   schedule:
   - cron: "0 * * * *"
+  push:
+    branches:
+      - master
   workflow_run:
     workflows: ["Build"]
     types:
@@ -28,5 +31,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: output
+        publish_dir: .output
         cname: themotte.srid.ca
