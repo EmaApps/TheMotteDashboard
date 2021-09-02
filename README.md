@@ -1,6 +1,12 @@
-# WIP dashboard for r/TheMotte
+# Dashboard for r/TheMotte
 
-https://themotte.srid.ca
+Delineate the various sticky threads in r/TheMotte to present an unified and easy to glance its content. Like Twitter, but without [its toxicity](https://www.srid.ca/niche). An atom feed is also provided for reading in the likes of [Mailbrew](https://www.srid.ca/tdm/mailbrew). 
+
+This is a no-frills statically generated site, powered by [Ema](https://ema.srid.ca/).
+
+Production instance running at https://themotte.srid.ca
+
+## Local develpoment
 
 Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run the dashboard site using that data. Run `bin/fetch` at any point, and the site will hot reload.
 
@@ -10,7 +16,7 @@ Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run th
 - [x] Generate HTML
 - [x] the same for WW and FF
 - [x] BLR
-- [ ] Generate RSS feeds (and test in Mailbrew)
+- [x] Generate RSS/Atom feeds (and test in Mailbrew)
 
 Initial announcement,
 
