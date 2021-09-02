@@ -102,6 +102,9 @@ data Model = Model
   }
   deriving (Show)
 
+siteUrl :: F.URI
+siteUrl = "https://themotte.srid.ca/"
+
 postUrl :: Post -> Text
 postUrl Post {..} =
   "http://old.reddit.com" <> postPermalink
@@ -142,11 +145,17 @@ modelGetUsers model =
 modelTimelineFeed :: Model -> [F.Entry]
 modelTimelineFeed model =
   modelGetPostTimeline model <&> \(ms, post) ->
-    (F.nullEntry (postUrl post) (F.TextString $ T.take 80 $ postBody post) (formatTimeRFC3339 $ utcToZonedTime utc $ postTime post))
-      { F.entryContent = Just $ F.TextContent $ postBody post,
-        F.entryAuthors = one $ F.nullPerson {F.personName = postAuthor post},
-        F.entryLinks = one $ F.nullLink (postUrl post)
-      }
+    let catUrl = siteUrl <> Ema.routeUrl model (AppRoute_Html $ R_MotteSticky ms)
+        itemTitle = prefixed (motteStickyName ms) $ T.take 80 $ postBody post
+     in (F.nullEntry (postUrl post) (F.TextString itemTitle) (formatTimeRFC3339 $ utcToZonedTime utc $ postTime post))
+          { F.entryContent = Just $ F.TextContent $ postBody post,
+            F.entryAuthors = one $ F.nullPerson {F.personName = postAuthor post},
+            F.entryCategories = one $ F.Category (motteStickyLongName ms) (Just catUrl) (Just $ motteStickyName ms) mempty,
+            F.entryLinks = one $ F.nullLink (postUrl post)
+          }
+  where
+    prefixed x s =
+      "[" <> x <> "] " <> s
 
 instance Default Model where
   def = Model mempty mempty mempty mempty mempty
@@ -249,7 +258,6 @@ render emaAction model = \case
   AppRoute_TimelineFeed ->
     let items = modelTimelineFeed model
         lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
-        siteUrl = "https://themotte.srid.ca/"
         feed =
           (F.nullFeed siteUrl (F.TextString "r/TheMotte timeline") lastUpdated)
             { F.feedEntries = items,
