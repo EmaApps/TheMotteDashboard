@@ -219,9 +219,10 @@ main = do
         Nothing ->
           pure id
 
-extraHead :: H.Html
-extraHead = do
+extraHead :: Model -> H.Html
+extraHead model = do
   H.base ! A.href "/"
+  H.link ! A.rel "alternate" ! A.type_ "application/atom+xml" ! A.title "r/TheMotte - timeline" ! A.href (H.toValue $ Ema.routeUrl model AppRoute_TimelineFeed)
   -- TODO: until we get windicss compilation
   H.style
     " .extlink:visited { \
@@ -268,7 +269,7 @@ render emaAction model = \case
 renderHtml :: Ema.CLI.Action -> Model -> Route -> LByteString
 renderHtml emaAction model r = do
   let now = unsafePerformIO getCurrentTime
-  Tailwind.layout emaAction (headTitle r >> extraHead) $
+  Tailwind.layout emaAction (headTitle r >> extraHead model) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center gap-4" $ do
