@@ -32,6 +32,8 @@ executable TheMotteDashboard
     , data-default
     , directory
     , ema                 >=0.2
+    , feed
+    , timerep
     , filepath
     , lvar
     , monad-logger

@@ -16,7 +16,7 @@ jobs:
           install_options: "--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve"
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - name: Build bundle 🔧
+      - name: Build 🔧
         id: build
         run: |
           nix-build -j 4 docker.nix --argstr tag latest -o docker-img

@@ -12,15 +12,18 @@ import Data.Aeson.Options (genericParseJSONStripType)
 import Data.Default (Default (..))
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
-import Data.Time (UTCTime)
+import Data.Time (UTCTime, utc, utcToZonedTime)
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Data.Time.Format (defaultTimeLocale, formatTime)
+import Data.Time.RFC3339
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
 import System.IO.Unsafe (unsafePerformIO)
+import qualified Text.Atom.Feed as F
+import qualified Text.Atom.Feed.Export as F (textFeed)
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -55,12 +58,18 @@ readMotteSticky (T.toUpper -> s) =
   let nameMap = Map.fromList $ [minBound .. maxBound] <&> \ms -> (motteStickyName ms, ms)
    in Map.lookup (toText s) nameMap
 
+data AppRoute
+  = AppRoute_Html Route
+  | -- TODO: Refactor to be polymorphic over other 'collection' routes
+    AppRoute_TimelineFeed
+  deriving (Eq, Show)
+
 data Route
   = R_Index
-  | R_Timeline
   | R_MotteSticky MotteSticky
   | R_Users
   | R_User Text
+  | R_Timeline
   deriving (Eq, Show)
 
 -- FIXME: A hack that can be removed by using inner ADT for user Route
@@ -93,6 +102,14 @@ data Model = Model
   }
   deriving (Show)
 
+postUrl :: Post -> Text
+postUrl Post {..} =
+  "http://old.reddit.com" <> postPermalink
+
+postTime :: Post -> UTCTime
+postTime =
+  posixSecondsToUTCTime . fromInteger . postCreatedUtc
+
 modelSetPosts :: MotteSticky -> [Post] -> Model -> Model
 modelSetPosts ms xs model = case ms of
   MS_CultureWar -> model {modelCWPosts = xs}
@@ -122,35 +139,47 @@ modelGetUsers model =
   let m :: Map Text [Post] = Map.fromListWith (<>) $ modelGetPostTimeline model <&> (postAuthor . snd &&& one . snd)
    in Map.toAscList m
 
+modelTimelineFeed :: Model -> [F.Entry]
+modelTimelineFeed model =
+  modelGetPostTimeline model <&> \(ms, post) ->
+    (F.nullEntry (postUrl post) (F.TextString $ T.take 80 $ postBody post) (formatTimeRFC3339 $ utcToZonedTime utc $ postTime post))
+      { F.entryContent = Just $ F.TextContent $ postBody post,
+        F.entryAuthors = one $ F.nullPerson {F.personName = postAuthor post},
+        F.entryLinks = one $ F.nullLink (postUrl post)
+      }
+
 instance Default Model where
   def = Model mempty mempty mempty mempty mempty
 
-instance Ema Model Route where
+instance Ema Model AppRoute where
   encodeRoute _model =
     \case
-      R_Index -> "index.html"
-      R_Timeline -> "timeline.html"
-      R_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
-      R_Users -> "u.html"
-      R_User name -> "u/" <> toString name <> ".html"
+      AppRoute_Html r -> case r of
+        R_Index -> "index.html"
+        R_Timeline -> "timeline.html"
+        R_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
+        R_Users -> "u.html"
+        R_User name -> "u/" <> toString name <> ".html"
+      AppRoute_TimelineFeed -> "timeline.atom"
   decodeRoute _model = \case
-    "index.html" -> Just R_Index
-    "timeline.html" -> Just R_Timeline
-    "u.html" -> Just R_Users
+    "index.html" -> Just $ AppRoute_Html $ R_Index
+    "timeline.html" -> Just $ AppRoute_Html $ R_Timeline
+    "timeline.atom" -> Just AppRoute_TimelineFeed
+    "u.html" -> Just $ AppRoute_Html $ R_Users
     (T.stripSuffix ".html" . toText -> Just baseName) ->
       case T.stripPrefix "u/" baseName of
         Just userName ->
-          Just $ R_User userName
+          Just $ AppRoute_Html $ R_User userName
         Nothing ->
-          R_MotteSticky <$> readMotteSticky baseName
+          AppRoute_Html . R_MotteSticky <$> readMotteSticky baseName
     _ -> Nothing
   allRoutes model =
     mconcat
-      [ [R_Index],
-        [R_Timeline],
-        R_MotteSticky <$> [minBound .. maxBound],
-        [R_Users],
-        R_User <$> (modelGetUsers model <&> fst)
+      [ [AppRoute_Html R_Index],
+        [AppRoute_Html R_Timeline, AppRoute_TimelineFeed],
+        AppRoute_Html . R_MotteSticky <$> [minBound .. maxBound],
+        [AppRoute_Html R_Users],
+        AppRoute_Html . R_User <$> (modelGetUsers model <&> fst)
       ]
 
 log :: MonadLogger m => Text -> m ()
@@ -161,7 +190,7 @@ logD = logDebugNS "TheMotteDashboard"
 
 main :: IO ()
 main = do
-  Ema.runEma (\act m -> Ema.AssetGenerated Ema.Html . render act m) $ \_act model -> do
+  Ema.runEma render $ \_act model -> do
     let pats = [((), "*.json")]
         ignorePats = [".*"]
     FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
@@ -173,7 +202,8 @@ main = do
               log $ "Reading " <> toText fp
               liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
                 Left err -> error $ show err
-                Right posts ->
+                Right posts -> do
+                  log $ "Setting " <> show ms <> " to " <> show (length posts) <> " posts"
                   pure $ modelSetPosts ms posts
             FileSystem.Delete ->
               pure id
@@ -212,15 +242,30 @@ data ViewMode
   | ViewFull
   deriving (Eq, Show)
 
-render :: Ema.CLI.Action -> Model -> Route -> LByteString
-render emaAction model r = do
+render :: Ema.CLI.Action -> Model -> AppRoute -> Ema.Asset LByteString
+render emaAction model = \case
+  AppRoute_Html htmlRoute ->
+    Ema.AssetGenerated Ema.Html $ renderHtml emaAction model htmlRoute
+  AppRoute_TimelineFeed ->
+    let items = modelTimelineFeed model
+        lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
+        siteUrl = "https://themotte.srid.ca/"
+        feed =
+          (F.nullFeed siteUrl (F.TextString "r/TheMotte timeline") lastUpdated)
+            { F.feedEntries = items,
+              F.feedLinks = one $ (F.nullLink siteUrl) {F.linkRel = Just (Left "self")}
+            }
+     in Ema.AssetGenerated Ema.Other $ encodeUtf8 $ fromMaybe (error "Feed malformed?") $ F.textFeed feed
+
+renderHtml :: Ema.CLI.Action -> Model -> Route -> LByteString
+renderHtml emaAction model r = do
   let now = unsafePerformIO getCurrentTime
   Tailwind.layout emaAction (headTitle r >> extraHead) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center gap-4" $ do
           let linkBg tr = if tr == r || (tr == R_Users && isUserRoute r) then "bg-blue-300" else ""
-              mkLink tr = H.a ! A.class_ (linkBg tr <> " px-1 py-0.5 rounded") ! routeHref tr
+              mkLink tr = H.a ! A.class_ (linkBg tr <> " px-1 py-0.5 rounded") ! routeHref (AppRoute_Html tr)
           mkLink R_Timeline "Timeline View"
           mkLink R_Index "Dashboard View"
           mkLink R_Users "User View"
@@ -262,9 +307,6 @@ render emaAction model r = do
               H.a ! A.href "https://github.com/srid/TheMotteDashboard" $ "View Source"
               ")"
   where
-    showTime :: UTCTime -> Text
-    showTime =
-      toText . formatTime defaultTimeLocale "%b %d, %R UTC"
     renderTime t = do
       H.span ! A.title (H.toValue $ show @Text t) $ H.toHtml $ showTime t
     sectionClr = \case
@@ -278,7 +320,7 @@ render emaAction model r = do
             ViewGrid -> R_MotteSticky motteSticky
             ViewFull -> R_Index
       H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> sectionClr motteSticky <> "-200") $ do
-        H.a ! routeHref otherRoute ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
+        H.a ! routeHref (AppRoute_Html otherRoute) ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
           H.toHtml $ motteStickyLongName motteSticky
       H.ul $
         forM_ (modelGetPosts model motteSticky) $ \post@Post {..} -> do
@@ -293,11 +335,11 @@ render emaAction model r = do
 
     renderPostAuthor author =
       H.code $ do
-        H.a ! routeHref (R_User author) $
+        H.a ! routeHref (AppRoute_Html $ R_User author) $
           "u/" <> H.toHtml author
     renderRouteHeading headingR clr w =
       H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> clr <> "-200") $ do
-        H.a ! routeHref headingR ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
+        H.a ! routeHref (AppRoute_Html headingR) ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
           w
 
     renderPostBody motteSticky viewMode p@Post {..} =
@@ -310,9 +352,9 @@ render emaAction model r = do
           H.toHtml $ T.take nn $ T.drop n postBody
           "..."
 
-    renderPostTime p@Post {..} =
+    renderPostTime p =
       H.a ! A.class_ "text-xs text-gray-400" ! postLinkAttr p $ do
-        renderTime $ posixSecondsToUTCTime . fromInteger $ postCreatedUtc
+        renderTime $ postTime p
 
     renderTimeline :: [(MotteSticky, Post)] -> H.Html
     renderTimeline posts =
@@ -323,9 +365,12 @@ render emaAction model r = do
             H.div ! A.class_ "mt-0.5 text-xs overflow-hidden text-gray-600" $ renderPostAuthor postAuthor
           H.div ! A.class_ "flex-1" $ renderPostBody ms ViewFull post
 
-    postLinkAttr Post {..} =
-      let url = "http://old.reddit.com" <> postPermalink
-       in mconcat [A.target "blank", A.href (H.toValue url)]
+    postLinkAttr post =
+      mconcat [A.target "blank", A.href (H.toValue $ postUrl post)]
 
     routeHref r' =
       A.href (fromString . toString $ Ema.routeUrl model r')
+
+showTime :: UTCTime -> Text
+showTime =
+  toText . formatTime defaultTimeLocale "%b %d, %R UTC"
