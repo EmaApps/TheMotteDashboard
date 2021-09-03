@@ -372,9 +372,10 @@ renderHtml emaAction model r = do
             H.p $ do
               "Powered by "
               H.a ! A.class_ "font-semibold" ! A.href "https://ema.srid.ca" $ "Ema"
-              " ("
+              " | "
               H.a ! A.href "https://github.com/srid/TheMotteDashboard" $ "View Source"
-              ")"
+              " | "
+              H.a ! A.href "https://app.mailbrew.com/sridca/themotte-daily-U7cipp5tPZdQ" $ "Daily Newsletter"
   where
     renderTime t = do
       H.span ! A.title (H.toValue $ show @Text t) $ H.toHtml $ showTime t
