@@ -66,17 +66,21 @@ data AppRoute
 
 data Route
   = R_Index
-  | R_MotteSticky MotteSticky
   | R_Users
-  | R_User Text
-  | R_Timeline
+  | R_Listing ListingRoute
+  deriving (Eq, Show)
+
+data ListingRoute
+  = LR_Timeline
+  | LR_MotteSticky MotteSticky
+  | LR_User Text
   deriving (Eq, Show)
 
 -- FIXME: A hack that can be removed by using inner ADT for user Route
 isUserRoute :: Route -> Bool
 isUserRoute = \case
   R_Users -> True
-  R_User _ -> True
+  R_Listing (LR_User _) -> True
   _ -> False
 
 -- | Represents a reddit post
@@ -145,7 +149,7 @@ modelGetUsers model =
 modelTimelineFeed :: Model -> [F.Entry]
 modelTimelineFeed model =
   modelGetPostTimeline model <&> \(ms, post) ->
-    let catUrl = siteUrl <> Ema.routeUrl model (AppRoute_Html $ R_MotteSticky ms)
+    let catUrl = siteUrl <> Ema.routeUrl model (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
         itemTitle = prefixed (motteStickyName ms) $ T.take 80 $ postBody post
      in (F.nullEntry (postUrl post) (F.TextString itemTitle) (formatTimeRFC3339 $ utcToZonedTime utc $ postTime post))
           { F.entryContent = Just $ F.TextContent $ postBody post,
@@ -165,30 +169,31 @@ instance Ema Model AppRoute where
     \case
       AppRoute_Html r -> case r of
         R_Index -> "index.html"
-        R_Timeline -> "timeline.html"
-        R_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
         R_Users -> "u.html"
-        R_User name -> "u/" <> toString name <> ".html"
+        R_Listing lr -> case lr of
+          LR_Timeline -> "timeline.html"
+          LR_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
+          LR_User name -> "u/" <> toString name <> ".html"
       AppRoute_TimelineFeed -> "timeline.atom"
   decodeRoute _model = \case
-    "index.html" -> Just $ AppRoute_Html $ R_Index
-    "timeline.html" -> Just $ AppRoute_Html $ R_Timeline
+    "index.html" -> Just $ AppRoute_Html R_Index
+    "u.html" -> Just $ AppRoute_Html R_Users
+    "timeline.html" -> Just $ AppRoute_Html $ R_Listing LR_Timeline
     "timeline.atom" -> Just AppRoute_TimelineFeed
-    "u.html" -> Just $ AppRoute_Html $ R_Users
     (T.stripSuffix ".html" . toText -> Just baseName) ->
       case T.stripPrefix "u/" baseName of
         Just userName ->
-          Just $ AppRoute_Html $ R_User userName
+          Just $ AppRoute_Html $ R_Listing $ LR_User userName
         Nothing ->
-          AppRoute_Html . R_MotteSticky <$> readMotteSticky baseName
+          AppRoute_Html . R_Listing . LR_MotteSticky <$> readMotteSticky baseName
     _ -> Nothing
   allRoutes model =
     mconcat
       [ [AppRoute_Html R_Index],
-        [AppRoute_Html R_Timeline, AppRoute_TimelineFeed],
-        AppRoute_Html . R_MotteSticky <$> [minBound .. maxBound],
+        [AppRoute_Html $ R_Listing LR_Timeline, AppRoute_TimelineFeed],
+        AppRoute_Html . R_Listing . LR_MotteSticky <$> [minBound .. maxBound],
         [AppRoute_Html R_Users],
-        AppRoute_Html . R_User <$> (modelGetUsers model <&> fst)
+        AppRoute_Html . R_Listing . LR_User <$> (modelGetUsers model <&> fst)
       ]
 
 log :: MonadLogger m => Text -> m ()
@@ -238,13 +243,13 @@ headTitle r = do
   case r of
     R_Index ->
       H.title $ H.toHtml siteTitle
-    R_Timeline ->
-      H.title $ H.toHtml $ "Timeline - " <> siteTitle
-    R_MotteSticky ms ->
-      H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
     R_Users ->
       H.title $ H.toHtml $ "Users - " <> siteTitle
-    R_User name ->
+    R_Listing LR_Timeline ->
+      H.title $ H.toHtml $ "Timeline - " <> siteTitle
+    R_Listing (LR_MotteSticky ms) ->
+      H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
+    R_Listing (LR_User name) ->
       H.title $ H.toHtml $ "u/" <> name <> " - " <> siteTitle
 
 data ViewMode
@@ -275,7 +280,7 @@ renderHtml emaAction model r = do
         H.div ! A.class_ "flex items-center justify-center gap-4" $ do
           let linkBg tr = if tr == r || (tr == R_Users && isUserRoute r) then "bg-blue-300" else ""
               mkLink tr = H.a ! A.class_ (linkBg tr <> " px-1 py-0.5 rounded") ! routeHref (AppRoute_Html tr)
-          mkLink R_Timeline "Timeline View"
+          mkLink (R_Listing LR_Timeline) "Timeline View"
           mkLink R_Index "Dashboard View"
           mkLink R_Users "User View"
         case r of
@@ -285,10 +290,10 @@ renderHtml emaAction model r = do
                 H.div ! A.class_ "w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 overflow-hidden flex-grow" $ do
                   H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 mx-2 p-2") $
                     renderSection ms ViewGrid
-          R_Timeline -> do
+          R_Listing LR_Timeline -> do
             H.div ! A.class_ "my-2 p-2 container mx-auto" $
               renderTimeline $ modelGetPostTimeline model
-          R_MotteSticky ms -> do
+          R_Listing (LR_MotteSticky ms) -> do
             H.div ! A.class_ ("bg-" <> sectionClr ms <> "-50 my-2 p-2 container mx-auto") $
               renderSection ms ViewFull
           R_Users -> do
@@ -298,7 +303,7 @@ renderHtml emaAction model r = do
                   H.div ! A.class_ "flex flex-nowrap items-center gap-2" $ do
                     renderPostAuthor user
                     H.span ! A.class_ "text-gray-500 text-xs font-mono" $ H.toHtml $ length posts
-          R_User name -> do
+          R_Listing (LR_User name) -> do
             H.div ! A.class_ "my-2 p-2 container mx-auto" $ do
               renderRouteHeading R_Users "blue" $ H.toHtml $ "u/" <> name
               renderTimeline $
@@ -326,7 +331,7 @@ renderHtml emaAction model r = do
       MS_FridayFun -> "purple"
     renderSection motteSticky viewMode = do
       let otherRoute = case viewMode of
-            ViewGrid -> R_MotteSticky motteSticky
+            ViewGrid -> R_Listing $ LR_MotteSticky motteSticky
             ViewFull -> R_Index
       H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> sectionClr motteSticky <> "-200") $ do
         H.a ! routeHref (AppRoute_Html otherRoute) ! A.title "Switch View" ! A.class_ "flex items-center justify-center" $ do
@@ -344,7 +349,7 @@ renderHtml emaAction model r = do
 
     renderPostAuthor author =
       H.code $ do
-        H.a ! routeHref (AppRoute_Html $ R_User author) $
+        H.a ! routeHref (AppRoute_Html $ R_Listing $ LR_User author) $
           "u/" <> H.toHtml author
     renderRouteHeading headingR clr w =
       H.h1 ! A.class_ ("py-1 text-2xl italic font-semibold font-mono border-b-2 bg-" <> clr <> "-200") $ do
