@@ -60,8 +60,7 @@ readMotteSticky (T.toUpper -> s) =
 
 data AppRoute
   = AppRoute_Html Route
-  | -- TODO: Refactor to be polymorphic over other 'collection' routes
-    AppRoute_Atom ListingRoute
+  | AppRoute_Atom ListingRoute
   deriving (Eq, Show)
 
 data Route
@@ -75,6 +74,17 @@ data ListingRoute
   | LR_MotteSticky MotteSticky
   | LR_User Text
   deriving (Eq, Show)
+
+listingTitle :: ListingRoute -> Text
+listingTitle = \case
+  LR_Timeline -> "Timeline"
+  LR_MotteSticky ms -> motteStickyLongName ms
+  LR_User name -> "u/" <> name
+
+listingUrl :: Model -> ListingRoute -> Text
+listingUrl model lr =
+  let path = Ema.routeUrl model (AppRoute_Html $ R_Listing lr)
+   in siteUrl <> path
 
 -- FIXME: A hack that can be removed by using inner ADT for user Route
 isUserRoute :: Route -> Bool
@@ -146,20 +156,48 @@ modelGetUsers model =
   let m :: Map Text [Post] = Map.fromListWith (<>) $ modelGetPostTimeline model <&> (postAuthor . snd &&& one . snd)
    in Map.toAscList m
 
-modelTimelineFeed :: Model -> [F.Entry]
-modelTimelineFeed model =
-  modelGetPostTimeline model <&> \(ms, post) ->
-    let catUrl = siteUrl <> Ema.routeUrl model (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
-        itemTitle = prefixed (motteStickyName ms) $ T.take 80 $ postBody post
-     in (F.nullEntry (postUrl post) (F.TextString itemTitle) (formatTimeRFC3339 $ utcToZonedTime utc $ postTime post))
-          { F.entryContent = Just $ F.TextContent $ postBody post,
-            F.entryAuthors = one $ F.nullPerson {F.personName = postAuthor post},
-            F.entryCategories = one $ F.Category (motteStickyLongName ms) (Just catUrl) (Just $ motteStickyName ms) mempty,
-            F.entryLinks = one $ F.nullLink (postUrl post)
-          }
+modelGetUserPosts :: Model -> Text -> [(MotteSticky, Post)]
+modelGetUserPosts model name =
+  modelGetPostTimeline model & filter ((== name) . postAuthor . snd)
+
+modelListingFeedEntries :: Model -> ListingRoute -> [F.Entry]
+modelListingFeedEntries model = \case
+  LR_Timeline ->
+    modelGetPostTimeline model <&> \(ms, post) ->
+      mkPostEntry post & assignMotteSticky ms
+  LR_MotteSticky ms ->
+    modelGetPosts model ms <&> \post ->
+      mkPostEntry post
+  LR_User name ->
+    modelGetUserPosts model name <&> \(ms, post) ->
+      mkPostEntry post & assignMotteSticky ms
   where
+    assignMotteSticky ms entry =
+      let catUrl = siteUrl <> Ema.routeUrl model (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
+       in entry
+            { F.entryCategories = one $ F.Category (motteStickyLongName ms) (Just catUrl) (Just $ motteStickyName ms) mempty,
+              F.entryTitle = F.TextString $ prefixed (motteStickyName ms) $ toText . F.txtToString $ F.entryTitle entry
+            }
+    mkPostEntry post =
+      let itemTitle = T.take 80 $ postBody post
+       in (F.nullEntry (postUrl post) (F.TextString itemTitle) (formatTimeRFC3339 $ utcToZonedTime utc $ postTime post))
+            { F.entryContent = Just $ F.TextContent $ postBody post,
+              F.entryAuthors = one $ F.nullPerson {F.personName = postAuthor post},
+              F.entryLinks = one $ F.nullLink (postUrl post)
+            }
     prefixed x s =
       "[" <> x <> "] " <> s
+
+listingFeed :: Model -> ListingRoute -> F.Feed
+listingFeed model lr =
+  let items = modelListingFeedEntries model lr
+      lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
+      feed =
+        (F.nullFeed siteUrl (F.TextString $ listingTitle lr <> "- r/TheMotte") lastUpdated)
+          { F.feedEntries = items,
+            F.feedLinks = one $ (F.nullLink $ listingUrl model lr) {F.linkRel = Just (Left "self")}
+          }
+   in feed
 
 instance Default Model where
   def = Model mempty mempty mempty mempty mempty
@@ -236,11 +274,14 @@ main = do
         Nothing ->
           pure id
 
-extraHead :: Model -> H.Html
-extraHead model = do
+extraHead :: Model -> Route -> H.Html
+extraHead model r = do
   H.base ! A.href "/"
-  -- TODO: vary if on different timeline route
-  H.link ! A.rel "alternate" ! A.type_ "application/atom+xml" ! A.title "r/TheMotte - timeline" ! A.href (H.toValue $ Ema.routeUrl model $ AppRoute_Atom LR_Timeline)
+  let feedR = associatedListingRoute r
+  H.link ! A.rel "alternate"
+    ! A.type_ "application/atom+xml"
+    ! A.title (H.toValue $ listingTitle feedR <> "- r/TheMotte")
+    ! A.href (H.toValue $ Ema.routeUrl model $ AppRoute_Atom feedR)
   -- TODO: until we get windicss compilation
   H.style
     " .extlink:visited { \
@@ -249,6 +290,13 @@ extraHead model = do
     \ .extlink:link { \
     \  font-weight: 600; \
     \ } "
+  where
+    -- Used to hint at the feed for current route.
+    associatedListingRoute = \case
+      R_Listing lr ->
+        lr
+      _ ->
+        LR_Timeline
 
 headTitle :: Route -> H.Html
 headTitle r = do
@@ -258,12 +306,8 @@ headTitle r = do
       H.title $ H.toHtml siteTitle
     R_Users ->
       H.title $ H.toHtml $ "Users - " <> siteTitle
-    R_Listing LR_Timeline ->
-      H.title $ H.toHtml $ "Timeline - " <> siteTitle
-    R_Listing (LR_MotteSticky ms) ->
-      H.title $ H.toHtml $ motteStickyLongName ms <> " - " <> siteTitle
-    R_Listing (LR_User name) ->
-      H.title $ H.toHtml $ "u/" <> name <> " - " <> siteTitle
+    R_Listing lr ->
+      H.title $ H.toHtml $ listingTitle lr <> " - " <> siteTitle
 
 data ViewMode
   = ViewGrid
@@ -274,20 +318,14 @@ render :: Ema.CLI.Action -> Model -> AppRoute -> Ema.Asset LByteString
 render emaAction model = \case
   AppRoute_Html htmlRoute ->
     Ema.AssetGenerated Ema.Html $ renderHtml emaAction model htmlRoute
-  AppRoute_Atom LR_Timeline ->
-    let items = modelTimelineFeed model
-        lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
-        feed =
-          (F.nullFeed siteUrl (F.TextString "r/TheMotte timeline") lastUpdated)
-            { F.feedEntries = items,
-              F.feedLinks = one $ (F.nullLink siteUrl) {F.linkRel = Just (Left "self")}
-            }
+  AppRoute_Atom lr ->
+    let feed = listingFeed model lr
      in Ema.AssetGenerated Ema.Other $ encodeUtf8 $ fromMaybe (error "Feed malformed?") $ F.textFeed feed
 
 renderHtml :: Ema.CLI.Action -> Model -> Route -> LByteString
 renderHtml emaAction model r = do
   let now = unsafePerformIO getCurrentTime
-  Tailwind.layout emaAction (headTitle r >> extraHead model) $
+  Tailwind.layout emaAction (headTitle r >> extraHead model r) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div ! A.class_ "flex items-center justify-center gap-4" $ do
@@ -319,8 +357,7 @@ renderHtml emaAction model r = do
           R_Listing (LR_User name) -> do
             H.div ! A.class_ "my-2 p-2 container mx-auto" $ do
               renderRouteHeading R_Users "blue" $ H.toHtml $ "u/" <> name
-              renderTimeline $
-                modelGetPostTimeline model & filter ((== name) . postAuthor . snd)
+              renderTimeline $ modelGetUserPosts model name
         H.div ! A.class_ "flex items-center justify-center" $ do
           H.div ! A.class_ "text-sm text-gray-400" $ do
             "Generated on "
