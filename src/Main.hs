@@ -182,16 +182,23 @@ instance Ema Model AppRoute where
   decodeRoute _model = \case
     "index.html" -> Just $ AppRoute_Html R_Index
     "u.html" -> Just $ AppRoute_Html R_Users
-    "timeline.html" -> Just $ AppRoute_Html $ R_Listing LR_Timeline
-    -- TODO: the rest, done with DRY
-    "timeline.atom" -> Just $ AppRoute_Atom LR_Timeline
-    (T.stripSuffix ".html" . toText -> Just baseName) ->
-      case T.stripPrefix "u/" baseName of
-        Just userName ->
-          Just $ AppRoute_Html $ R_Listing $ LR_User userName
-        Nothing ->
-          AppRoute_Html . R_Listing . LR_MotteSticky <$> readMotteSticky baseName
-    _ -> Nothing
+    fp ->
+      (AppRoute_Html . R_Listing <$> parseListingRoutePath ".html" fp)
+        <|> (AppRoute_Atom <$> parseListingRoutePath ".atom" fp)
+    where
+      parseListingRoutePath ext = \case
+        (T.stripSuffix ext . toText -> Just baseName) ->
+          case T.stripPrefix "u/" baseName of
+            Just userName ->
+              Just $ LR_User userName
+            Nothing ->
+              case baseName of
+                "timeline" ->
+                  Just LR_Timeline
+                _ ->
+                  LR_MotteSticky <$> readMotteSticky baseName
+        _ ->
+          Nothing
   allRoutes model =
     mconcat
       [ [AppRoute_Html R_Index],
