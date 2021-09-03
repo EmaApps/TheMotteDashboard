@@ -238,13 +238,18 @@ instance Ema Model AppRoute where
         _ ->
           Nothing
   allRoutes model =
-    mconcat
-      [ [AppRoute_Html R_Index],
-        [AppRoute_Html $ R_Listing LR_Timeline, AppRoute_Atom LR_Timeline],
-        AppRoute_Html . R_Listing . LR_MotteSticky <$> [minBound .. maxBound],
-        [AppRoute_Html R_Users],
-        AppRoute_Html . R_Listing . LR_User <$> (modelGetUsers model <&> fst)
-      ]
+    let allListingRoutes =
+          mconcat
+            [ [LR_Timeline],
+              LR_MotteSticky <$> [minBound .. maxBound],
+              LR_User <$> (modelGetUsers model <&> fst)
+            ]
+     in mconcat
+          [ [AppRoute_Html R_Index],
+            [AppRoute_Html R_Users],
+            AppRoute_Html . R_Listing <$> allListingRoutes,
+            AppRoute_Atom <$> allListingRoutes
+          ]
 
 log :: MonadLogger m => Text -> m ()
 log = logInfoNS "TheMotteDashboard"
