@@ -61,7 +61,7 @@ readMotteSticky (T.toUpper -> s) =
 data AppRoute
   = AppRoute_Html Route
   | -- TODO: Refactor to be polymorphic over other 'collection' routes
-    AppRoute_TimelineFeed
+    AppRoute_Atom ListingRoute
   deriving (Eq, Show)
 
 data Route
@@ -170,16 +170,21 @@ instance Ema Model AppRoute where
       AppRoute_Html r -> case r of
         R_Index -> "index.html"
         R_Users -> "u.html"
-        R_Listing lr -> case lr of
-          LR_Timeline -> "timeline.html"
-          LR_MotteSticky ms -> toString $ T.toLower (motteStickyName ms) <> ".html"
-          LR_User name -> "u/" <> toString name <> ".html"
-      AppRoute_TimelineFeed -> "timeline.atom"
+        R_Listing lr ->
+          listingRouteBaseName lr <> ".html"
+      AppRoute_Atom lr ->
+        listingRouteBaseName lr <> ".atom"
+    where
+      listingRouteBaseName = \case
+        LR_Timeline -> "timeline"
+        LR_MotteSticky ms -> toString $ T.toLower (motteStickyName ms)
+        LR_User name -> "u/" <> toString name
   decodeRoute _model = \case
     "index.html" -> Just $ AppRoute_Html R_Index
     "u.html" -> Just $ AppRoute_Html R_Users
     "timeline.html" -> Just $ AppRoute_Html $ R_Listing LR_Timeline
-    "timeline.atom" -> Just AppRoute_TimelineFeed
+    -- TODO: the rest, done with DRY
+    "timeline.atom" -> Just $ AppRoute_Atom LR_Timeline
     (T.stripSuffix ".html" . toText -> Just baseName) ->
       case T.stripPrefix "u/" baseName of
         Just userName ->
@@ -190,7 +195,7 @@ instance Ema Model AppRoute where
   allRoutes model =
     mconcat
       [ [AppRoute_Html R_Index],
-        [AppRoute_Html $ R_Listing LR_Timeline, AppRoute_TimelineFeed],
+        [AppRoute_Html $ R_Listing LR_Timeline, AppRoute_Atom LR_Timeline],
         AppRoute_Html . R_Listing . LR_MotteSticky <$> [minBound .. maxBound],
         [AppRoute_Html R_Users],
         AppRoute_Html . R_Listing . LR_User <$> (modelGetUsers model <&> fst)
@@ -227,7 +232,8 @@ main = do
 extraHead :: Model -> H.Html
 extraHead model = do
   H.base ! A.href "/"
-  H.link ! A.rel "alternate" ! A.type_ "application/atom+xml" ! A.title "r/TheMotte - timeline" ! A.href (H.toValue $ Ema.routeUrl model AppRoute_TimelineFeed)
+  -- TODO: vary if on different timeline route
+  H.link ! A.rel "alternate" ! A.type_ "application/atom+xml" ! A.title "r/TheMotte - timeline" ! A.href (H.toValue $ Ema.routeUrl model $ AppRoute_Atom LR_Timeline)
   -- TODO: until we get windicss compilation
   H.style
     " .extlink:visited { \
@@ -261,7 +267,7 @@ render :: Ema.CLI.Action -> Model -> AppRoute -> Ema.Asset LByteString
 render emaAction model = \case
   AppRoute_Html htmlRoute ->
     Ema.AssetGenerated Ema.Html $ renderHtml emaAction model htmlRoute
-  AppRoute_TimelineFeed ->
+  AppRoute_Atom LR_Timeline ->
     let items = modelTimelineFeed model
         lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
         feed =
