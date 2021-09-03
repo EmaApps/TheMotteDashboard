@@ -193,7 +193,7 @@ listingFeed model lr =
   let items = modelListingFeedEntries model lr
       lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
       feed =
-        (F.nullFeed siteUrl (F.TextString $ listingTitle lr <> "- r/TheMotte") lastUpdated)
+        (F.nullFeed siteUrl (F.TextString $ listingTitle lr <> " - r/TheMotte") lastUpdated)
           { F.feedEntries = items,
             F.feedLinks = one $ (F.nullLink $ listingUrl model lr) {F.linkRel = Just (Left "self")}
           }
