@@ -57,6 +57,7 @@ BLR_JSON_URL=https://old.reddit.com$(cat CW.json \
         | jq -r 'map(select (.data.author == "AutoModerator" and .kind == "t1")) | first | .data.permalink').json?depth=2
 wget $BLR_JSON_URL -O BLR.json
 
+echo '[]' > BLR-sanitizied.json  # In case the subsequent jq fails (because of missing BLR posts)
 cat BLR.json \
         | jq 'map (select (.data.dist != 1)) | first' \
         | jq '.data.children | first | .data.replies.data.children'  \
