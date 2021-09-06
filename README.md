@@ -4,7 +4,7 @@ Delineate the various sticky threads in r/TheMotte to present an unified and eas
 
 This is a no-frills statically generated site, powered by [Ema](https://ema.srid.ca/).
 
-Production instance running at https://themotte.srid.ca - and a newsletter is available [here](https://app.mailbrew.com/sridca/themotte-daily-U7cipp5tPZdQ).
+Production instance running at https://themotte.srid.ca - and a newsletter is available [here](https://app.mailbrew.com/sridca/themotte-daily-U7cipp5tPZdQ?aff=sridca).
 
 ## Local develpoment
 
