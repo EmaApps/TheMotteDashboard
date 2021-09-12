@@ -37,6 +37,7 @@ executable TheMotteDashboard
     , filepath
     , lvar
     , monad-logger
+    , neat-interpolation
     , relude
     , shower
     , tagged
