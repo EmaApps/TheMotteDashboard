@@ -15,13 +15,13 @@ import qualified Data.Text as T
 import Data.Time (UTCTime, utc, utcToZonedTime)
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Data.Time.Format (defaultTimeLocale, formatTime)
-import Data.Time.RFC3339
+import Data.Time.RFC3339 (formatTimeRFC3339)
 import Ema (Ema (..))
 import qualified Ema
 import qualified Ema.CLI
 import qualified Ema.Helper.FileSystem as FileSystem
 import qualified Ema.Helper.Tailwind as Tailwind
-import NeatInterpolation
+import NeatInterpolation (text)
 import System.IO.Unsafe (unsafePerformIO)
 import qualified Text.Atom.Feed as F
 import qualified Text.Atom.Feed.Export as F (textFeed)
@@ -31,7 +31,6 @@ import qualified Text.Blaze.Html5.Attributes as A
 
 data MotteSticky
   = MS_CultureWar
-  | MS_BareLinkRepository
   | MS_WellnessWednesday
   | MS_FridayFun
   | MS_SmallScaleQuestions
@@ -40,7 +39,6 @@ data MotteSticky
 motteStickyName :: MotteSticky -> Text
 motteStickyName = \case
   MS_CultureWar -> "CW"
-  MS_BareLinkRepository -> "BLR"
   MS_WellnessWednesday -> "WW"
   MS_FridayFun -> "FF"
   MS_SmallScaleQuestions -> "SQ"
@@ -48,7 +46,6 @@ motteStickyName = \case
 motteStickyLongName :: MotteSticky -> Text
 motteStickyLongName = \case
   MS_CultureWar -> "Culture War"
-  MS_BareLinkRepository -> "Culture War Links"
   MS_WellnessWednesday -> "Wellness Wednesday"
   MS_FridayFun -> "Friday Fun"
   MS_SmallScaleQuestions -> "Small-Scale Question"
@@ -110,7 +107,6 @@ instance FromJSON Post where
 
 data Model = Model
   { modelCWPosts :: [Post],
-    modelBLRPosts :: [Post],
     modelWWPosts :: [Post],
     modelFFPosts :: [Post],
     modelSQPosts :: [Post]
@@ -131,7 +127,6 @@ postTime =
 modelSetPosts :: MotteSticky -> [Post] -> Model -> Model
 modelSetPosts ms xs model = case ms of
   MS_CultureWar -> model {modelCWPosts = xs}
-  MS_BareLinkRepository -> model {modelBLRPosts = xs}
   MS_WellnessWednesday -> model {modelWWPosts = xs}
   MS_FridayFun -> model {modelFFPosts = xs}
   MS_SmallScaleQuestions -> model {modelSQPosts = xs}
@@ -139,7 +134,6 @@ modelSetPosts ms xs model = case ms of
 modelGetPosts :: Model -> MotteSticky -> [Post]
 modelGetPosts Model {..} = \case
   MS_CultureWar -> modelCWPosts
-  MS_BareLinkRepository -> modelBLRPosts
   MS_WellnessWednesday -> modelWWPosts
   MS_FridayFun -> modelFFPosts
   MS_SmallScaleQuestions -> modelSQPosts
@@ -201,7 +195,7 @@ listingFeed model lr =
    in feed
 
 instance Default Model where
-  def = Model mempty mempty mempty mempty mempty
+  def = Model mempty mempty mempty mempty
 
 instance Ema Model AppRoute where
   encodeRoute _model =
@@ -385,7 +379,6 @@ renderHtml emaAction model r = do
       H.span ! A.title (H.toValue $ show @Text t) $ H.toHtml $ showTime t
     sectionClr = \case
       MS_CultureWar -> "red"
-      MS_BareLinkRepository -> "yellow"
       MS_WellnessWednesday -> "green"
       MS_SmallScaleQuestions -> "gray"
       MS_FridayFun -> "purple"
