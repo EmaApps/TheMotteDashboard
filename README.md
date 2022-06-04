@@ -4,8 +4,6 @@ Delineate the various sticky threads in r/TheMotte to present an unified and eas
 
 This is a no-frills statically generated site, powered by [Ema](https://ema.srid.ca/).
 
-Production instance running at https://themotte.srid.ca (no longer updating, as the author lost interest in its content).
-
 ## Local develpoment
 
 Run `bin/fetch` once (it pulls the reddit data), followed by `bin/run` to run the dashboard site using that data. Run `bin/fetch` at any point, and the site will hot reload.
