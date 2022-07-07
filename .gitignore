@@ -26,3 +26,5 @@ result-*
 
 TheMotteDashboard
 content/*.json
+
+.direnv

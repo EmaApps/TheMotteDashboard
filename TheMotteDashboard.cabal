@@ -23,7 +23,7 @@ extra-source-files:
 executable TheMotteDashboard
   build-depends:
     , aeson
-    , aeson-options
+    , aeson-casing
     , async
     , base
     , blaze-html
@@ -32,6 +32,8 @@ executable TheMotteDashboard
     , data-default
     , directory
     , ema                 >=0.2
+    , optics-core
+    , unionmount
     , feed
     , timerep
     , filepath
