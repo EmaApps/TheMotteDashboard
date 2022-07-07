@@ -17,7 +17,7 @@ import Data.Time (UTCTime, utc, utcToZonedTime)
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Data.Time.Format (defaultTimeLocale, formatTime)
 import Data.Time.RFC3339 (formatTimeRFC3339)
-import Ema
+import Ema hiding (routeUrl)
 import Optics.Core
 import System.FilePath ((</>))
 import System.IO.Unsafe (unsafePerformIO)
@@ -81,8 +81,11 @@ listingTitle = \case
 
 listingUrl :: Prism' FilePath AppRoute -> ListingRoute -> Text
 listingUrl rp lr =
-  let path = Ema.routeUrl rp (AppRoute_Html $ R_Listing lr)
+  let path = routeUrl rp (AppRoute_Html $ R_Listing lr)
    in siteUrl <> path
+
+routeUrl :: Prism' FilePath r -> r -> Text
+routeUrl = Ema.routeUrlWith Ema.UrlPretty
 
 -- FIXME: A hack that can be removed by using inner ADT for user Route
 isUserRoute :: Route -> Bool
@@ -168,7 +171,7 @@ modelListingFeedEntries rp model = \case
       mkPostEntry post & assignMotteSticky ms
   where
     assignMotteSticky ms entry =
-      let catUrl = siteUrl <> Ema.routeUrl rp (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
+      let catUrl = siteUrl <> routeUrl rp (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
        in entry
             { F.entryCategories = one $ F.Category (motteStickyLongName ms) (Just catUrl) (Just $ motteStickyName ms) mempty,
               F.entryTitle = F.TextString $ prefixed (motteStickyName ms) $ toText . F.txtToString $ F.entryTitle entry
@@ -280,14 +283,14 @@ instance EmaSite AppRoute where
 main :: IO ()
 main = Ema.runSite_ @AppRoute ()
 
-extraHead :: Prism' FilePath AppRoute -> Model -> Route -> H.Html
-extraHead rp model r = do
+extraHead :: Prism' FilePath AppRoute -> Route -> H.Html
+extraHead rp r = do
   H.base ! A.href "/"
   let feedR = associatedListingRoute r
   H.link ! A.rel "alternate"
     ! A.type_ "application/atom+xml"
     ! A.title (H.toValue $ listingTitle feedR <> "- r/TheMotte")
-    ! A.href (H.toValue $ Ema.routeUrl rp $ AppRoute_Atom feedR)
+    ! A.href (H.toValue $ routeUrl rp $ AppRoute_Atom feedR)
   -- TODO: until we get windicss compilation
   H.style
     " .extlink:visited { \
@@ -331,7 +334,7 @@ render rp model = \case
 renderHtml :: Prism' FilePath AppRoute -> Model -> Route -> LByteString
 renderHtml rp model r = do
   let now = unsafePerformIO getCurrentTime
-  tailwindLayout (headTitle r >> extraHead rp model r) $
+  tailwindLayout (headTitle r >> extraHead rp r) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div $ do
@@ -438,7 +441,7 @@ renderHtml rp model r = do
       mconcat [A.target "blank", A.href (H.toValue $ postUrl post)]
 
     routeHref r' =
-      A.href (fromString . toString $ Ema.routeUrl rp r')
+      A.href (fromString . toString $ routeUrl rp r')
 
 showTime :: UTCTime -> Text
 showTime =
