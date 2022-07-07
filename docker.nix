@@ -17,7 +17,7 @@ let
         }
       )
       { };
-  app = (import ./.).defaultPackage.x86_64-linux;
+  app = (import ./.).packages.x86_64-linux.default;
   windicss = (import ./.).windicss.x86_64-linux;
 in
 { name ? "sridca/themottedashboard"
