@@ -3,12 +3,13 @@
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module Main where
 
-import Control.Monad.Logger
-import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict)
-import Data.Aeson.Options (genericParseJSONStripType)
+import Control.Monad.Logger (MonadLogger, logDebugNS, logInfoNS)
+import Data.Aeson (FromJSON (parseJSON), eitherDecodeFileStrict, genericParseJSON)
+import Data.Aeson.Casing (aesonPrefix, camelCase)
 import Data.Default (Default (..))
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
@@ -16,18 +17,18 @@ import Data.Time (UTCTime, utc, utcToZonedTime)
 import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Data.Time.Format (defaultTimeLocale, formatTime)
 import Data.Time.RFC3339 (formatTimeRFC3339)
-import Ema (Ema (..))
-import qualified Ema
-import qualified Ema.CLI
-import qualified Ema.Helper.FileSystem as FileSystem
-import qualified Ema.Helper.Tailwind as Tailwind
+import Ema
 import NeatInterpolation (text)
+import Optics.Core
 import System.IO.Unsafe (unsafePerformIO)
+import qualified System.UnionMount as UM
 import qualified Text.Atom.Feed as F
 import qualified Text.Atom.Feed.Export as F (textFeed)
+import qualified Text.Blaze.Html.Renderer.Utf8 as RU
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
+import System.FilePath ((</>))
 
 data MotteSticky
   = MS_CultureWar
@@ -79,9 +80,9 @@ listingTitle = \case
   LR_MotteSticky ms -> motteStickyLongName ms
   LR_User name -> "u/" <> name
 
-listingUrl :: Model -> ListingRoute -> Text
-listingUrl model lr =
-  let path = Ema.routeUrl model (AppRoute_Html $ R_Listing lr)
+listingUrl :: Prism' FilePath AppRoute -> ListingRoute -> Text
+listingUrl rp lr =
+  let path = Ema.routeUrl rp (AppRoute_Html $ R_Listing lr)
    in siteUrl <> path
 
 -- FIXME: A hack that can be removed by using inner ADT for user Route
@@ -103,7 +104,7 @@ data Post = Post
   deriving (Eq, Show, Generic)
 
 instance FromJSON Post where
-  parseJSON = genericParseJSONStripType
+  parseJSON = genericParseJSON $ aesonPrefix camelCase
 
 data Model = Model
   { modelCWPosts :: [Post],
@@ -155,8 +156,8 @@ modelGetUserPosts :: Model -> Text -> [(MotteSticky, Post)]
 modelGetUserPosts model name =
   modelGetPostTimeline model & filter ((== name) . postAuthor . snd)
 
-modelListingFeedEntries :: Model -> ListingRoute -> [F.Entry]
-modelListingFeedEntries model = \case
+modelListingFeedEntries :: Prism' FilePath AppRoute -> Model -> ListingRoute -> [F.Entry]
+modelListingFeedEntries rp model = \case
   LR_Timeline ->
     modelGetPostTimeline model <&> \(ms, post) ->
       mkPostEntry post & assignMotteSticky ms
@@ -168,7 +169,7 @@ modelListingFeedEntries model = \case
       mkPostEntry post & assignMotteSticky ms
   where
     assignMotteSticky ms entry =
-      let catUrl = siteUrl <> Ema.routeUrl model (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
+      let catUrl = siteUrl <> Ema.routeUrl rp (AppRoute_Html $ R_Listing $ LR_MotteSticky ms)
        in entry
             { F.entryCategories = one $ F.Category (motteStickyLongName ms) (Just catUrl) (Just $ motteStickyName ms) mempty,
               F.entryTitle = F.TextString $ prefixed (motteStickyName ms) $ toText . F.txtToString $ F.entryTitle entry
@@ -183,55 +184,60 @@ modelListingFeedEntries model = \case
     prefixed x s =
       "[" <> x <> "] " <> s
 
-listingFeed :: Model -> ListingRoute -> F.Feed
-listingFeed model lr =
-  let items = modelListingFeedEntries model lr
+listingFeed :: Prism' FilePath AppRoute -> Model -> ListingRoute -> F.Feed
+listingFeed rp model lr =
+  let items = modelListingFeedEntries rp model lr
       lastUpdated = maybe "??" (F.entryUpdated . head) $ nonEmpty items
       feed =
         (F.nullFeed siteUrl (F.TextString $ listingTitle lr <> " - r/TheMotte") lastUpdated)
           { F.feedEntries = items,
-            F.feedLinks = one $ (F.nullLink $ listingUrl model lr) {F.linkRel = Just (Left "self")}
+            F.feedLinks = one $ (F.nullLink $ listingUrl rp lr) {F.linkRel = Just (Left "self")}
           }
    in feed
 
 instance Default Model where
   def = Model mempty mempty mempty mempty
 
-instance Ema Model AppRoute where
-  encodeRoute _model =
-    \case
-      AppRoute_Html r -> case r of
-        R_Index -> "index.html"
-        R_Users -> "u.html"
-        R_Listing lr ->
-          listingRouteBaseName lr <> ".html"
-      AppRoute_Atom lr ->
-        listingRouteBaseName lr <> ".atom"
+instance IsRoute AppRoute where
+  type RouteModel AppRoute = Model
+
+  -- TODO: Use generics
+  routeEncoder = mkRouteEncoder $ \_model ->
+    prism' encodeRoute decodeRoute
     where
-      listingRouteBaseName = \case
-        LR_Timeline -> "timeline"
-        LR_MotteSticky ms -> toString $ T.toLower (motteStickyName ms)
-        LR_User name -> "u/" <> toString name
-  decodeRoute _model = \case
-    "index.html" -> Just $ AppRoute_Html R_Index
-    "u.html" -> Just $ AppRoute_Html R_Users
-    fp ->
-      (AppRoute_Html . R_Listing <$> parseListingRoutePath ".html" fp)
-        <|> (AppRoute_Atom <$> parseListingRoutePath ".atom" fp)
-    where
-      parseListingRoutePath ext = \case
-        (T.stripSuffix ext . toText -> Just baseName) ->
-          case T.stripPrefix "u/" baseName of
-            Just userName ->
-              Just $ LR_User userName
-            Nothing ->
-              case baseName of
-                "timeline" ->
-                  Just LR_Timeline
-                _ ->
-                  LR_MotteSticky <$> readMotteSticky baseName
-        _ ->
-          Nothing
+      encodeRoute = \case
+        AppRoute_Html r -> case r of
+          R_Index -> "index.html"
+          R_Users -> "u.html"
+          R_Listing lr ->
+            listingRouteBaseName lr <> ".html"
+        AppRoute_Atom lr ->
+          listingRouteBaseName lr <> ".atom"
+        where
+          listingRouteBaseName = \case
+            LR_Timeline -> "timeline"
+            LR_MotteSticky ms -> toString $ T.toLower (motteStickyName ms)
+            LR_User name -> "u/" <> toString name
+      decodeRoute = \case
+        "index.html" -> Just $ AppRoute_Html R_Index
+        "u.html" -> Just $ AppRoute_Html R_Users
+        fp ->
+          (AppRoute_Html . R_Listing <$> parseListingRoutePath ".html" fp)
+            <|> (AppRoute_Atom <$> parseListingRoutePath ".atom" fp)
+        where
+          parseListingRoutePath ext = \case
+            (T.stripSuffix ext . toText -> Just baseName) ->
+              case T.stripPrefix "u/" baseName of
+                Just userName ->
+                  Just $ LR_User userName
+                Nothing ->
+                  case baseName of
+                    "timeline" ->
+                      Just LR_Timeline
+                    _ ->
+                      LR_MotteSticky <$> readMotteSticky baseName
+            _ ->
+              Nothing
   allRoutes model =
     let allListingRoutes =
           mconcat
@@ -246,42 +252,43 @@ instance Ema Model AppRoute where
             AppRoute_Atom <$> allListingRoutes
           ]
 
-log :: MonadLogger m => Text -> m ()
-log = logInfoNS "TheMotteDashboard"
-
-logD :: MonadLogger m => Text -> m ()
-logD = logDebugNS "TheMotteDashboard"
-
-main :: IO ()
-main = do
-  Ema.runEma render $ \_act model -> do
+instance EmaSite AppRoute where
+  siteInput _ _ = do
     let pats = [((), "*.json")]
         ignorePats = [".*"]
-    FileSystem.mountOnLVar "." pats ignorePats model def $ \() fp action -> do
-      -- Consume foo-sanitizied.json
-      case T.stripSuffix "-sanitizied.json" (toText fp) >>= readMotteSticky of
-        Just ms ->
-          case action of
-            FileSystem.Update () -> do
-              log $ "Reading " <> toText fp
-              liftIO (eitherDecodeFileStrict @[Post] fp) >>= \case
-                Left err -> error $ show err
-                Right posts -> do
-                  log $ "Setting " <> show ms <> " to " <> show (length posts) <> " posts"
-                  pure $ modelSetPosts ms posts
-            FileSystem.Delete ->
-              pure id
-        Nothing ->
-          pure id
+        model0 = Model mempty mempty mempty mempty
+    Dynamic <$> UM.mount "content" pats ignorePats model0 (const updateHandler)
+    where
+      updateHandler fp action = do
+        -- Consume foo-sanitizied.json
+        case T.stripSuffix "-sanitizied.json" (toText fp) >>= readMotteSticky of
+          Just ms ->
+            case action of
+              UM.Refresh _ _ -> do
+                log $ "Reading " <> toText fp
+                liftIO (eitherDecodeFileStrict @[Post] $ "content" </> fp) >>= \case
+                  Left err -> error $ show err
+                  Right posts -> do
+                    log $ "Setting " <> show ms <> " to " <> show (length posts) <> " posts"
+                    pure $ modelSetPosts ms posts
+              UM.Delete ->
+                pure id
+          Nothing ->
+            pure id
+  siteOutput rp model r =
+    render rp model r
 
-extraHead :: Model -> Route -> H.Html
-extraHead model r = do
+main :: IO ()
+main = Ema.runSite_ @AppRoute ()
+
+extraHead :: Prism' FilePath AppRoute -> Model -> Route -> H.Html
+extraHead rp model r = do
   H.base ! A.href "/"
   let feedR = associatedListingRoute r
   H.link ! A.rel "alternate"
     ! A.type_ "application/atom+xml"
     ! A.title (H.toValue $ listingTitle feedR <> "- r/TheMotte")
-    ! A.href (H.toValue $ Ema.routeUrl model $ AppRoute_Atom feedR)
+    ! A.href (H.toValue $ Ema.routeUrl rp $ AppRoute_Atom feedR)
   -- TODO: until we get windicss compilation
   H.style
     " .extlink:visited { \
@@ -314,18 +321,18 @@ data ViewMode
   | ViewFull
   deriving (Eq, Show)
 
-render :: Ema.CLI.Action -> Model -> AppRoute -> Ema.Asset LByteString
-render emaAction model = \case
+render :: Prism' FilePath AppRoute -> Model -> AppRoute -> Ema.Asset LByteString
+render rp model = \case
   AppRoute_Html htmlRoute ->
-    Ema.AssetGenerated Ema.Html $ renderHtml emaAction model htmlRoute
+    Ema.AssetGenerated Ema.Html $ renderHtml rp model htmlRoute
   AppRoute_Atom lr ->
-    let feed = listingFeed model lr
+    let feed = listingFeed rp model lr
      in Ema.AssetGenerated Ema.Other $ encodeUtf8 $ fromMaybe (error "Feed malformed?") $ F.textFeed feed
 
-renderHtml :: Ema.CLI.Action -> Model -> Route -> LByteString
-renderHtml emaAction model r = do
+renderHtml :: Prism' FilePath AppRoute -> Model -> Route -> LByteString
+renderHtml rp model r = do
   let now = unsafePerformIO getCurrentTime
-  Tailwind.layout emaAction (headTitle r >> extraHead model r) $
+  tailwindLayout (headTitle r >> extraHead rp model r) $
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div $ do
@@ -436,7 +443,7 @@ renderHtml emaAction model r = do
       mconcat [A.target "blank", A.href (H.toValue $ postUrl post)]
 
     routeHref r' =
-      A.href (fromString . toString $ Ema.routeUrl model r')
+      A.href (fromString . toString $ Ema.routeUrl rp r')
 
 showTime :: UTCTime -> Text
 showTime =
@@ -494,3 +501,37 @@ mailbrewHtml =
     </form>
     <script type="text/javascript" src="https://embed.mailbrew.com/html-embed-script.js"></script>
     |]
+
+-- | A simple and off-the-shelf layout using Tailwind CSS
+tailwindLayout :: H.Html -> H.Html -> LByteString
+tailwindLayout h b =
+  layoutWith "en" "UTF-8" (tailwind2ShimCdn >> h) $
+    -- The "overflow-y-scroll" makes the scrollbar visible always, so as to
+    -- avoid janky shifts when switching to routes with suddenly scrollable content.
+    H.body ! A.class_ "overflow-y-scroll" $ b
+  where
+    -- A general layout
+    layoutWith :: H.AttributeValue -> H.AttributeValue -> H.Html -> H.Html -> LByteString
+    layoutWith lang encoding appHead appBody = RU.renderHtml $ do
+      H.docType
+      H.html ! A.lang lang $ do
+        H.head $ do
+          H.meta ! A.charset encoding
+          -- This makes the site mobile friendly by default.
+          H.meta ! A.name "viewport" ! A.content "width=device-width, initial-scale=1"
+          appHead
+        appBody
+
+    -- Loads full tailwind CSS from CDN (not good for production)
+    tailwind2ShimCdn :: H.Html
+    tailwind2ShimCdn =
+      H.link
+        ! A.href "https://unpkg.com/tailwindcss@2/dist/tailwind.min.css"
+        ! A.rel "stylesheet"
+        ! A.type_ "text/css"
+
+log :: MonadLogger m => Text -> m ()
+log = logInfoNS "TheMotteDashboard"
+
+logD :: MonadLogger m => Text -> m ()
+logD = logDebugNS "TheMotteDashboard"

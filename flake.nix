@@ -1,68 +1,41 @@
 {
-  description = "Ema documentation source";
+  description = "Ema template app";
   inputs = {
-    ema.url = "github:srid/ema/master";
-    # Use the nixpkgs used by the pinned ema.
-    nixpkgs.follows = "ema/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs.follows = "nixpkgs";
+    haskell-flake.url = "github:srid/haskell-flake";
 
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
+    # Haskell overrides
+    ema.url = "github:srid/ema/multisite";
+    ema.flake = false;
   };
-  outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ] (system:
-      let
-        name = "TheMotteDashboard";
-        overlays = [ ];
-        pkgs = import nixpkgs { inherit system overlays; config.allowBroken = true; };
-        # Based on https://github.com/input-output-hk/daedalus/blob/develop/yarn2nix.nix#L58-L71
-        filter = name: type:
-          let
-            baseName = baseNameOf (toString name);
-            sansPrefix = pkgs.lib.removePrefix (toString ./.) name;
-          in
-          # Ignore these files when building source package
-            !(
-              baseName == "README.md" ||
-              sansPrefix == "/bin" ||
-              sansPrefix == "/content" ||
-              sansPrefix == "/.github" ||
-              sansPrefix == "/.vscode" ||
-              sansPrefix == "/.ghcid"
-            );
-        project = returnShellEnv:
-          pkgs.haskellPackages.developPackage {
-            inherit returnShellEnv name;
-            root = pkgs.lib.cleanSourceWith { inherit filter name; src = ./.; };
-            withHoogle = false;
-            overrides = self: super: with pkgs.haskell.lib; {
-              ema = disableCabalFlag inputs.ema.defaultPackage.${system} "with-examples";
-              # lvar = self.callCabal2nix "lvar" inputs.ema.inputs.lvar { }; # Until lvar gets into nixpkgs
-              aeson-options = doJailbreak (super.aeson-options);
-            };
-            modifier = drv:
-              pkgs.haskell.lib.addBuildTools drv (with pkgs.haskellPackages;
-              [
-                cabal-fmt
-                cabal-install
-                ghcid
-                haskell-language-server
-                ormolu
-                pkgs.nixpkgs-fmt
-
-                # For data processing
-                pkgs.jq
-                pkgs.wget
-              ]);
+  outputs = inputs@{ self, nixpkgs, flake-parts, haskell-flake, ... }:
+    flake-parts.lib.mkFlake { inherit self; } {
+      systems = nixpkgs.lib.systems.flakeExposed;
+      imports = [
+        haskell-flake.flakeModule
+      ];
+      perSystem = { self', inputs', pkgs, ... }: {
+        # "haskellProjects" comes from https://github.com/srid/haskell-flake
+        haskellProjects.default = {
+          root = ./.;
+          buildTools = hp: {
+            inherit (pkgs)
+              treefmt
+              nixpkgs-fmt
+              foreman
+              jq wget;
+            inherit (hp)
+              cabal-fmt
+              fourmolu;
           };
-      in
-      {
-        # Used by `nix build` & `nix run`
-        defaultPackage = project false;
-
-        # Used by `nix develop`
-        devShell = project true;
-      });
+          source-overrides = {
+            inherit (inputs)
+              ema;
+          };
+          overrides = self: super: with pkgs.haskell.lib; { };
+        };
+      };
+    };
 }
