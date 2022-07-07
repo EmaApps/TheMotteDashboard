@@ -18,8 +18,8 @@ import Data.Time.Clock.POSIX (getCurrentTime, posixSecondsToUTCTime)
 import Data.Time.Format (defaultTimeLocale, formatTime)
 import Data.Time.RFC3339 (formatTimeRFC3339)
 import Ema
-import NeatInterpolation (text)
 import Optics.Core
+import System.FilePath ((</>))
 import System.IO.Unsafe (unsafePerformIO)
 import qualified System.UnionMount as UM
 import qualified Text.Atom.Feed as F
@@ -28,7 +28,6 @@ import qualified Text.Blaze.Html.Renderer.Utf8 as RU
 import Text.Blaze.Html5 ((!))
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
-import System.FilePath ((</>))
 
 data MotteSticky
   = MS_CultureWar
@@ -336,8 +335,6 @@ renderHtml rp model r = do
     H.main ! A.class_ "mx-auto" $ do
       H.div ! A.class_ "my-2 p-4" $ do
         H.div $ do
-          H.div ! A.class_ "flex items-center justify-center" $ do
-            mailbrewHtml
           H.div ! A.class_ "flex items-center justify-center gap-4" $ do
             let linkBg tr = if tr == r || (tr == R_Users && isUserRoute r) then "bg-blue-300" else ""
                 mkLink tr = H.a ! A.class_ (linkBg tr <> " px-1 py-0.5 rounded") ! routeHref (AppRoute_Html tr)
@@ -378,9 +375,7 @@ renderHtml rp model r = do
               "Powered by "
               H.a ! A.class_ "font-semibold" ! A.href "https://ema.srid.ca" $ "Ema"
               " | "
-              H.a ! A.href "https://github.com/srid/TheMotteDashboard" $ "Source & Feedback"
-              " | "
-              H.a ! A.href "https://app.mailbrew.com/sridca/themotte-daily-U7cipp5tPZdQ?aff=sridca" $ "Daily Newsletter"
+              H.a ! A.href "https://github.com/EmaApps/TheMotteDashboard" $ "Source & Feedback"
   where
     renderTime t = do
       H.span ! A.title (H.toValue $ show @Text t) $ H.toHtml $ showTime t
@@ -448,59 +443,6 @@ renderHtml rp model r = do
 showTime :: UTCTime -> Text
 showTime =
   toText . formatTime defaultTimeLocale "%b %d, %R UTC"
-
-mailbrewHtml :: H.Html
-mailbrewHtml =
-  H.unsafeLazyByteString . encodeUtf8 $
-    [text|
-    <link rel="stylesheet" href="https://embed.mailbrew.com/html-embed-style.css" />
-    <form
-      action="https://embed.mailbrew.com/api/form_subscribe"
-      method="get"
-      style="width: 100%; max-width: 340px; color: #262629; background: transparent; padding: 10px; border-radius: 7px"
-      id="mailbrew-embed-form"
-    >
-      <div style="display: flex; width: 100%; margin-top: 0">
-        <input
-          type="email"
-          style="
-            height: 32px;
-            font-size: 14.5px;
-            border-radius: 6px;
-            appearance: none;
-            padding: 0 8px;
-            border: 1px solid rgba(120, 120, 120, 0.3);
-            margin-right: 6px;
-            flex: 1;
-          "
-          id="email"
-          name="email"
-          placeholder="Your email"
-          value=""
-        /><input type="hidden" name="id" value="U7cipp5tPZdQ" /><button
-          type="submit"
-          style="
-            height: 32px;
-            font-size: 14.5px;
-            border-radius: 6px;
-            appearance: none;
-            padding: 0 16px;
-            border: none;
-            flex: 0 0 auto;
-            font-weight: 500;
-            cursor: pointer;
-            background: #f75858;
-            color: white;
-          "
-        >
-          Subscribe
-        </button>
-      </div>
-      <p id="mailbrew-success-message" style="font-size: 13px; margin-top: 5px; color: green"></p>
-      <p id="mailbrew-error-message" style="font-size: 13px; margin-top: 5px; color: red"></p>
-    </form>
-    <script type="text/javascript" src="https://embed.mailbrew.com/html-embed-script.js"></script>
-    |]
 
 -- | A simple and off-the-shelf layout using Tailwind CSS
 tailwindLayout :: H.Html -> H.Html -> LByteString
