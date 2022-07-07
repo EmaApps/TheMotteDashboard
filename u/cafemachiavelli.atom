@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/cafemachiavelli - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-07-02T14:35:44Z</updated><link href="https://themotte.srid.ca/u/cafemachiavelli.html" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/vosrph/friday_fun_thread_for_july_01_2022/iekxnbe/</id><title type="text">[FF] I&#39;ve been getting back into (Japanese) Mahjong and it&#39;s been surprisingly fun so</title><updated>2022-07-02T14:35:44Z</updated><author><name>cafemachiavelli</name></author><category label="FF" scheme="https://themotte.srid.ca/ff.html" term="Friday Fun"/><content type="text">I&#39;ve been getting back into (Japanese) Mahjong and it&#39;s been surprisingly fun so far.
+
+Here&#39;s a short summary and plug:
+
+**The rules**
+
+Mahjong is a distant cousin of Rummy and plays similarly. You build sequences or sets of 3 tiles (e.g. 2-3-4 or 2-2-2) of the same suit. Discarded tiles can be claimed by other players. Four of those sets/sequences plus a pair make up a winning hand. The more rare qualities (e.g. having a flush, having a straight from 1 to 9) your hand has, the more valuable it is.
+
+Reasonable people might stop here, but it&#39;s Japanese Mahjong, so we need at least four more rules:
+
+Firstly, you need at least one of those rare qualities (called yaku) in your hand for it to be considered a winning hand. So no calling random trash for a quick win. 
+
+Secondly, yaku add up quickly. A cheap hand may get you 2000pts, a complex one 12000, the really rare yaku cost up to 96000. 
+
+Thirdly, if you win by calling a discard, that player pays the full value of your hand, else it&#39;s split evenly (ish). So at all but the lowest levels of play, people will try to avoid dealing into your hand.
+
+Lastly, you can&#39;t win by stealing a discard that you&#39;ve discarded before. In combination with the last rule this makes checking the other players discards for safe tiles to drop in the late game a central part of the game, and much of basic strategy consists of learning certain inference patterns regarding discards.
+
+There are still many more rules - &#34;betting&#34; on a hand, bonus tiles, quads, repeats - but this should cover the basic feel of the game.
+
+**The plug**
+
+Mahjong is fairly quick, easily played online and imo offers a good compromise between luck and skill. It&#39;s not as erratic as poker or as deterministic as chess. 
+
+The deal-in rule makes Mahjong feel more defensive than similar games. Players are typically aggressive early on but will slow down and &#34;fold&#34; in the late game, destroying a nearly finished hand to avoid a deal-in. That may sound boring, at least it did to me, but it has a certain kind of appeal once you get used to it. Ready hands, i.e. those only one tile from winning, get revealed after the round and seeing that your hunch was right and you folded in just the right moment is just deeply satisfying.
+
+Plays are highly contextual which makes an intuition for Bayesian inference very valuable. The stage of the game, the scores and player seating all affect gameplay and often let you draw conclusions about which hands are more and which less likely.
+
+The skill ceiling is intense. I pretty much always have more information available than I can process at a given moment and need to decide which calculations to run and which to ignore. Expert players can have a sense for which tiles are dangerous that looks almost supernatural to weaker players like me. 
+
+If you want to try out the game, there&#39;s the minimalist [Tenhou](https://tenhou.net/) and the fancier [Mahjong Soul](https://mahjongsoul.yo-star.com/). If you want to start against AI, get one of the [Yakuza](https://en.wikipedia.org/wiki/Yakuza_\(franchise\)) games, they have Mahjong parlors ingame. For strategy I recommend [Riichi Book I](https://dainachiba.github.io/RiichiBooks/) and [Crow77](https://www.youtube.com/c/Crow77), for game reviews [Daniel Moreno](https://www.youtube.com/user/XDasukeX/videos).</content><link href="http://old.reddit.com/r/TheMotte/comments/vosrph/friday_fun_thread_for_july_01_2022/iekxnbe/"/></entry></feed>
