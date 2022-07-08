@@ -121,7 +121,7 @@ siteUrl = "https://themotte.srid.ca/"
 
 postUrl :: Post -> Text
 postUrl Post {..} =
-  "http://old.reddit.com" <> postPermalink
+  "http://old.reddit.com" <> postPermalink <> "?sort=confidence"
 
 postTime :: Post -> UTCTime
 postTime =
