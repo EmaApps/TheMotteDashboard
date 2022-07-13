@@ -21,11 +21,11 @@
     "name": "t3_vwbj4s",
     "quarantine": false,
     "link_flair_text_color": "dark",
-    "upvote_ratio": 0.86,
+    "upvote_ratio": 0.87,
     "author_flair_background_color": null,
     "subreddit_type": "public",
-    "ups": 15,
-    "total_awards_received": 0,
+    "ups": 22,
+    "total_awards_received": 1,
     "media_embed": {},
     "author_flair_template_id": null,
     "is_original_content": false,
@@ -37,7 +37,7 @@
     "secure_media_embed": {},
     "link_flair_text": "Culture War Roundup",
     "can_mod_post": false,
-    "score": 15,
+    "score": 22,
     "approved_by": null,
     "is_created_from_ads_ui": false,
     "author_premium": true,
@@ -67,7 +67,93 @@
     "is_crosspostable": false,
     "pinned": false,
     "over_18": false,
-    "all_awardings": [],
+    "all_awardings": [
+      {
+        "giver_coin_reward": null,
+        "subreddit_id": null,
+        "is_new": false,
+        "days_of_drip_extension": null,
+        "coin_price": 150,
+        "id": "award_f44611f1-b89e-46dc-97fe-892280b13b82",
+        "penny_donate": null,
+        "award_sub_type": "GLOBAL",
+        "coin_reward": 0,
+        "icon_url": "https://i.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png",
+        "days_of_premium": null,
+        "tiers_by_required_awardings": null,
+        "resized_icons": [
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=16&amp;height=16&amp;auto=webp&amp;s=a5662dfbdb402bf67866c050aa76c31c147c2f45",
+            "width": 16,
+            "height": 16
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=32&amp;height=32&amp;auto=webp&amp;s=a6882eb3f380e8e88009789f4d0072e17b8c59f1",
+            "width": 32,
+            "height": 32
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=48&amp;height=48&amp;auto=webp&amp;s=e50064b090879e8a0b55e433f6ee61d5cb5fbe1d",
+            "width": 48,
+            "height": 48
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=64&amp;height=64&amp;auto=webp&amp;s=8e5bb2e76683cb6b161830bcdd9642049d6adc11",
+            "width": 64,
+            "height": 64
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=128&amp;height=128&amp;auto=webp&amp;s=eda4a9246f95f42ee6940cc0ec65306fd20de878",
+            "width": 128,
+            "height": 128
+          }
+        ],
+        "icon_width": 2048,
+        "static_icon_width": 2048,
+        "start_date": null,
+        "is_enabled": true,
+        "awardings_required_to_grant_benefits": null,
+        "description": "Thank you stranger. Shows the award.",
+        "end_date": null,
+        "sticky_duration_seconds": null,
+        "subreddit_coin_reward": 0,
+        "count": 1,
+        "static_icon_height": 2048,
+        "name": "Helpful",
+        "resized_static_icons": [
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=16&amp;height=16&amp;auto=webp&amp;s=a5662dfbdb402bf67866c050aa76c31c147c2f45",
+            "width": 16,
+            "height": 16
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=32&amp;height=32&amp;auto=webp&amp;s=a6882eb3f380e8e88009789f4d0072e17b8c59f1",
+            "width": 32,
+            "height": 32
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=48&amp;height=48&amp;auto=webp&amp;s=e50064b090879e8a0b55e433f6ee61d5cb5fbe1d",
+            "width": 48,
+            "height": 48
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=64&amp;height=64&amp;auto=webp&amp;s=8e5bb2e76683cb6b161830bcdd9642049d6adc11",
+            "width": 64,
+            "height": 64
+          },
+          {
+            "url": "https://preview.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png?width=128&amp;height=128&amp;auto=webp&amp;s=eda4a9246f95f42ee6940cc0ec65306fd20de878",
+            "width": 128,
+            "height": 128
+          }
+        ],
+        "icon_format": null,
+        "icon_height": 2048,
+        "penny_price": null,
+        "award_type": "global",
+        "static_icon_url": "https://i.redd.it/award_images/t5_22cerq/klvxk1wggfd41_Helpful.png"
+      }
+    ],
     "awarders": [],
     "media_only": false,
     "can_gild": false,
@@ -89,7 +175,7 @@
     "report_reasons": null,
     "author": "AutoModerator",
     "discussion_type": null,
-    "num_comments": 189,
+    "num_comments": 468,
     "send_replies": false,
     "whitelist_status": "some_ads",
     "contest_mode": false,
@@ -100,7 +186,7 @@
     "parent_whitelist_status": "some_ads",
     "stickied": true,
     "url": "https://old.reddit.com/r/TheMotte/comments/vwbj4s/culture_war_roundup_for_the_week_of_july_11_2022/",
-    "subreddit_subscribers": 18337,
+    "subreddit_subscribers": 18339,
     "created_utc": 1657520108,
     "num_crossposts": 0,
     "media": null,
