@@ -1,9 +1,18 @@
 [
   {
     "kind": "t1",
+    "id": "igg1gya",
+    "author": "ShouldHaveVotedGore",
+    "score": 1,
+    "createdUtc": 1658008142,
+    "body": "Got an old network attached storage device, HDD-based, that I'd like to securely erase. There doesn't seem to be any low-level way to access it and DBAN it. Do you think just writing a script to fill it to the brim with txt files a few times over would do the trick? Seems like it should but curious about opinions here.",
+    "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/igg1gya/"
+  },
+  {
+    "kind": "t1",
     "id": "igb5i4r",
     "author": "EdenicFaithful",
-    "score": 1,
+    "score": 5,
     "createdUtc": 1657916862,
     "body": "Anyone know any fun academic terms or concepts?\n\nEmic and etic are used for the \"inside view\" and \"outside view\" of a group respectively.\n\nThe gnomic aspect is the tense of aphorism.\n\nE' (E-Prime) ~~is~~ means English without using the verb \"to be.\"",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/igb5i4r/"
@@ -12,7 +21,7 @@
     "kind": "t1",
     "id": "igac6mg",
     "author": "Atersed",
-    "score": 1,
+    "score": 9,
     "createdUtc": 1657905107,
     "body": "\"There are reports that the Defense Advanced Research Projects Agency (DARPA) at one point banned the game from the ARPANET due to its popularity.\"\n\nhttps://en.wikipedia.org/wiki/Maze_(1973_video_game)",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/igac6mg/"
@@ -21,7 +30,7 @@
     "kind": "t1",
     "id": "ig9dgwd",
     "author": "Difficult_Ad_3879",
-    "score": 1,
+    "score": 12,
     "createdUtc": 1657890872,
     "body": "Adding to the theme of FFT gaming posts. There’s been talk online about [how video games aren’t as fun as they used to be](https://youtu.be/j4QKSCushmo). The ascribed reasons vary, from differences in design to superstimuli alternatives like Tik Tok. But there’s an important element that has been missed: the fun of video games is in some sense *charged* from the boredom of everyday life. The more boredom you have habituated to in daily life, the more fun video games will be.\n\nWhen childhood life around the 00’s and before consisted of boring schoolwork and activities, and you did not have the ability to find anything on YouTube and message your friends 24/7, the fun factor of video games stands out. This fun factor is relative to your default living condition. When you’re at school, simply getting free time to eat lunch and stand outside for recess is fun, or watching a boring documentary on a crappy TV. But over summer vacation this fun factor no longer stands out. Fun is relative to what we are accustomed to. And so back when life was more boring, the fun of a Halo or other game is stronger and more memorable. \n\nYou might remember seeing your first “modern” television, and how captivating the image was. Maybe you remember when YouTube switched from 720p to 1080p. Maybe you remember recording a show on TiVo and being able to skip through commercials (!). The pleasantness and novelty of this is also relative. \n\nThe importance of understanding this dynamic is that it proves to us a certain vanity of pleasure. A fun video game is fun, but it makes real life less intrinsically fun. A colorful dramatic television drama is engaging, but it makes our real life relationships less engaging. “Fun” is our mind being lit up by easy pleasure. Going from boring middle school life to GTA San Andreas is overwhelmingly fun. Going from modern GTA to San Andreas is no fun at all. Waking up on Christmas and playing Oblivion is fun; going from modded Skyrim to Oblivion is less fun. And don’t get me started on Chess. \n\nThis fun differential is most evident in open world games, because the fun of the open world game is charged from real life participation; but open world games sap our pleasure from real life participation, to some degree.\n\nThis explanation is the least fun answer to the question of why video games are no longer fun. Because like a Renaissance vanitas painting it shows us clearly the vanity of games. Sum total fun was not increased in your life from your game playing, it was just transferred from real life to an artificial consumer product.",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/ig9dgwd/"
@@ -30,7 +39,7 @@
     "kind": "t1",
     "id": "ig9bzx0",
     "author": "NondualGenie",
-    "score": 1,
+    "score": 22,
     "createdUtc": 1657890167,
     "body": "What are your favorite examples of famous quotes whose meaning changes a lot in context? Two I learned this week (coincidentally both about religion) are:\n\nMarx’s “religion is the opium of the masses” is actually  \"Religion is the sigh of the oppressed creature, the heart of a heartless world, and the soul of soulless conditions. It is the opium of the people.\" Also opium was much more widely accepted in Europe at the time.\n\nJohn Adam’s quote about how “the US is in no way a Christian nation” was from a treaty signed with Muslim Tripoli and guaranteed by the Ottomans. The full quote is: “the Government of the United States of America is not, in any sense, founded on the Christian religion,—as it has in itself no character of enmity against the laws, religion, or tranquility, of Mussulmen [Muslims],—and as the said States never entered into any war or act of hostility against any Mahometan [Mohammedan] nation, it is declared by the parties that no pretext arising from religious opinions shall ever produce an interruption of the harmony existing between the two countries.” Adams himself was a deeply religious, church-going Unitarian.",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/ig9bzx0/"
@@ -39,7 +48,7 @@
     "kind": "t1",
     "id": "ig9bwz9",
     "author": "orthoxerox",
-    "score": 1,
+    "score": 4,
     "createdUtc": 1657890128,
     "body": "Polo shirts: tucked or untucked?",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/ig9bwz9/"
@@ -48,7 +57,7 @@
     "kind": "t1",
     "id": "ig956er",
     "author": "bl1y",
-    "score": 1,
+    "score": 6,
     "createdUtc": 1657886617,
     "body": "Been spending a bunch of time working on a homebrew D&amp;D campaign. [Got roughly half of it planned out now.](https://imgur.com/O1CjK2x) Got two groups that'll be starting in a couple weeks. Sort of exciting, sort of panic inducing.",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/ig956er/"
@@ -57,7 +66,7 @@
     "kind": "t1",
     "id": "ig8o333",
     "author": "wunr",
-    "score": 1,
+    "score": 18,
     "createdUtc": 1657874196,
     "body": "Though I'm a big proponent of video game modding, there's a part of me that misses the era of video games where data mining and leaks weren't so prevalent and people actually had to search for secrets. Playground rumors of Sonic in Smash Bros Melee, creepypastas centered around unsettling things in otherwise cheery and colorful games, the multi-year community effort to search for [a last big secret in Shadow of the Colossus.](https://youtu.be/jQNeYbBiCKw) There's a certain magic to it all that I can't quite put into words, and I don't think younger generations of gamers will be able to experience that kind of thing firsthand. There's been an endless amount of examples in recent years where a game developer attempts to hide interesting secrets behind tough puzzles in their game only to have all the secrets datamined within hours of release.",
     "permalink": "/r/TheMotte/comments/vzgha1/friday_fun_thread_for_july_15_2022/ig8o333/"
