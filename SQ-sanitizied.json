@@ -1,164 +1,83 @@
 [
   {
     "kind": "t1",
-    "id": "ih1cjyp",
-    "author": "Southkraut",
-    "score": 2,
-    "createdUtc": 1658403029,
-    "body": "I'm not seeing a CWR thread for this week. Did I miss something? Are we taking some time off?",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/ih1cjyp/"
-  },
-  {
-    "kind": "t1",
-    "id": "igrrykb",
-    "author": "[deleted]",
-    "score": 7,
-    "createdUtc": 1658234792,
-    "body": "[removed]",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igrrykb/"
-  },
-  {
-    "kind": "t1",
-    "id": "igq8pkg",
-    "author": "Difficult_Ad_3879",
-    "score": 8,
-    "createdUtc": 1658198750,
-    "body": "What does Napoleon tell us about ideology? He was the culmination of a revolution between a far right and a far left. He took control undemocratically, became Emperor, and both sides were just… okay with it. Widespread support, yet dictatorial; attempted to balance the Left and Right, but motivated by personal ambition.\n\nThere’s something illustrative in this whole thing, but I’m too lazy to read Thomas Carlyle. It’s almost like both sides simply wanted practical improvements and a good story, and Napoleon more than sufficed.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igq8pkg/"
-  },
-  {
-    "kind": "t1",
-    "id": "igq05ea",
-    "author": "TJ11240",
-    "score": 7,
-    "createdUtc": 1658194890,
-    "body": "This comment's just a notice to anyone who might be recreating my personality some time in the future through all these years' worth of comments, I'd like to remind you I'm usually working on a buzz in the evenings so that probably should be accounted for.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igq05ea/"
-  },
-  {
-    "kind": "t1",
-    "id": "igo3c52",
-    "author": "[deleted]",
-    "score": 5,
-    "createdUtc": 1658166328,
-    "body": "[deleted]",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igo3c52/"
-  },
-  {
-    "kind": "t1",
-    "id": "ignl1wi",
-    "author": "Sinity",
-    "score": 12,
-    "createdUtc": 1658159103,
-    "body": "Not sure if it's the correct thread to post this.\n\nI remembered [this comment](https://www.reddit.com/r/TheMotte/comments/vlopk0/culture_war_roundup_for_the_week_of_june_27_2022/idwelna/) by /u/ZorbaTHut about trying to generalize the problem of (supposedly existing) people who can't understand conditionals. And I wonder if there's any connection with inability to understand pointers and recursion by some people described [here](https://www.joelonsoftware.com/2006/10/25/the-guerrilla-guide-to-interviewing-version-30/). Indirection?\n\n&gt; I’ve come to realize that **understanding pointers in C is not a skill, it’s an aptitude**. In first year computer science classes, there are always about 200 kids at the beginning of the semester, all of whom wrote complex adventure games in BASIC for their PCs when they were 4 years old. They are having a good ol’ time learning C or Pascal in college, until one day the professor introduces pointers, and suddenly, they don’t get it.\n\n&gt; They just don’t understand anything any more. 90% of the class goes off and becomes Political Science majors, then they tell their friends that there weren’t enough good looking members of the appropriate sex in their CompSci classes, that’s why they switched. **For some reason most people seem to be born without the part of the brain that understands pointers. Pointers require a complex form of doubly-indirected thinking that some people just can’t do**, and it’s pretty crucial to good programming. A lot of the “script jocks” who started programming by copying JavaScript snippets into their web pages and went on to learn Perl never learned about pointers, and they can never quite produce code of the quality you need.\n\n&gt; That’s the source of all these famous interview questions you hear about, like “reversing a linked list” or “detect loops in a tree structure.”\n\n\nThrough now that I checked, recursion was already covered in that 4chan post Scott referenced\n\n&gt; Other interesting phenomenon around IQ involves recursion. For example: \"Write a story with two named characters, each of whom have at least one line of dialogue.\" Most literate people can manage this, especially once you give them an example. \"Write a story with two named characters, each of whom have at least one line of dialogue. In this story, one of the characters must be describing a story with at least two named characters, each of whom have at least one line of dialogue.\" If you have less than 90 IQ, this second exercise is basically completely impossible. Add a third level ('frame') to the story, and even IQ 100's start to get mixed up with the names and who's talking. Turns out Scheherazade was an IQ test!\n&gt; \n&gt; Time is practically impossible to understand for sub 80s. They exist only in the present, can barely reflect on the past and can't plan for the future at all. Sub 90s struggle with anachronism too. For example, I remember the 80-85s stumbling on logic problems that involved common sense anachronism stuff. For instance: \"Why do you think that military strategists in WWII didn't use laptop computers to help develop their strategies?\" \"I guess they didn't want to get hacked by Nazis\". Admittedly you could argue that this is a history knowledge question, not quite a logic sequencing question, but you get the idea. Sequencing is super hard for them to track, but most 100+ have no problem with it, although I imagine that a movie like Memento strains them a little. Recursion was definitely the killer though. Recursive thinking and recursive knowledge seems genuinely hard for people of even average intelligence.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/ignl1wi/"
-  },
-  {
-    "kind": "t1",
-    "id": "igmj9y6",
-    "author": "Greenei",
-    "score": 11,
-    "createdUtc": 1658139646,
-    "body": "I'm looking for a study that shows that teaching quality is more important for good students than bad students, i.e. the learning achievements of good students increase more quickly with teacher quality. Scott may have linked it once as well. Anyone know where to find it? IIRC it was an experimental study.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igmj9y6/"
-  },
-  {
-    "kind": "t1",
-    "id": "iglux6n",
-    "author": "Navalgazer420XX",
-    "score": 12,
-    "createdUtc": 1658120533,
-    "body": "I finally finished a year-long project, need suggestions on buying or doing something to celebrate. \n\nStarted air-layering a couple hundred laurel starts last summer, planted them in a composted trench along the most exposed section of my frontage this spring, and only just got [the last of the weed barrier and wood chips down](https://files.catbox.moe/9hohcv.jpg).  \nTotal cost was about $20 for some rooting hormone and a lot of grunt work, and while it feels really good to be finished, I can't think of anything to treat myself to.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/iglux6n/"
-  },
-  {
-    "kind": "t1",
-    "id": "iglayom",
-    "author": "bored_at_work_guy",
-    "score": 10,
-    "createdUtc": 1658109197,
-    "body": "Weird question, but does anyone having dining room chairs they recommend?   I hate mine, but I'm afraid I'd hate whatever replacements I got as well.\n\nFactors: Comfort, appearance, durability, slides across floor nicely.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/iglayom/"
-  },
-  {
-    "kind": "t1",
-    "id": "igl6cyu",
-    "author": "cant-feel_my-face",
-    "score": 5,
-    "createdUtc": 1658106930,
-    "body": "What is the best physical state to be in when studying? Alone, with someone else, at home, outside?",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igl6cyu/"
-  },
-  {
-    "kind": "t1",
-    "id": "igkfte0",
-    "author": "bl1y",
-    "score": 1,
-    "createdUtc": 1658094391,
-    "body": "What are the odds the center-left and center-right adopt the traditional gay pride flag as a way to signal opposition to the far-left positions on gender and sexuality?\n\nIt could be flown to mean *Not* The Progress Flag, but at the same time, the left would have a really hard time throwing -phobic labels at someone flying the rainbow flag.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igkfte0/"
-  },
-  {
-    "kind": "t1",
-    "id": "igjsk8b",
-    "author": "FiveHourMarathon",
-    "score": 12,
-    "createdUtc": 1658084384,
-    "body": "What are your vices?\n\nFor me personally, compulsive snooping. I can't not snoop. When I start a job, I tell people, look I'm a snoop, don't leave files open a file on my computer and expect me not to read it, don't leave a confidential letter open on the conference table when we're meeting there, don't have a \"private\" conversation in the car with me, I will read/listen/etc. Can't help myself. My wife and I are the same way, and as a result we've always kept phone passwords because we just can't help ourselves and it's too much information to share.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igjsk8b/"
-  },
-  {
-    "kind": "t1",
-    "id": "igjglwo",
+    "id": "ihhgg4l",
     "author": "EdenicFaithful",
-    "score": 5,
-    "createdUtc": 1658079260,
-    "body": "So, what are you reading?\n\nI'm reading Nystrom's *Project of a New System of Arithmetic*, which makes the case for switching to a hexadecimal system for things like clocks (seems like a 16-hour day with 90 decimal minutes per hour?). Skimming it shows that he somehow applies hexadecimal to other things like music. Does not seem like anyone has ever taken it seriously, but it's short and maybe interesting.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igjglwo/"
+    "score": 1,
+    "createdUtc": 1658690884,
+    "body": "So, what are you reading?\n\nI'm picking up Dreyfus' *Underground*, which is about black hat hackers in the 90s. It seems that it was researched by none other than Julian Assange himself, who was one of the handle-owning hackers featured.",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihhgg4l/"
   },
   {
     "kind": "t1",
-    "id": "igjflgq",
-    "author": "cae_jones",
-    "score": 4,
-    "createdUtc": 1658078819,
-    "body": "I dislike earbuds with earplug-nipple-things. It seems like the brands that didn't use them might be moving in that direction, though. What's a reliable no-plug wireless earbud brand? Preferably cheap and unlikely to disappear in the next x years?",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igjflgq/"
+    "id": "ihgvakg",
+    "author": "Jeccems",
+    "score": 1,
+    "createdUtc": 1658681983,
+    "body": "I'm under the impression that small culture war laden questions are permissible - I'm mostly just looking for a reference.  Apologies if I'm mistaken.  \n\nLynching.  I'm trying to understand the extent and severity.  Is there a good resource for understanding the historical phenomenon as it occurred in the United States?  Hopefully with some high level of detail and specificity?  I am of the impression that it's incredibly inflated in the minds of modern individuals - occurring a few thousand times over the course of a century, to people of various ethnicities.  Most specifically, I am interested in the reasonableness (for lack of a better word) of the actions.  Extrajudicial violence is, in and of itself, somewhat unreasonable a priori, but how many victims were random citizens taken off the street, and how many were communally killed before the legal system would have (likely) found them guilty of the alleged crimes?  Is there any accounting of this?  Is looking for as much frivolous?",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihgvakg/"
   },
   {
     "kind": "t1",
-    "id": "igj1y51",
-    "author": "NondualGenie",
-    "score": 6,
-    "createdUtc": 1658072807,
-    "body": "Theists of the Motte, what are your thoughts on the Problem of Evil?",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igj1y51/"
+    "id": "ihgexto",
+    "author": "DuplexFields",
+    "score": 1,
+    "createdUtc": 1658675083,
+    "body": "iTunes broke my Windows 10 laptop.\n\nBefore installing iTunes on my HP laptop with Core i5 7th Gen Intel, I could watch fullscreen video without judder, I could have dozens of tabs open simultaneously, I could play video games.\n\nThen I installed iTunes for a work project. Fullscreen video runs at one frame per second, and embedded videos almost as slowly. Even two tabs on Firefox makes it nearly impossible to move my mouse cursor, which moves, freezes, and then reappears halfway across screen.\n\nNow, even after uninstalling iTunes (and its associated tools) and a day later reinstalling my Intel onboard graphics driver, the problems remain. Since I can't afford a new computer, I'm stuck with this one for now, and I'll need to use it next weekend to run an RPG, so the clock is ticking. Any suggestions?",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihgexto/"
   },
   {
     "kind": "t1",
-    "id": "igj1bj9",
-    "author": "[deleted]",
-    "score": 9,
-    "createdUtc": 1658072529,
-    "body": "Is eating organic good for anything besides draining your bank account?\n\nCurious how much of a sucker I've been for the past ~1 year",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igj1bj9/"
+    "id": "ihgdg5n",
+    "author": "MacaqueOfTheNorth",
+    "score": 1,
+    "createdUtc": 1658674444,
+    "body": "Where can I find stats on how many IVF babies have been born each year going back to the 70s?",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihgdg5n/"
   },
   {
     "kind": "t1",
-    "id": "igikeu1",
+    "id": "ihg1ec7",
     "author": "Difficult_Ad_3879",
-    "score": 6,
-    "createdUtc": 1658064450,
-    "body": "Why is it so uncommon to factor for the malleability of value in our beliefs?\n\nFor instance, if I am a feminist, it’s important to factor in the fact that people can be reared to value *either* feminist values *or* traditional values. Humans are this malleable, that they can be raised to value particular things according to what they consume and how they model rewards. Men, for instance, can be raised to value the Spartan way of life, the Athenian way of life, or the Puritan way of life. By simply changing some variables we can have people value different things.\n\nThis is important, because it means we can just think dispassionately “what is best for the whole of society”, without much care for what people happen to value at this particular point, ourselves included. I have little doubt that if I were born a Spartan I would love war and that if I were born a Puritan I would love prayer. People did not historically deviate from their culture’s values except in times of strong propaganda against the values, eg counterculture 60’s with their strong and vivid media.",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igikeu1/"
+    "score": 1,
+    "createdUtc": 1658668958,
+    "body": "Are there any major image/media search/collection websites that are not Pinterest/Tumblr?",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihg1ec7/"
   },
   {
     "kind": "t1",
-    "id": "igifq3r",
-    "author": "ChrisPrattAlphaRaptr",
-    "score": 7,
-    "createdUtc": 1658061780,
-    "body": "How many people here actually own a firearm, and if you don't mind saying, is it a hunting rifle/handgun/AR style whatever?",
-    "permalink": "/r/TheMotte/comments/w10nh1/smallscale_question_sunday_for_july_17_2022/igifq3r/"
+    "id": "ihg15n2",
+    "author": "Difficult_Ad_3879",
+    "score": 1,
+    "createdUtc": 1658668832,
+    "body": "Is there any value to thirst-fasting, eg going x hours of your day without hydration? It would seem to fall in line with other kinds of “fasting” that have health benefits (caloric fasting, sleep restriction to increase sleep efficiency). The closest I could find is a study where *not* hydrating *within* an exercise session (but a little after) led to increased cardiovascular gains. My intuition is that there is probably some health benefit to ~8 hours of the day refraining from hydration, followed by over-hydration.",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihg15n2/"
+  },
+  {
+    "kind": "t1",
+    "id": "ihfxd76",
+    "author": "orthoxerox",
+    "score": 1,
+    "createdUtc": 1658666742,
+    "body": "What's the most right-wing quote from a work of fiction you can think of?\n\nMine is from *No Country for Old Men*:\n\n&gt; \"Dope. They sell that shit to schoolkids.\"\n&gt; \n&gt; \"It's worse than that.\"\n&gt; \n&gt; \"How's that?\"\n&gt; \n&gt; \"Schoolkids buy it.\"",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihfxd76/"
+  },
+  {
+    "kind": "t1",
+    "id": "ihfgrug",
+    "author": "cat-astropher",
+    "score": 1,
+    "createdUtc": 1658654613,
+    "body": "Freddie deBoer's \"More Commenting Sadness\" post:\n&gt; \"Comments are off again until I decide otherwise. You know why. I have had enough.\"\n\nI wasn't paying attention and don't know why.\n\nI don't and shouldn't even need to know, but now I want to.",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihfgrug/"
+  },
+  {
+    "kind": "t1",
+    "id": "ihfbi4i",
+    "author": "DandyPandemonium",
+    "score": 1,
+    "createdUtc": 1658650280,
+    "body": "Tips or resources by which I can improve my English speaking? To be more specific, to speak more coherently.",
+    "permalink": "/r/TheMotte/comments/w6otlm/smallscale_question_sunday_for_july_24_2022/ihfbi4i/"
   }
 ]
