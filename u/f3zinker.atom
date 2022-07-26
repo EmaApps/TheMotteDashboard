@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/f3zinker - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-07-24T03:13:46Z</updated><link href="https://themotte.srid.ca/u/f3zinker" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/w524ad/friday_fun_thread_for_july_22_2022/ihekf5a/?sort=confidence</id><title type="text">[FF] A post on the CW thread trying to survey the mottes general knowledge and &#34;IQ&#34; g</title><updated>2022-07-24T03:13:46Z</updated><author><name>f3zinker</name></author><category label="FF" scheme="https://themotte.srid.ca/ff" term="Friday Fun"/><content type="text">A post on the CW thread trying to survey the mottes general knowledge and &#34;IQ&#34; got removed for supposedly being a troll. I didn&#39;t get to look at the questions, so I can&#39;t vouch for that.
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/f3zinker - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-07-25T19:55:56Z</updated><link href="https://themotte.srid.ca/u/f3zinker" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/w7h8wa/culture_war_roundup_for_the_week_of_july_25_2022/ihmd0bz/?sort=confidence</id><title type="text">[CW] Reposting my link to a survey. I didn&#39;t get any responses from The Motte users (</title><updated>2022-07-25T19:55:56Z</updated><author><name>f3zinker</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">Reposting my link to a survey. I didn&#39;t get any responses from The Motte users (I got some from the other two subs) so I&#39;m posting it here, I think the CW thread might get all the traffic as opposed to the front page. 
+
+Recently there was a post trying to survey the general knowledge of the motte. The post got removed. And various people accused the survey of having various shortcomings, from it being a troll, to OP having some kind of agenda with the questions asked. 
+
+Therefore I created a new survey for general knowledge. 
+
+~~1. Its timed. There are 39 questions. With 35 minutes to answer all of them.~~ 
+
+~~2. They are all multiple choice, with only 1 valid answer.~~
+
+There is a math, CS, geography, history and economics section.
+
+I tried to design the questions such that they can be answered without any niche/esoteric knowledge. I did not include any of my personal pet questions or anything like that and tried to frame the questions such that you can use incomplete knowledge to answer them, as long as you have a rough idea of the mechanisms that guide those fields. 
+
+Feedback appreciated. 
+
+DISCLAIMER: Email only to log in, I can&#39;t see the emails. 
+
+Link to the survey here. https://forms.gle/S2a8BY7Ln8kPcCpj9
+
+
+________________________
+
+edit - Very controversial. I will count more than one answer to the *vague* questions as correct when I do the final eda. My ultimate goal is to do a subreddit wide survey, not individual survey, so don&#39;t put too much weight into your own score. Add +1 or 2 points because some questions are vague, if you want a rough estimate of your score were the questions less vague.
+
+edit2- Certain questions most people were getting wrong, people are getting right now. Either there is data leakage from the comments, or a different demographic is onto it. Hmmmmm</content><link href="http://old.reddit.com/r/TheMotte/comments/w7h8wa/culture_war_roundup_for_the_week_of_july_25_2022/ihmd0bz/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/w524ad/friday_fun_thread_for_july_22_2022/ihekf5a/?sort=confidence</id><title type="text">[FF] A post on the CW thread trying to survey the mottes general knowledge and &#34;IQ&#34; g</title><updated>2022-07-24T03:13:46Z</updated><author><name>f3zinker</name></author><category label="FF" scheme="https://themotte.srid.ca/ff" term="Friday Fun"/><content type="text">A post on the CW thread trying to survey the mottes general knowledge and &#34;IQ&#34; got removed for supposedly being a troll. I didn&#39;t get to look at the questions, so I can&#39;t vouch for that.
 
 I am thinking of making an actual general knowledge survey with sections on math, physics, biology, geogpraphy,economics and CS.
 
@@ -6,101 +31,4 @@ I plan to only include multiple choice questions that are straight forward and c
 
 Any suggestions on other topics? Or how to frame the questions?
 
-I might cross post to a lot of different subreddits and compile the results of each subreddit at the end.</content><link href="http://old.reddit.com/r/TheMotte/comments/w524ad/friday_fun_thread_for_july_22_2022/ihekf5a/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/w1s5b7/culture_war_roundup_for_the_week_of_july_18_2022/ihddgmx/?sort=confidence</id><title type="text">[CW] ## Will you miss the critters?
-
-I&#39;m making this post inspired by [this post](htt</title><updated>2022-07-23T21:33:37Z</updated><author><name>f3zinker</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">## Will you miss the critters?
-
-I&#39;m making this post inspired by [this post](https://old.reddit.com/r/TheMotte/comments/w1s5b7/culture_war_roundup_for_the_week_of_july_18_2022/ihatskw/) by u/ZorbaTHut. Where he posits that the sheer control we have over-the raw materials of the earth are an awe-inspiring thought and sight. I want to highlight what we sacrifice for that, to some extent. It&#39;s all speculative and shower thought laden, so I implore you to just enjoy the ride. 
-
-I want to talk about &#34;the environment&#34;. And on discussions about the environment. I  know jackshit about any of the life sciences. But I will try to build up a discussion/argument trying to carefully bootstrap whatsoever intuition I have from other fields. 
-
-My understanding of the word &#34;ecosystem&#34; is that it is quite literally like any other [complex system](https://en.wikipedia.org/wiki/Complex_system). They are highly chaotic, non linear and dynamic. There are agents, feedback loops, gains, etc. Much like the [economic system](https://www.econlib.org/archives/2017/06/yudkowsky_on_my.html), there is a [delicate](https://en.wikipedia.org/wiki/Lotka–Volterra_equations) [balance](https://www.sciencedirect.com/science/article/abs/pii/S0006320716301185). And this not that insightful at all. Anyone who read learned about the food chain can figure this out, with a bit of thought. This might be the one topic where I diverge significantly from my fellow libertarians and right wingers. Given the the delicate balance, I am more sympathetic to laws that minimize externalities towards the natural world. 
-
-There are plenty of object level arguments on why the environment/ecosystems should be preserved. I won&#39;t go into those because they are signal boosted plentifully. I want to have a discussion on the aesthetics of it.
-
-#### The Asian Monsoon 
-
-When I was a child, I used to live in a country that gets the [Asian monsoon](https://www.youtube.com/watch?v=1nstixjMS7A&amp;amp;ab_channel=Geodiode). For the uninitiated, it is rain of the likes you have (probably) never experienced before. I&#39;m talking more rain in a month than most European and North American cities get in a years. 
-
-In the countryside you would be immersed in nature just leaving your house. You could barely go for a walk without stumbling into a large (4 foot long) monitor lizard, snakes, turtles, frogs and bugs, so many bugs. And I am not understating this, you could seriously just go and find any one of those animals any day. 
-
-A significant part of my childhood consisted of just going out into the edges of the jungle and observing all the critters and sometimes trapping them in plastic jars.  Every day felt like an adventure because I wouldn&#39;t know what I would come across the next day. Everything felt for a lack of a better word &#39;alive&#39;.
-
-Unfortunately it seems like kids a few decades down might not be able to experience that any more. The [Asian monsoon](https://www.bbc.com/future/article/20220517-the-uncertain-fate-of-asias-monsoons) is drying up. So many of these critters depended on the rain and the vegetation it brought. I would consider it a huge loss to all the kids who would have been like me, if that part of the world dries up. 
-
-#### The Windshield phenomenon
-
-The [Windshield phenomenon](https://en.wikipedia.org/wiki/Windshield_phenomenon) is the observation that less bugs splatter into the windshields of cars than they used to. There are countless anecdotes from Europe and North America about this phenomenon happening over time. 
-
-Yes anecdata has its shortcomings but it really does seem like the World is [losing its critters](https://e360.yale.edu/features/insect_numbers_declining_why_it_matters).  The world has lost 70% of its insect biomass in the last 50 years. I don&#39;t know why, but for some reason, finding out about this filled me with a sense of sadness that is very hard to describe. It&#39;s not that I have empathy towards insects, it&#39;s just that the world became a less vibrant place. Less insects means, less other types of plants and animals, because its all linked, obviously. Less natural beauty in the world. 
-
-I have visited the forests of North America (North East US) in the summer recently. Ofcourse they are not the same type of forest as the ones I had in my country, but they felt very &#34;clean&#34;. The forests I grew up with had so many critters that you could hear them crawling around. The forests in North America were quite in comparison. If the windshield phenomenon explains anything, the forests in North America were probably much more lively than they are now, at some time in the near past. 
-
-There are plenty of reasons to believe the causation is anthropogenic. 
-
-#### North America
-
-North America used to have [buffalo heards](http://www.ozarkbisons.com/aboutbison.php) as far as the eye could see. [Passenger pigeon](https://en.wikipedia.org/wiki/Passenger_pigeon) flocks that used to cover the sky. They both don&#39;t exist anymore, the latter not at all, the former not at the level it used to. And this is  entirely because of what I would confidently assert as [unadulterated evil](https://www.theatlantic.com/national/archive/2016/05/the-buffalo-killers/482349/). 
-
-Did North America in the abstract not lose something great? 
-
-#### Europe
-
-Europe lost 60% of its forest cover because of agriculture and development. Thankfully [its recovering](https://data.worldbank.org/indicator/AG.LND.FRST.ZS?locations=EU). 
-
-It gives me an uneasy feeling ,a sort of &#34;are we playing with fire&#34; type of feeling, when we can just wipe out 60% of life in a continent to live ourselves. There&#39;s not much more to it, just a passing thought.
-
-
-#### Concluding thoughts
-
-I am well aware that some damage to the enviorment has to be done to progress technologically. We need to mine raw materials to make bridges, cars, and computers. Some of that will ruin some forests and some mountains. I am also well aware that not doing destroying some of nature means terrible living standards forever. I understand all that clear enough.
-
-But I also think sometimes, what good would having tall buildings and planes means if there are no places to live or go with tall trees and bushes with bugs and lizards. Mountains with tall trees and bushes. And land with mountains. 
-
-&#34;Save the Earth&#34; is a vacuous phrase. The Earth has been there for billions of years without us and can do fine. Yes, we need the Earth to literally live, but we also need it for other things that make life worth living right? What candle does the tallest building hold to Mt Everest if awe is to be inspired? What candle does a botanical garden hold to the Amazon rain-forest?  Is the NYC skyline more awe inspiring than the Niagara falls? Can any zoo in the world replace seeing lions hunt in the Serengeti? 
-
-I don&#39;t have enough knowledge to assert if its all doom and gloom and the natural world is inevitibly soon to be gone forever. But I do know that we already lost a fair bit of it, and we are losing it fast.</content><link href="http://old.reddit.com/r/TheMotte/comments/w1s5b7/culture_war_roundup_for_the_week_of_july_18_2022/ihddgmx/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/w1s5b7/culture_war_roundup_for_the_week_of_july_18_2022/igwztcg/?sort=confidence</id><title type="text">[CW] ## Why I still talk about covid restrictions. And will continue to do so. 
-
-
-Rec</title><updated>2022-07-20T13:47:34Z</updated><author><name>f3zinker</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">## Why I still talk about covid restrictions. And will continue to do so. 
-
-
-Recently there was a [post](https://old.reddit.com/r/TheMotte/comments/vr0t4v/culture_war_roundup_for_the_week_of_july_04_2022/ifl02lf/) talking about how; now that covid restrictions are mostly done with; covid is not something most people really think or talk about. But, there are still two groups of people who continue to talk about covid. Those who were really scared and still are, and the &#34;skeptics&#34;. The post somewhat implied that both groups are extremist in some way or the other on the issue of covid. 
-
-I will try to defend my case on why I think my position of being a skeptic should have been the default position. And the fact it wasn&#39;t requires some heavy investigation as to why.
-
-_____________________________________________________________
-
-As a &#34;covid skeptic&#34; much of the discourse around covid restrictions makes me feel like I am being &#39;gaslighted&#39; on a grand level. The jist of it being that I operated under one overton window, one epistemology my entire life and both those things get radically shifted and transformed in 2 years and everyone is suddenly on board, and I am the crazy one for asking &#34;wait what about everything we knew before?&#34;? 
-
-To put it shortly there have been shifts on multiple overton windows in ways that are not conductive to a epistemologycally and politically healthy society and somebody has to acknowledge and speak about it. And continue speaking about it, because some of these shifts pave the way for tremendous injustices. 
-
-Here are the reasons why I will keep talking about covid for the rest of my life. And I will not be convinced I am crazy or of a certain ideological group because I do so. I believe the ones who are not talking about these things have had the cloak successfully put over their eyes (even if they are otherwise skeptics), they forgave what was done to them after it wasn&#39;t being done anymore, they are complacent.
-
-1. Being a &#34;covid skeptic&#34; is the default position of almost all societies before 2020. It was the medical consensus that;
- * Lockdowns are not worth it (QALY,$, &#34;human rights&#34; ) for the vast majority of diseases. The ones that pose an IFR high enough to justify them are not that scary because they also tend to be non contagious for various reasons. 
-What was  essentially considered putting entire cities or countries of people under house arrest suddenly became the default mode of addressing the problem? 
- * Universal masking is ineffective for airborne diseases.
- * Vaccinating the entire population by threatening the loss of education/work is by the State is overstepping the bounds by any reasonable western State. 
-
- The first two points are correct. They were reached after decades of &#34;good science&#34;. The bullshit ideological science (along with all sorts of publication bias and a thousand other traps) peddled to make it seem that lockdowns are worth it and masks work are the work of pure propaganda. We can&#39;t just let that slide right? If &#34;mistakes&#34; were made, they need to be discussed and analyzed lest they not be repeated. 
-
- We can&#39;t just replace the field of public health which is fundamentally based on the idea of a cost benefit analysis with some idiotic throw EVERYTHING at the wall and hope it works at whatever costs method right? More importantly we can&#39;t have this &#34;philosophy&#34; wear the skin-suit of what it replaced and pretend to be something it is not, rational. Least of all this needs to be discussed. 
-
-2.  The much obvious economic malign caused by covid policies are blamed on &#34;supply chain issues&#34;,&#34;Ukraine war&#34;, &#34;general economic turmoil&#34;, etc. Why is no one talking about the elephant in the room when it comes to economic downturn?
-
-	Really? Lockdowns and travel bans and printing all that money had nothing to do with the inflation and economic struggles? Why is no one discussing the policies that literally consisted of shutting down economies not having an effect when economies are shutting down? Would Sri Lanka be where it is today if not for travel bans and lockdowns? 
-
-	In a recent [video essay](https://www.youtube.com/watch?v=JxdHm2dmvKE) by Jordan Peterson. He posits that perhaps the Russian invasion of Ukraine was in part caused by covid restrictions, as some far out there nth order effect. That world leaders being isolated from each other in person for nearing two years might have been a straw that broke the camels back. Even if this sounds like a far reaching judgement on the surface, is it not more far reaching to assert that two years of lockdowns, mandates, minimized travel, and all its social and economic malaise would not manifest at the margins?
-
-      What about an easier to digest example? The mass shootings in the US? They must be at least slightly correlated with the declining social and economic environment right? Why is no one talking about how further isolating and economically straining those on the margins of shooting up a school going to make them do it? Hell I wanted to cause mayhem as I was locked up in my room (don&#39;t live in the US) for 2 months on end. 
-
-3. The overton window has been shifted significantly towards authoritarianism. We expected the government to play God and deal with nature in 2020 and they let us have our cake, they gladly played as the Gods people wanted them to play so desperately. As a libertarian I don&#39;t think this is a good development.  
-
-	 Did we really expect the governments to do everything they did in 2020 for diseases of the past. They were given the right to put people under house arrest for arbitrary levels of disease depending on time and place. This is a terrible precedent. Will this increased state power never be used for stamping out dissent in the future? 
-
-____________________________________________________________________
-
-To further add on. This whole covid debate left me with a tremendous hate towards &#34;normies&#34;. Many of them felt the same as me. They knew masking 24/7 was stupid. They knew 20 year olds being forced to be vaccinated was unjust. They knew lockdowns would destroy everything. They were still compliant. They had their fun time at home binging netflix and making sourdough bread (as they lost their jobs because of lockdowns). They wore the masks dutifully under their nose. They got vaccinated because &#34;its just less hassle&#34;, etc. Fuck them.
-
-Maybe I have the temperament of a rabid dog who absolutely won&#39;t do something if he thinks its stupid or performative or doesn&#39;t want to do it. Perhaps. But if more people were like me, No one would have complied with lockdown orders, what would they have done? Arrest all of us?</content><link href="http://old.reddit.com/r/TheMotte/comments/w1s5b7/culture_war_roundup_for_the_week_of_july_18_2022/igwztcg/?sort=confidence"/></entry></feed>
+I might cross post to a lot of different subreddits and compile the results of each subreddit at the end.</content><link href="http://old.reddit.com/r/TheMotte/comments/w524ad/friday_fun_thread_for_july_22_2022/ihekf5a/?sort=confidence"/></entry></feed>
