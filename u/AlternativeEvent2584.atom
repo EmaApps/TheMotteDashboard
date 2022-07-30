@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/AlternativeEvent2584 - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-07-29T06:14:33Z</updated><link href="https://themotte.srid.ca/u/AlternativeEvent2584" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/w7h8wa/culture_war_roundup_for_the_week_of_july_25_2022/ii3f5hp/?sort=confidence</id><title type="text">[CW] I want to talk about how training is obsolete. Nobody can be trained nowadays. A</title><updated>2022-07-29T06:14:33Z</updated><author><name>AlternativeEvent2584</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">I want to talk about how training is obsolete. Nobody can be trained nowadays. At my work, literally every new hire who is a programmer got locked out of their Outlook except OWA because someone changed my automaton scripts. Some JSON file got pushed out and everyone lost access. I was able to quickly fix it once it got escalated to me because I wrote the scripts and the Mac exception i could easily fix.
+
+But it got me thinking. How is a normal person who edits my scripts supposed to know that Apple needs certain protocols turned on for certain users. Legal comes in and says turn off this attribute and some person changes my code.
+
+My point is literally nobody apparently knows why my code does what it does. I try to write good comments but apparently people think they can change stuff if they have a change request. I respect the ambition but they are messing up everything.
+
+My point is how can these youngsters actually get experience. They just get in our way, but we also need to hire them. It&#39;s a conundrum. And most aren&#39;t worth 2 shits. Just saying.
+
+
+
+That&#39;s not my point though. New hires trying to change my code isn&#39;t a new thing. 
+
+What is crazy to me is that one small change could mess up so many things. New people get out of college get aggressive and make changes they have no clue what will impact others.
+
+Which brings me to my next point. Training is impossible in the modern environment. There is literally no way to teach these kids how to not screw up our code. We wrote an in house method for AD and these idiots broke it because our sys admins gave then to much access. But I&#39;m not mad because they found inefficiencies but broke stuff.</content><link href="http://old.reddit.com/r/TheMotte/comments/w7h8wa/culture_war_roundup_for_the_week_of_july_25_2022/ii3f5hp/?sort=confidence"/></entry></feed>
