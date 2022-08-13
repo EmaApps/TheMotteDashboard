@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/Hailanathema - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-08-12T20:22:39Z</updated><link href="https://themotte.srid.ca/u/Hailanathema" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/wj1cwt/culture_war_roundup_for_the_week_of_august_08_2022/ik1ibdz/?sort=confidence</id><title type="text">[CW] The Trump search warrant has been [unsealed](https://storage.courtlistener.com/r</title><updated>2022-08-12T20:22:39Z</updated><author><name>Hailanathema</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">The Trump search warrant has been [unsealed](https://storage.courtlistener.com/recap/gov.uscourts.flsd.617854/gov.uscourts.flsd.617854.17.0_6.pdf) and it tells us a little more than we already knew.
+
+The warrant authorizes a search of:
+
+&amp;gt;The premises to be searched, 1100 S Ocean Blvd, Palm Beach, FL 33480, is further
+described as a resort, club, and residence located near the intersection of Southern Blvd and S Ocean Blvd. It is described as a mansion with approximately 58 bedrooms, 33 bathrooms, on a 17- acre estate. The locations to be searched include the &#34; 45 Office,&#34; all storage rooms, and all other rooms or areas within the premises used or available to be used by FPOTUS and his staff and in which boxes or documents could be stored, including all structures or buildings on the estate. It does not include areas currently (i.e. , at the time of the search) being occupied, rented, or used by third parties (such as Mar-a-Largo Members) and not otherwise used or available to be used by FPOTUS and his staff, such as private guest suites
+
+The inventory is not terribly interesting itself. Mostly it classifies what documents they found by their classification level (Secret, Top Secret, etc) and characterizes them very generally.
+
+There are three statutes listed as being the basis for the warrant. Those are [18 USC 793](https://www.law.cornell.edu/uscode/text/18/793), [18 USC 2071](https://www.law.cornell.edu/uscode/text/18/2071), and [18 USC 1519](https://www.law.cornell.edu/uscode/text/18/1519).
+
+Taking these in reverse order. 1519 provides:
+
+&amp;gt;Whoever knowingly alters, destroys, mutilates, conceals, covers up, falsifies, or makes a false entry in any record, document, or tangible object with the intent to impede, obstruct, or influence the investigation or proper administration of any matter within the jurisdiction of any department or agency of the United States or any case filed under title 11, or in relation to or contemplation of any such matter or case, shall be fined under this title, imprisoned not more than 20 years, or both.
+
+So the allegation is that Trump altered or destroyed some documents with the intent to impede some kind of investigation or administrative proceeding.
+
+2071 provides:
+
+&amp;gt;(a) Whoever willfully and unlawfully conceals, removes, mutilates, obliterates, or destroys, or attempts to do so, or, with intent to do so takes and carries away any record, proceeding, map, book, paper, document, or other thing, filed or deposited with any clerk or officer of any court of the United States, or in any public office, or with any judicial or public officer of the United States, shall be fined under this title or imprisoned not more than three years, or both.
+
+&amp;gt;(b) Whoever, having the custody of any such record, proceeding, map, book, document, paper, or other thing, willfully and unlawfully conceals, removes, mutilates, obliterates, falsifies, or destroys the same, shall be fined under this title or imprisoned not more than three years, or both; and shall forfeit his office and be disqualified from holding any office under the United States. As used in this subsection, the term “office” does not include the office held by any person as a retired officer of the Armed Forces of the United States.
+
+The warrant does not specify which section the allegation is for but I think (b) seems the most likely. (a) seems to apply specifically to judicial related documents and I don&#39;t think any of Trumps were of that kind. The inventory doesn&#39;t obviously indicate so to me. Looking *far* forward, will be interesting to see what kind of legal arguments might evolve around the prohibition of holding office in (b) if Trump were convicted and decided to run anyway. My understanding is current Court precedent prohibits Congress (or the States) adding additional qualifications beyond those in the constitution to offices that are mentioned in the constitution.
+
+793 is probably the spiciest section. I&#39;m not gonna quote it in full here like the others because it&#39;s much longer. It basically lists out a bunch of subsections that have to deal with having access to information related to national defense and it being misused in various ways. If I had to pick a section I think (d) or (e) are the most likely. Those paragraphs cover anyone who has access to national defense information (lawfully or unlawfully) and refuses to turn over those documents to a United States officer entitled to receive it. From section (d):
+
+&amp;gt;(d) Whoever, lawfully having possession of, access to, control over, or being entrusted with any document, writing, code book, signal book, sketch, photograph, photographic negative, blueprint, plan, map, model, instrument, appliance, or note relating to the national defense, or information relating to the national defense which information the possessor has reason to believe could be used to the injury of the United States or to the advantage of any foreign nation, willfully communicates, delivers, transmits or causes to be communicated, delivered, or transmitted or attempts to communicate, deliver, transmit or cause to be communicated, delivered or transmitted the same to any person not entitled to receive it, or willfully retains the same and fails to deliver it on demand to the officer or employee of the United States entitled to receive it; or
+
+The way I read this section is that even if assuming Trump lawfully had possession of these documents (a dubious proposition itself, I think) he still violated this section by refusing to return the documents on demand of whatever government agency was entitled to receive them.
+
+Section 1519 provides a punishment of up to 20 years imprisonment, 2071 provides a punishment of up to 3 years imprisonment, and 793 provides a punishment up to 10 years imprisonment. Note that these are maximums, not necessarily what someone convicted will get.
+
+ETA:
+
+One thing that jumps out to me is that none of these charges seem to depend on the classification status of the documents themselves. I&#39;ve seen some people float the idea that Trump could have declassified all these documents before leaving office but none of these charges read to me as requiring any particular classification level for the documents referenced therein. Maybe that&#39;s my lack of knowledge though.
+
+ETA2:
+
+For reference 18 USC 794(e) (the one I quoted but when you don&#39;t have lawful possession) is the one that landed [Reality Winner](https://en.wikipedia.org/wiki/Reality_Winner) five years in federal prison.</content><link href="http://old.reddit.com/r/TheMotte/comments/wj1cwt/culture_war_roundup_for_the_week_of_august_08_2022/ik1ibdz/?sort=confidence"/></entry></feed>
