@@ -12,7 +12,7 @@
     "kind": "t1",
     "id": "ik3a798",
     "author": "DuplexFields",
-    "score": 7,
+    "score": 4,
     "createdUtc": 1660365083,
     "body": "On Wordle, I’ve decided to start playing “yesterday’s” word as my first guess the following day. It’s a suboptimal strategy when the previous solution has doubles of a given letter (or two), but it gives me a sense of continuity and challenge, and beats starting with “SLATE” or “ARIEL” every day.\n\nWhat are your favorite Wordle tools?\n\nMy primary tool is Notepad, wherein I use the notation of capital letters for certainties, lowercase for possibilities and dashes for impossibilities. Let’s say the word is “&gt;!NIGHT!&lt;” and I’ve guessed “GRAIN”, “SPROG”, and “THERE”, getting no greens, some yellows, and all five letters by the third guess. If I didn’t immediately think of \"&gt;!NIGHT!&lt;\", I’d type these in like so:\n\n    G: -ggg-\n    I: iii-i\n    N: nnnn-\n    T: -tttt\n    H: h-hhh\n\nI also have an Excel spreadsheet with every word in Wordle’s “guess” dictionary and none from the “solutions” dictionary, so I’ll never accidentally see the real answer. The five letters are each in their own columns, in a filterable List, so in the above example I can eliminate RASPO from all columns after the second guess and E after the third. If I’m still stumped, I can eliminate G from the first and last column, I from the fourth, and so on, and see what’s left to make another guess to eliminate up to five more letters. Of course, in this example I’ve got all five letters by my third guess, so I could just turn off all but those letters, and maybe turn some back on, to eliminate additional positions.",
     "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik3a798/"
@@ -21,7 +21,7 @@
     "kind": "t1",
     "id": "ik2r0a7",
     "author": "WhiningCoil",
-    "score": 7,
+    "score": 6,
     "createdUtc": 1660355192,
     "body": "Spent my day install a cell booster on my house.  Ever since a big storm rolled through knocking everything over, and leading to some debate about whether we experienced a downburst or a tornado, my Verizon signal has been in the toilet.  So, $400 later, and some rather nervous work on a ladder, we now have a serviceable signal again.  It was a constant thorn in our side since moving out to the country, so hopefully that problem is fully well fixed now.\n\nBeen seriously binging Xenoblade Chronicles 3 more.  I got seriously side tracked by optional quests, and am now overleveled for the core story in front of me by about 10 levels.  The job system is **ok** so far.  I think what's hampering my enjoyment is the temporary cap of 10 levels per job I'm currently laboring under.  So my characters max out their jobs rather quickly, and I find myself rotating them to new ones, not because I want to, but because I feel like I have to in order to min max.  And I'm constantly running short of jobs I actually want to switch them into.  I'm looking forward to the cap coming off.\n\nHit my first tantalizing and obvious reference to previous Xenoblade games, hinting at the world this is taking place in.  The trailer had hinted at things, and I'm curious to see if the hints come to fruition.  But I think the Xenoblade \"timeline\" is a lot like the Zelda \"timeline\".  Mostly bullshit theory crafting around thoughtlessly included references that give the games a unified feel, but aren't meant for serious theorizing.",
     "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik2r0a7/"
@@ -30,7 +30,7 @@
     "kind": "t1",
     "id": "ik2c9wm",
     "author": "Difficult_Ad_3879",
-    "score": 16,
+    "score": 19,
     "createdUtc": 1660348446,
     "body": "I think I have a leucistic duck on my pond. He is very cute and sticks out. I believe his probability is &lt;1 in 3000. As someone who sees waterfowl every day this is a fortuitous development. I have been trying to keep him around with food and praise.\n\nhttps://imgur.io/0zkaZIg",
     "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik2c9wm/"
@@ -48,7 +48,7 @@
     "kind": "t1",
     "id": "ik01wij",
     "author": "Difficult_Ad_3879",
-    "score": 5,
+    "score": 4,
     "createdUtc": 1660315709,
     "body": "Has anyone obtained value from the ikigai / kanban / self-authoring / etc programs? My interest is piqued after reading that Shohei Ohtani used one of these programs (Harada Method).",
     "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik01wij/"
@@ -57,7 +57,7 @@
     "kind": "t1",
     "id": "ijzpibv",
     "author": "thrownaway24e89172",
-    "score": 17,
+    "score": 16,
     "createdUtc": 1660310507,
     "body": "(u/ZorbaTHut) Is there a reason we usually don't see more complicated save systems in games than simple named checkpoints?  In particular, why does there seem to be little to no interest in systems that make branching easier?  Yes, interested users can roll their own outside the game (eg, using a version control system to manage a game's save files), but doing that outside of the game itself limits its effectiveness in a lot of ways.",
     "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ijzpibv/"
@@ -75,7 +75,7 @@
     "kind": "t1",
     "id": "ijz922p",
     "author": "NormanImmanuel",
-    "score": 5,
+    "score": 6,
     "createdUtc": 1660301459,
     "body": "Last week, the Tim Dillon Show  [had a very special guest](https://www.youtube.com/watch?v=5jpvUMaH17o).\n\nAs far as comedic value it's quite possibly one the worst episodes ever, but it's interesting as basically an introduction to Yarvin's ideas in a more palatable context than densely referenced blog posts.",
     "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ijz922p/"
