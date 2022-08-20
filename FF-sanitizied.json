@@ -1,83 +1,20 @@
 [
   {
     "kind": "t1",
-    "id": "ik6fadf",
-    "author": "sciuru_",
-    "score": 4,
-    "createdUtc": 1660426741,
-    "body": "*Status: dreams and visions*\n\nOne of the applications of language models is [Question answering](https://paperswithcode.com/task/question-answering/latest) systems. They seem to fit nicely subscription-based business model. Here’s how it works: \n\n1. You specify the domain and scope of knowledge, that you want to encapsulate \n2. You hire a team of experts and extract knowledge from them (or from a suit of books). Since the model is pretrained for general reasoning, it only needs to fine-tune itself according to specifications from the previous step. The model queries people and processes their answers until ~~they confess~~ target quality is achieved \n3. Subscribers select domain, “number of queries per month” and a multitude of other parameters like “model capacity”, “answer granularity”, “knowledge provider”, “dialogue memory”, etc. \n4. Then you \"stream\" it, using web or app interface\n\nTowards complete commodification of knowledge, capitalism has been dreaming of, with pipeline and valve. Few features:\n\n1. Linear mode is still available – you can read long chunks w/t querying model piece by piece \n2. Everyone can pack their knowledge into a model and publish it online. What if someone publishes something bad? Right, that’s why each model gets checked and licensed by benevolent third party \n3. You can merge/import data from other models/books/humans; manually override it; you can grow model continuously  \n4. Various kinds of knowledge might be embedded: factual, procedural, black-box \"tacit\" functions and arbitrary uncertainty distributions around them",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik6fadf/"
+    "id": "ikxlm5f",
+    "author": "yofuckreddit",
+    "score": 1,
+    "createdUtc": 1660916537,
+    "body": "I'm attempting to smoke two huge pork shoulders that are a total of 16 lbs this weekend. The story of my smoking experiences with pork are ones of being off by multiple hours in terms of completion, so I'm working a whole day ahead of time. If I get done early, which has never happened, I'll wrap the meat in aluminum trays and keep it warm. \n\nSince most of y'all are on the west coast I assume the proclivity for cooking vast cuts of meat this way isn't as popular as it is around my neck of the woods. But right now I have a small electric Masterbilt smoker. It was unbelievably affordable in my estimation, it's relatively easy to clean, but I've been electrocuted while it's sprinkling a couple times and I've always wondered if I should be stepping up to a pellet grill at some point. Any comment from someone who's made the move would be welcome. I only smoke stuff 6-7 times a year, so perhaps it's a luxury I shouldn't be considering anyway.",
+    "permalink": "/r/TheMotte/comments/ws5dhg/friday_fun_thread_for_august_19_2022/ikxlm5f/"
   },
   {
     "kind": "t1",
-    "id": "ik3a798",
-    "author": "DuplexFields",
-    "score": 6,
-    "createdUtc": 1660365083,
-    "body": "On Wordle, I’ve decided to start playing “yesterday’s” word as my first guess the following day. It’s a suboptimal strategy when the previous solution has doubles of a given letter (or two), but it gives me a sense of continuity and challenge, and beats starting with “SLATE” or “ARIEL” every day.\n\nWhat are your favorite Wordle tools?\n\nMy primary tool is Notepad, wherein I use the notation of capital letters for certainties, lowercase for possibilities and dashes for impossibilities. Let’s say the word is “&gt;!NIGHT!&lt;” and I’ve guessed “GRAIN”, “SPROG”, and “THERE”, getting no greens, some yellows, and all five letters by the third guess. If I didn’t immediately think of \"&gt;!NIGHT!&lt;\", I’d type these in like so:\n\n    G: -ggg-\n    I: iii-i\n    N: nnnn-\n    T: -tttt\n    H: h-hhh\n\nI also have an Excel spreadsheet with every word in Wordle’s “guess” dictionary and none from the “solutions” dictionary, so I’ll never accidentally see the real answer. The five letters are each in their own columns, in a filterable List, so in the above example I can eliminate RASPO from all columns after the second guess and E after the third. If I’m still stumped, I can eliminate G from the first and last column, I from the fourth, and so on, and see what’s left to make another guess to eliminate up to five more letters. Of course, in this example I’ve got all five letters by my third guess, so I could just turn off all but those letters, and maybe turn some back on, to eliminate additional positions.",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik3a798/"
-  },
-  {
-    "kind": "t1",
-    "id": "ik2r0a7",
-    "author": "WhiningCoil",
-    "score": 7,
-    "createdUtc": 1660355192,
-    "body": "Spent my day install a cell booster on my house.  Ever since a big storm rolled through knocking everything over, and leading to some debate about whether we experienced a downburst or a tornado, my Verizon signal has been in the toilet.  So, $400 later, and some rather nervous work on a ladder, we now have a serviceable signal again.  It was a constant thorn in our side since moving out to the country, so hopefully that problem is fully well fixed now.\n\nBeen seriously binging Xenoblade Chronicles 3 more.  I got seriously side tracked by optional quests, and am now overleveled for the core story in front of me by about 10 levels.  The job system is **ok** so far.  I think what's hampering my enjoyment is the temporary cap of 10 levels per job I'm currently laboring under.  So my characters max out their jobs rather quickly, and I find myself rotating them to new ones, not because I want to, but because I feel like I have to in order to min max.  And I'm constantly running short of jobs I actually want to switch them into.  I'm looking forward to the cap coming off.\n\nHit my first tantalizing and obvious reference to previous Xenoblade games, hinting at the world this is taking place in.  The trailer had hinted at things, and I'm curious to see if the hints come to fruition.  But I think the Xenoblade \"timeline\" is a lot like the Zelda \"timeline\".  Mostly bullshit theory crafting around thoughtlessly included references that give the games a unified feel, but aren't meant for serious theorizing.",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik2r0a7/"
-  },
-  {
-    "kind": "t1",
-    "id": "ik2c9wm",
-    "author": "Difficult_Ad_3879",
-    "score": 16,
-    "createdUtc": 1660348446,
-    "body": "I think I have a leucistic duck on my pond. He is very cute and sticks out. I believe his probability is &lt;1 in 3000. As someone who sees waterfowl every day this is a fortuitous development. I have been trying to keep him around with food and praise.\n\nhttps://imgur.io/0zkaZIg",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik2c9wm/"
-  },
-  {
-    "kind": "t1",
-    "id": "ik0elg5",
-    "author": "cafemachiavelli",
-    "score": 20,
-    "createdUtc": 1660320590,
-    "body": "I'm replaying Mass Effect now that the remake/master/mass is out. Spoilers below. A recent thread on askreddit had people complain about the ending and since my reply inevitably got buried, I thought I'd repost and expand on it here. \n\nI have a separate thought about the series' politics but I'm posting that as a reply.\n\nThe prompt:\n\n    despite the lackluster ending\n\nUghhh the ending annoyed me so much.\n\nPretty much from the beginning I had my nerd guess for what was gonna happen:\n\nIt turns out that using element zero (which causes the \"mass effect\") increases entropy massively. After all, all that energy has to come from somewhere. Use it too much and the universe runs out or [insert doomsday scenario]. So the leviathans build the reapers to find a way to fix or contain it, then the reapers go a little overboard and murder everyone before \"seeding\" new civilizations to gather data on the mass effect. Things are going pretty well apart from the everyone getting murdered at the end of the experiment cycle part.\n\nI like that I could see an indoctrination ending as the \"good\" ending here - if you have to choose between trillions dying and the universe ending, maybe the former is the better option? But of course, who knows if the reapers will even find a solution, if the other civs can't do it on their own w/o regular genocide, etc. There's room for disagreement, which I think is a necessary component of a good RPG ending. \n\nThe actual ending feels dumb even by soft sci-fi standards. It's almost literally [they're made of meat](https://www.mit.edu/people/dpolicar/writing/prose/text/thinkingMeat.html). Apparently \"organics\" and \"synthetics\" just never get along. Never mind that synthetic is just a short-hand for semiconductor technology since that's the level where our civilization is at, and never mind that we'd totally make self-repairing computers out of wet hydrocarbons if we could. Also disregard the fact that organic/synthetic just describes what is essentially a manufacturing process and should have little impact on ones feelings / value functions beyond naive looks-like-me ingroup bias (and why would you put that in synthetic life anyway?). The entire universal conflict is sibling rivalry with some AI risk thrown in.\n\nI grant that this can be read as an AI risk device - the Leviathans, demi-gods from Ye Olden Times, notice that whenever their thralls build synthetic life, the latter rebels against the former. This tends to result in genocide. Replace \"life\" with \"generally intelligent agent\" and it's not a strange prediction. It would be kind of a stretch to have the leviathans a) be smart enough to meaningfully resist the AIs of their thralls and b) decide that building their own AI in the form of the reapers is a great idea, especially since that plan backfires as much as it possibly could. But who knows, maybe all the smart leviathans are working on thrall containment policy and reapers are a big political mess.\n\nIt still makes the ending fall kinda flat, imo. The choices of \"destroy, control, do nothing\" lack meaning if all you're deciding on is how to deal with a malaligned AI. \n\nIIRC some other game had the entropy plot as its big reveal, so maybe ME didn't want to seem too unoriginal, but I think it's still one of the better choices: It's narratively cheap since much of ME's plot still makes sense in retrospect. Geth calculate utility and conclude that the reapers are correct. Organic life doesn't and is also highly interested in staying alive, so the only way to align them is direct mind control. In the anti-Reaper ending you decide that humanity can fix the Mass Effect on your own (Renegade) or with the help of the rest of the universe (Paragon). In the pro-Reaper ending you either zip humanity into a new Reaper or die honorably and let them deal with the problem. I can totally see myself playing both and that rarely happens for me with \"good/evil\" playthroughs.",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik0elg5/"
-  },
-  {
-    "kind": "t1",
-    "id": "ik01wij",
-    "author": "Difficult_Ad_3879",
-    "score": 8,
-    "createdUtc": 1660315709,
-    "body": "Has anyone obtained value from the ikigai / kanban / self-authoring / etc programs? My interest is piqued after reading that Shohei Ohtani used one of these programs (Harada Method).",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ik01wij/"
-  },
-  {
-    "kind": "t1",
-    "id": "ijzpibv",
-    "author": "thrownaway24e89172",
-    "score": 19,
-    "createdUtc": 1660310507,
-    "body": "(u/ZorbaTHut) Is there a reason we usually don't see more complicated save systems in games than simple named checkpoints?  In particular, why does there seem to be little to no interest in systems that make branching easier?  Yes, interested users can roll their own outside the game (eg, using a version control system to manage a game's save files), but doing that outside of the game itself limits its effectiveness in a lot of ways.",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ijzpibv/"
-  },
-  {
-    "kind": "t1",
-    "id": "ijzbiz3",
-    "author": "hateradio",
-    "score": 13,
-    "createdUtc": 1660303098,
-    "body": "Has anybody seen the new Sandman series on Netflix and got opinions? I'm quite fond of the grapic-novel, but I've heard that the series-adaptation is supposed to be annoying in its waging of the culture war.",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ijzbiz3/"
-  },
-  {
-    "kind": "t1",
-    "id": "ijz922p",
-    "author": "NormanImmanuel",
-    "score": 6,
-    "createdUtc": 1660301459,
-    "body": "Last week, the Tim Dillon Show  [had a very special guest](https://www.youtube.com/watch?v=5jpvUMaH17o).\n\nAs far as comedic value it's quite possibly one the worst episodes ever, but it's interesting as basically an introduction to Yarvin's ideas in a more palatable context than densely referenced blog posts.",
-    "permalink": "/r/TheMotte/comments/wmcsjf/friday_fun_thread_for_august_12_2022/ijz922p/"
+    "id": "ikwl5po",
+    "author": "practical_romantic",
+    "score": 1,
+    "createdUtc": 1660893552,
+    "body": "It's Janmashtami today. Janmashtami is the day when Lord Krishna was born. He is an incarnation of Lord Vishnu and is one of the most beloved deity.\n\nHe was the charioteer for the supreme warrior Arjun during the Mahabharat. Arjuna didn't want to fight the war and Lord Krishna had a long conversation with him about life which is known as the Gita, the supreme Scripture for many Hindus.\n\nI shall fast today and spend time with my family, read some theology thanks to Gita Press Gorakhpur.\n\nThe very first thing this commentary on the Gita says  is that one must appreciate being born a human. We can experience, conceive and feel divinity, something no other being can do and no matter how bad things are, we will always be lucky as compared to most animals.\n\nThis isn't the same as me going out for talking to girls or consuming substances but I like this a lot. I find theology quite profound and enjoyable to read. I find it more than just fun and hence the motif to post about today here.\n\nMay Lord Krishna bless us all. Happy Janmashtami to everyone reading this.\n\nJai Shri Krishna.",
+    "permalink": "/r/TheMotte/comments/ws5dhg/friday_fun_thread_for_august_19_2022/ikwl5po/"
   }
 ]
