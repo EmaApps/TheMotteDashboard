@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/hh26 - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-08-21T16:14:06Z</updated><link href="https://themotte.srid.ca/u/hh26" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/wtsdor/smallscale_question_sunday_for_august_21_2022/il7hb7o/?sort=confidence</id><title type="text">[SQ] How do I learn better techniques and standard practices for coding, given a amat</title><updated>2022-08-21T16:14:06Z</updated><author><name>hh26</name></author><category label="SQ" scheme="https://themotte.srid.ca/sq" term="Small-Scale Question"/><content type="text">How do I learn better techniques and standard practices for coding, given a amateurish knowledge do-it-yourself background, without wasting my time on basic stuff I already know?
+
+
+As background, I took an AP Comp Sci class in highschool, and then mostly didn&#39;t do programming in undergrad except occasionally messing around on my calculator as I majored in Math.  In grad school, I ended up drifting more in the direction of game theory, and started doing mathematical modeling, which gradually become more and more of my emphasis until now as a postdoc that&#39;s pretty much all that I do.  I create a mathematical model that models some scenario, program it, explore the results of the model and tweak stuff, and then write and publish results about it.
+
+Also, I program almost exclusively in Java because that&#39;s what I learned in highschool, though I have dabbled in a couple other languages.
+
+So I do a lot of programming, but it&#39;s all self-contained stuff meant for my own use, and mostly self-taught via googling things whenever I need to know how to do something.  I&#39;m pretty good at taking a thing I need to do and hacking together the right steps and loops in the right order to make it work, but I suspect a more well-studied programmer would look at my spaghetti code in horror.  In particular, I suspect that my main flaws are
+
+1. Lack of comments.  I sometimes write them, but often don&#39;t because I know what I&#39;m doing in the moment and also keep changing things on the fly
+
+2. Lack of optimization.  I&#39;m aware that this is a thing, and the general idea.  I can make sure I don&#39;t use like a O(n^3 ) structure if a O(n^2 ) will do or something, but I haven&#39;t learned like common techniques for recognizing shortcuts that save processing time, or like this function nobody ever uses because it&#39;s ten times less efficient than this equivalent function.
+
+3. General project organization?  Like, I separate stuff into classes and methods, and try to keep them organized nicely, but often it ends up as spaghetti code and when I want to do multiple algorithms that are similar but with slightly different steps, I&#39;m never sure whether to copy/paste a new method and change stuff there, or try to make one method more robust with booleans to toggle different steps on and off.  And like, planning ahead to make stuff more robust ahead of time and save time in the future.
+
+
+Stuff like that.  And just general practices.  As I&#39;m looking towards possibly moving out of academia and into industry, I&#39;m worried my code will look very amateur and be hard for other people to use if I end up collaborating with people and/or designing something used by someone other than myself.  I&#39;m hoping to find some sort of resource that I can use to learn techniques for code design/structure/planning/efficiency, without wasting my time on basics of how to code in the first place that I already know.
+
+Any suggestions or comments are welcome.</content><link href="http://old.reddit.com/r/TheMotte/comments/wtsdor/smallscale_question_sunday_for_august_21_2022/il7hb7o/?sort=confidence"/></entry></feed>
