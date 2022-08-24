@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/ZorbaTHut - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-08-24T00:59:46Z</updated><link href="https://themotte.srid.ca/u/ZorbaTHut" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/wulqxp/culture_war_roundup_for_the_week_of_august_22_2022/ilj878k/?sort=confidence</id><title type="text">[CW] **The site changeover work continues!**
+
+We have a dev site at https://www.dev.t</title><updated>2022-08-24T00:59:46Z</updated><author><name>ZorbaTHut</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">**The site changeover work continues!**
+
+We have a dev site at https://www.dev.themotte.org/. I strongly encourage you to make an account and test stuff out. Change settings, try to break it, make sure it works how you&#39;d expect it to. Can you find problems? Please find problems! Report them here, or at the, uh, dammit, I don&#39;t trust Reddit to not filter this. Report them at the repo on https://github.com/themotte that says it&#39;s for the website. If they&#39;re sensitive for some reason, feel free to PM me.
+
+The standard posting rules do apply, with the major exception of the low-effort rule. Low-effort posts are still disallowed, but no-effort posts are explicitly allowed! Post Lorem Ipsum! Post the bee movie script! Write &#34;I am a fish&#34; 400 times! Go wild! Obviously this is a dev-site-only change, this is just to make it easier to test stuff.
+
+If you want to join the dev team, [it&#39;s over here](https://discord.gg/KChpcdaNJC). I cannot emphasize this enough: *this would not be happening if it wasn&#39;t for our volunteers*. They are great. I seriously need to put a Credits page on the site, I haven&#39;t done that yet, but I will. Thank you!
+
+Again, please report any issues you run into, from site-breaking issues to mild inconveniences; every bit of info is useful. I can always triage minor things down, but if I don&#39;t know about them, they won&#39;t ever get fixed.
+
+----
+
+Major change: I&#39;ve done a reasonably hefty revamp of the theme. It should now look better off mobile and considerably better, though still not as good, *on* mobile. If you were grumbling about the site layout on mobile let me know what you think; I&#39;m not totally satisfied but it&#39;ll be a lot more work to shape it up further.</content><link href="http://old.reddit.com/r/TheMotte/comments/wulqxp/culture_war_roundup_for_the_week_of_august_22_2022/ilj878k/?sort=confidence"/></entry></feed>
