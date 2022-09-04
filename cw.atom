@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">Culture War - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-09-02T20:00:04Z</updated><link href="https://themotte.srid.ca/cw" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imu8nvt/?sort=confidence</id><title type="text">Income Based Repayment is totally insane.
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">Culture War - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-09-03T23:22:23Z</updated><link href="https://themotte.srid.ca/cw" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imzlrm8/?sort=confidence</id><title type="text">Update to the Kiwifarms Saga: [Cloudflare has blocked Kiwifarms from using their</title><updated>2022-09-03T23:22:23Z</updated><author><name>Difficult_Ad_3879</name></author><content type="text">Update to the Kiwifarms Saga: [Cloudflare has blocked Kiwifarms from using their service](https://blog.cloudflare.com/kiwifarms-blocked/)
+
+The Cloudflare argument (which may be an excuse to cover for political pressure behind the scenes) is that because some user made a threat on Kiwifarms, the website ought to be refused service. This is despite Kiwifarms having strict rules regarding threats and always issuing bans soon after violating posts are published. I’m reminded of when the Florida school shooter literally wrote on YouTube that he planned to carry out his attack, in no uncertain terms, weeks before his attack. Obviously, no one would argue that YouTube ought to be denied DDoS protection (effectively deplatformed) for this. importantly, this judgment by Cloudflare allows malicious actors to eradicate any unpopular discussion website they desire by writing threats using a VPN. The rule strikes me as an insane misjudgment, but then, I don’t think this is as simple as Cloudflare making a misjudgment. I think there may be political pressures behind the scenes, which would be even scarier than Cloudflare making a misjudgment.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imzlrm8/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imym8n3/?sort=confidence</id><title type="text">One thing about Biden&#39;s speech that surprised me was his desperation to get back</title><updated>2022-09-03T19:07:28Z</updated><author><name>MelodicBerries</name></author><content type="text">One thing about Biden&#39;s speech that surprised me was his desperation to get back to &#34;moderate Republicans&#34;. If these MAGA people are so extreme as he claims, wouldn&#39;t he want to encourage their antics so as to continually win general elections?
+
+In places like Philippines or Hungary, the ruling party relishes putting their opposition to the margins, whereas Biden bizarrely wants to *help* the establishment of his opponent.
+
+This is something that seems strangely and uniquely American. I can&#39;t think of any other country where the elite of one party tries desperately to help out the other party&#39;s establishment. In most other democracies, the ruling party just tries to consolidate its gains. 
+
+And lest I be accused of only promoting right-wing populists (e.g. Orban or Duterte), you could look at Scandinavia from the 1950s-1970s for a left-wing equivalent. Those government had no compunction about stacking the odds as much as possible in their own favour.
+
+The generous reading is that Biden&#39;s speech wasn&#39;t about winning but about &#34;saving democracy&#34; even if it means helping the GOP elite, because Biden is such a selfless patriot.
+
+A less generous reading would be that Biden is part of the same &#34;uniparty&#34; as Mitch McConnell and other GOP leaders who are terrified of being swallowed up alive by the forces that Trump ultimately represents however inperfectly. In this reading, Biden trying to bring down a rival faction to the GOP establishment isn&#39;t a selfless act of patriotism as much as naked self-interest.
+
+Whichever reading you prefer, it still remains notable that this type of behaviour is uncommon in other countries. Certainly, the US system seems to produce a unified political class much more unified than other countries.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imym8n3/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imu8nvt/?sort=confidence</id><title type="text">Income Based Repayment is totally insane.
 
 People had pointed out that it was a </title><updated>2022-09-02T20:00:04Z</updated><author><name>DevonAndChris</name></author><content type="text">Income Based Repayment is totally insane.
 
@@ -379,101 +393,4 @@ concealed and removed from the Storage Room and that efforts were likely taken t
 the government’s investigation. ... This included evidence indicating that boxes formerly in the Storage Room
 were not returned prior to counsel’s review.
 
-6. DoJ says they have finished their privilege review for attorney/client privilege already, and do not think executive privilege can possibly apply, and did not filter for it.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imhhqa5/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imgofrm/?sort=confidence</id><title type="text">**Is &#34;Paperclipping&#34; a fringe idea?**
-
-Lately, u/ilforte  has been banging the d</title><updated>2022-08-31T00:57:07Z</updated><author><name>gardenofjew</name></author><content type="text">**Is &#34;Paperclipping&#34; a fringe idea?**
-
-Lately, u/ilforte  has been banging the drum of [paraphrasing] &#34;worrying about alignment too much at the expense of a high-freedom future is terrible, Yud is deeply paranoid which colors everything else he writes about, etc.&#34; &#34;Here is some suggestive evidence that Ilforte is mistaken on AGI Doom being a fringe/LW-only/Yud!/etc. idea:
-
-1. DeepMind&#39;s alignment team [engaging](https://www.lesswrong.com/posts/qJgz2YapqpFEDTLKn/deepmind-alignment-team-opinions-on-agi-ruin-arguments) with Yud&#39;s List of Lethalities post. I don&#39;t detect much sneering, mostly specific disagreements with specific things.  
-
-2. Sam Altman (OpenAI) re-tweeting that list of lethalities post (would link but short on time rn, easily found if you scroll back far enough)
-
-3. Stability AI (of Stable Diffusion fame) is related to EleutherAI in some capacity. There&#39;s definitely a lot of personnel overlap. Emad (head of Stability AI, someone Ilforte has spoken very fondly of) has retweeted various LW posts ([1)](https://twitter.com/EMostaque/status/1563715319566409729) and has [retweeted this job ad](https://twitter.com/EMostaque/status/1512405527350943746) from Conjecture, the Alignment focused spin-off of EleutherAI, founded by Connor Leahy, seems to have alignment takes that are not far from Yud&#39;s, as you can tell if you either watch his interview on a [recent podcast](https://www.youtube.com/watch?v=Oz4G9zrlAGs&amp;amp;ab_channel=TheInsideView) or simply read his feed. 
-
-note: These are three differnet organizations, all with relatively diverse views on AI, especially Stability AI vs the others. 
-
-
-**What is the point of this post?**
-
-Ilforte is an extremely eloquent writer. He is probably the most talented (certainly the most compelling! though IMO his prose is often far from lucid...) prose writer currently active on /themotte. And yet he seems to have a completely evidence-free view on the possible danger of AGI, has a deeply suspicious view of Yud, who, for all of his many flaws, is so bad at hiding his own views that he spends all of his weirdness points debating PR-toxic topics like baby qualia-- (you can accuse Yud of a few things, but a talented dissassembler for the sake of other goals he definitely is not...)
-
-Ilforte seems to have decided to direct all of his immense verbal talent to deriding pessimistic takes on AGI, and I think this bad. I think a redteaming of paranoid takes on AI is great, but Ilforte has often made his arguments mostly through suspicion of AI-suspicious people.
-
-I think its time someone pointed at this argument directly and engaged with it. I&#39;m not that person, unfortunately, because I&#39;m drowning in work rn, but I&#39;m planting a flag here and hoping Ilforte and others can debate productively about ways that [suspicious of AGI] and [suspicious of those who are suspicious of AGI] can productively disagree and understand the world better.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imgofrm/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imgejsp/?sort=confidence</id><title type="text">**There&#39;s Still a TJ Test, Actually**
-
-The [Thomas Jefferson High School for Sci</title><updated>2022-08-30T23:42:55Z</updated><author><name>DinoInNameOnly</name></author><content type="text">**There&#39;s Still a TJ Test, Actually**
-
-The [Thomas Jefferson High School for Science and Technology](https://en.wikipedia.org/wiki/Thomas_Jefferson_High_School_for_Science_and_Technology) is a magnet STEM-focused high school in Northern Virginia established in 1985. The school has special facilities meant to provide opportunities for students who show achievement and passion for STEM and who will eventually pursue careers in science, engineering, or medicine. It has courses in things like artificial intelligence, quantum mechanics, DNA science, and machine learning. It also has several labs where students can do research projects. It was [ranked](https://www.usnews.com/education/best-high-schools/virginia/districts/fairfax-county-public-schools/thomas-jefferson-high-school-for-science-and-technology-20461) as the best school in the country in 2022. 
-
-Until recently, TJ admitted students through a competitive process similar to the college admissions process in which prior academic achievement, teacher recommendations, and an exam similar to the SAT played a major role. The school had a low proportion of black and Hispanic students who were admitted, and this was long a complaint of left-wing activists who advocate reforms to the admissions process so that more non-Asian minorities would be admitted. In particular, they blamed the admissions exam for eliminating most such students from consideration.
-
-In 2020, those activists got their way. The school board voted to eliminate the admissions test in [October 2020](https://www.washingtonpost.com/local/education/thomas-jefferson-high-admissions-change/2020/10/07/0a1f8faa-08a7-11eb-9be6-cf25fb429f1a_story.html) and later that year made other reforms to the admissions process, including setting minimum quotas for admission at the middle school level and adding &#34;experience factors&#34; to the process. The [class of students](https://www.fcps.edu/news/tjhsst-offers-admission-550-students-broadens-access-students-who-have-aptitude-stem) admitted the next year went from being 4.52% black and Hispanic to 18.36%. 
-
-An advocacy group opposed to the 2020 changes [sued](https://en.wikipedia.org/wiki/Coalition_for_TJ_v._Fairfax_County_School_Board), alleging the changes discriminated against Asian Americans, whose share of admitted students decreased from 73.05% to 54.36%. The case is currently pending before the appeals court.
-
-One thing I realized while I was researching this is that there actually still is a test that influences your probability of admission to TJ. One of the &#34;experience factors&#34; that increases a student&#39;s odds of being admitted in the [new admissions process](https://www.fcps.edu/registration/thomas-jefferson-high-school-science-and-technology-admissions/tjhsst-freshman) is whether they are an English Language Learner (ELL). An [ELL is a student](https://wida.wisc.edu/sites/default/files/resource/explaining-ell-status-english.pdf) who has extra support learning English in school. How do schools identify which students need extra support learning English?
-
-Well, there&#39;s a test. Schools administer an English skills test and students who perform poorly on it are identified as ELL and offered extra instruction in special classes for ELLs. 
-
-What this means for TJ is that a student&#39;s chance of being admitted to an elite school for the academically excellent is *increased* if they perform *poorly* enough on evaluations of their language skills.
-
-The reason the school board added this consideration is obvious: The [large majority (78%)](https://www2.ed.gov/datastory/el-characteristics/index.html#four) of ELLs are Hispanic, so preferring ELLs in the admissions process is a way to increase the proportion of Hispanics admitted without needing to add race to the admissions process explicitly (which would be more easily challenged legally). Asians make up 11% of ELLs too, but it&#39;s notable that Hispanics outnumber Asians among ELLs by 7:1 but only by about 3:1 in the general population ([6.1% vs. 18.9%](https://www.census.gov/quickfacts/fact/table/US/PST045221)). A lot of Asian kids speak two languages but their parents made sure they were good enough with English that they don&#39;t need any special instruction.
-
-This is just... so backwards. I don&#39;t think it would be fair to prefer students who speak more than one language in admission to TJ. But I could see an argument for it: Students who successfully learned a second language and succeeded enough to be equally or almost equally academically impressive as students who speak English natively have done something really impressive, now that they&#39;ve mastered the lingua franca, they&#39;ll probably shine even brighter. In fact, this describes a large proportion of the students admitted to TJ under the old process. But that&#39;s not what they&#39;re doing with this new process. They&#39;re specifically preferring the students who were *least* successful at learning the new language, the ones who struggled the *most* with it. 
-
-On top of that, immigrant families who were responsible and ~~paid off their student loans~~ taught their kids English fluency and saved the taxpayer-funded school system the extra burden of dealing with kids who don&#39;t know English are punished, while the ones who depended on the government for that are rewarded.
-
-Well, expect an increase in enrollment in ELL programs in Fairfax County of kids who seem to be speak pretty good English most of the time.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imgejsp/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imfp7ja/?sort=confidence</id><title type="text">**Is data truth?**
-
-Since I owed a reply to /u/Im_not_JB here: https://www.reddi</title><updated>2022-08-30T20:47:19Z</updated><author><name>Evinceo</name></author><content type="text">**Is data truth?**
-
-Since I owed a reply to /u/Im_not_JB here: https://www.reddit.com/r/TheMotte/comments/wulqxp/comment/ilvutba/
-
-I&#39;m gonna try and figure out where we are with WikiLeaks.
-
-Wikileaks has come from the perspective that information wants to be free, that leaks hold people accountable, and that releasing all available data is the best way to do so.
-
-I think that this came from the same place of Aaron Schwartz, Jimbo Whales techno-utopian anti-state idealism that was in the air around the mid to late aughts. Compare the [Declaration Of Independence Of Cyberspace](https://www.eff.org/cyberspace-independence).
-
-We now live in that world, where it&#39;s easy to disseminate vast dumps of data. It&#39;s available to anyone. But now that we have it, I wonder if it&#39;s really the best approach. Because what we end up getting is just data. It doesn&#39;t come with the tools to analyze it, and in the absence of analysts by competent folks, we get The Internet doing its own sleuthing. From misidentifying the Boston Bomber to pizzagate, I can think of examples of information overload harming rather than helping.
-
-And that makes me lean back towards the journalistic approach of combining data with analysis and responsibility. I can think of plenty of hard hitting stories like the Panama papers that _did_ work out.
-
-I think the profession of journalism won. I don&#39;t think it can or should be replaced by blindly dumping any data you can get your hands on and calling it journalism.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imfp7ja/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/ime3y6y/?sort=confidence</id><title type="text">News from an old corner of the culture war: Oberlin is [denied an appeal](https:</title><updated>2022-08-30T14:38:58Z</updated><author><name>roolb</name></author><content type="text">News from an old corner of the culture war: Oberlin is [denied an appeal](https://legalinsurrection.com/2022/08/gibsons-bakery-wins-ohio-supreme-court-refuses-to-hear-oberlin-college-appeal/) to the Ohio Supreme Court in its loss to Gibson&#39;s Bakery. This is the end of the appellate road in the state, but I don&#39;t know if federal court is an option.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/ime3y6y/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/ime085j/?sort=confidence</id><title type="text">**More on Student Loan Relief**
-
-This week, the New York Times published [Why St</title><updated>2022-08-30T14:13:23Z</updated><author><name>deadpantroglodytes</name></author><content type="text">**More on Student Loan Relief**
-
-This week, the New York Times published [Why Student Debt Relief Isn’t Elitist](https://www.nytimes.com/2022/08/29/opinion/student-debt-relief.html) by Paul Krugman and [Why I Changed My Mind on Student Debt Forgiveness](https://www.nytimes.com/2022/08/30/opinion/student-loan-debt-relief-biden.html) (by Susan Dynarski, a Harvard economist). Krugman&#39;s mostly calling out Republican hypocrisy in one form or another (fine as far as it goes), but the substantive part follows:
-
-&amp;gt;The Biden administration says that its plan will provide relief to as many as 43 million Americans. That’s a lot of people, not a small, cosseted elite.  
-&amp;gt;  
-&amp;gt;even if you subscribe to the Trump diner theory of politics — according to which the only voters who matter are blue-collar guys wearing baseball caps — you should be aware that some of those guys probably took out loans to attend trade schools or community colleges, all too often getting nothing but debt in return. Even among those who didn’t take out student loans, many probably have children, siblings, cousins or friends who did. So the Biden plan will touch many people.
-
-Dynarski&#39;s article focuses on the borrowers hardest hit.
-
-&amp;gt;Defaults and financial distress are concentrated among the millions of students who drop out without a degree. The financial prospects for college dropouts are poor; they earn little more than do workers with no college education ...  
-&amp;gt;  
-&amp;gt;And dropout is not at all rare. A bit less than half of college students don’t earn a bachelor’s degree. Some people earn a shorter, two-year associate degree. But more than a quarter of those who start college hoping to earn a degree drop out with no credential.
-
-If we take those articles at face value \[0\], we&#39;re talking about a program that provides relief to about 13 million Americans that fit a very sympathetic profile and badly need it - and a bonanza for another 30 million people, most of whom do not need that relief. \[1\]
-
-**Would Anyone Support Country Club Loan Relief?**
-
-Let&#39;s pretend for a moment that a Republican administration instituted a program subsidizing country club membership. After all, a lot of businesses are built and supported by the informal networks around country clubs, plus people that belong to country clubs tend to be successful.
-
-So picture that: 60-70% of the borrowers do pretty well for themselves. Their businesses improve and they get richer. However, a substantial minority of the loan recipients don&#39;t have access to high-quality country clubs with their impressive facilities and wealthy cohorts. 30-40% take out loans to join municipal clubs or some strange off-brand variation called into being by the amount of money pumped into the system. The people do not flourish, their businesses do not succeed.
-
-I don&#39;t think many people would stand for a country club relief program for both groups, and I don&#39;t think the New York Times would publish multiple defenses of the program in the space of a week.
-
-This comparison might not sound fair, especially if you went to community college or commuter school (to say nothing of a for-profit college), but I promise it is directionally accurate.\[2\]
-
-At liberal arts colleges, most private universities, and flagship state schools (at least), you get unbelievable amenities for your money. It&#39;s not just the oft-ridiculed climbing walls and lazy rivers - I&#39;m talking about the basics, the features of college that predate the crazy expansion of the last thirty (?) years: access to first-rate facilities, people paid to serve you, people paid to do your dishes, and on top of all that, excellent event programming so that, if your studies ever bore you, you&#39;ll still be stimulated.
-
-Ultimately, I&#39;m shocked that so many early reactions to this involve a shrug, or (worse) approval of the policy, seemingly based on the sympathetic profile of a minority of beneficiaries, though maybe that&#39;s my naivete. Another writer here (responding to Trace&#39;s post, I think) wrote convincingly that people probably just conceive of this as &#34;free college&#34; rather than debt. That&#39;s an idea that&#39;s probably more popular than &#34;free country clubs&#34; (and definitely more popular than &#34;free country clubs for the rich&#34;), but I&#39;m not sure it deserves the support.
-
-\[0\] People that have some college but no degree already do moderately better than people with a high-school diploma, [per the US Bureau of Labor Statistics](https://www.bls.gov/emp/chart-unemployment-earnings-education.htm), or [this Northeastern University study](https://www.northeastern.edu/bachelors-completion/news/average-salary-by-education-level), or any of the dozens of links that pop up when you start to research education and income.
-
-\[1\] &#34;More than a quarter&#34; = 30% \* Krugman&#39;s &#34;43 million Americans&#34;, then round it up.
-
-\[2\] Apart from, of course, the educational experience. But I must say, this is easy to overstate, especially if you&#39;ve been [Fred-pilled](https://substack.com/profile/12666725-freddie-deboer).</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/ime085j/?sort=confidence"/></entry></feed>
+6. DoJ says they have finished their privilege review for attorney/client privilege already, and do not think executive privilege can possibly apply, and did not filter for it.</content><link href="http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imhhqa5/?sort=confidence"/></entry></feed>
