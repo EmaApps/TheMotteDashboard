@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/DevonAndChris - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-09-02T20:00:04Z</updated><link href="https://themotte.srid.ca/u/DevonAndChris" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imu8nvt/?sort=confidence</id><title type="text">[CW] Income Based Repayment is totally insane.
+<?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">u/DevonAndChris - r/TheMotte</title><id>https://themotte.srid.ca/</id><updated>2022-09-05T00:00:19Z</updated><link href="https://themotte.srid.ca/u/DevonAndChris" rel="self"/><entry><id>http://old.reddit.com/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in4d1jz/?sort=confidence</id><title type="text">[SQ] I have had this sitting for a week but it never seemed to fit in the small-scale</title><updated>2022-09-05T00:00:19Z</updated><author><name>DevonAndChris</name></author><category label="SQ" scheme="https://themotte.srid.ca/sq" term="Small-Scale Question"/><content type="text">I have had this sitting for a week but it never seemed to fit in the small-scale or friday fun or wednesday wellness.
+
+So I guess the question is &#34;how evil can a product be?&#34;
+
+
+https://twitter.com/RayRedacted/status/1562914396732801025?s=20&amp;amp;t=YTSBi61pjYTqsfkgBKOA3Q
+
+Short version: A consumer can buy a 30 TB hard drive off of Alibaba or Walmart&#39;s website (which is a reseller using them as a storefront).
+
+The capacity is fake. Someone wrote hacked firmware so that two flash drives have (each) 512MB of actual storage self-report as 15TB. When you go to use it, the hacked firmware pretends to write the files and creates the whole directory structure. The directory structure is the only permanent part. The file contents start getting overwritten once you put in too much data. Someone could buy this and take a while to realize that their data is dead.</content><link href="http://old.reddit.com/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in4d1jz/?sort=confidence"/></entry><entry><id>http://old.reddit.com/r/TheMotte/comments/x0hc17/culture_war_roundup_for_the_week_of_august_29_2022/imu8nvt/?sort=confidence</id><title type="text">[CW] Income Based Repayment is totally insane.
 
 People had pointed out that it was a </title><updated>2022-09-02T20:00:04Z</updated><author><name>DevonAndChris</name></author><category label="CW" scheme="https://themotte.srid.ca/cw" term="Culture War"/><content type="text">Income Based Repayment is totally insane.
 
