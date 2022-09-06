@@ -1,9 +1,18 @@
 [
   {
     "kind": "t1",
+    "id": "in9ktm4",
+    "author": "GibonFrog",
+    "score": 1,
+    "createdUtc": 1662432058,
+    "body": "Starting PhD program in neurosci in 1 week. General advice is wanted, but I have one specific question: how do I build a close knit group of friends? I am a little scared bc i am 21 and 2 years younger than anyone in my cohort of 20 ppl. I still like to hang out with my undergrad friends (moving away 400 miles) and do undergrad things (getting very very wasted etc).",
+    "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in9ktm4/"
+  },
+  {
+    "kind": "t1",
     "id": "in4d1jz",
     "author": "DevonAndChris",
-    "score": 1,
+    "score": 14,
     "createdUtc": 1662336019,
     "body": "I have had this sitting for a week but it never seemed to fit in the small-scale or friday fun or wednesday wellness.\n\nSo I guess the question is \"how evil can a product be?\"\n\n\nhttps://twitter.com/RayRedacted/status/1562914396732801025?s=20&amp;t=YTSBi61pjYTqsfkgBKOA3Q\n\nShort version: A consumer can buy a 30 TB hard drive off of Alibaba or Walmart's website (which is a reseller using them as a storefront).\n\nThe capacity is fake. Someone wrote hacked firmware so that two flash drives have (each) 512MB of actual storage self-report as 15TB. When you go to use it, the hacked firmware pretends to write the files and creates the whole directory structure. The directory structure is the only permanent part. The file contents start getting overwritten once you put in too much data. Someone could buy this and take a while to realize that their data is dead.",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in4d1jz/"
@@ -12,7 +21,7 @@
     "kind": "t1",
     "id": "in38d61",
     "author": "EdenicFaithful",
-    "score": 1,
+    "score": 7,
     "createdUtc": 1662317987,
     "body": "So, what are you reading?\n\nI'm starting Minsky's *Society of Mind*, a classic AI text about building minds from smaller, mindless components. The current zeitgeist seems to be moving away from classic AI, but eventually we'll need better understanding of where precisely our machine-learning models fit in the broader scheme of knowledge. \"Shut up and scale\" doesn't seem entirely satisfactory. Maybe going over some slightly dust-covered ideas might spark some useful thinking. The book itself seems like a mix of aesthetic quirks and precision, and I seem to be in the mood for that.",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in38d61/"
@@ -21,7 +30,7 @@
     "kind": "t1",
     "id": "in2y0fb",
     "author": "sciuru_",
-    "score": 1,
+    "score": 4,
     "createdUtc": 1662313738,
     "body": "Recently [posted](https://www.reddit.com/r/slatestarcodex/comments/x0wtdt/open_access_to_research_articles_recent_progress/?utm_source=share&amp;utm_medium=web2x&amp;context=3) my summary of the article [“Transformative agreements: Do they pave the way to open access?”](https://onlinelibrary.wiley.com/doi/10.1002/leap.1347) (2020) about struggles between publishers and pubic research institutions. I read the article to contextualize US govt [statement](https://www.whitehouse.gov/ostp/news-updates/2022/08/25/ostp-issues-guidance-to-make-federally-funded-research-freely-available-without-delay/) from Aug 25, announcing that immediate open access to all taxpayer-funded research articles should be implemented by 2025, thus eliminating current 12 months embargo.\n\nI wanted to ask here first, as my interest is in market power dynamics and bargaining, not consumer perspective. I’d love to know what you think about how it works.\n\nAnd separately, I’d like to know what is so awful about the post, that no one responded? Is it too long, boring, cluttered, grammar is poor? Want to know how to improve engagement.",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in2y0fb/"
@@ -30,7 +39,7 @@
     "kind": "t1",
     "id": "in22r6p",
     "author": "Navalgazer420XX",
-    "score": 1,
+    "score": 14,
     "createdUtc": 1662301386,
     "body": "**European Probation/Early Release Scandals:**\n\nAfter playing a game that made fun of him, I read that Josef Fritzl, [World's Least Popular Austrian (silver medalist)](https://en.wikipedia.org/wiki/Fritzl_case) might be eligible for probation next year, after 15 years in prison for the whole multi-generational incest rape dungeon business.  \nIt made me curious: what's the media environment in european countries like when this happens? Does the press pay any attention to it? Do people ever talk seriously about maybe bus-full-of-nuns-murderers needing to spend more time in prison?  \n\nIn the UK it's usually only the Daily Mail that notices/comes out with headlines about bringing back hanging, while the US sometimes gets some hand-wringing in the serious-people papers if the stars and skin colours align (which is fairly rare due to the 7 million year sentences in such cases).  \nIs it basically the same in Europe? The only big one I'm aware of was Pim Fortuyn's unrepentant assassin being released after 12(!) years to apparently more media attention in the english-speaking press than the dutch.",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in22r6p/"
@@ -39,7 +48,7 @@
     "kind": "t1",
     "id": "in1n72i",
     "author": "ItsAPomeloParty",
-    "score": 1,
+    "score": 11,
     "createdUtc": 1662293657,
     "body": "Anybody able to give general advice on hiring a personal attorney for matters related to one's involvement in an LLC?\n\nLike I need one but have no idea where to start looking for a good one. Is there something like Amazon reviews for lawyers?",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in1n72i/"
@@ -48,7 +57,7 @@
     "kind": "t1",
     "id": "in1mcoe",
     "author": "CD-ROM_INSTRUCTOR",
-    "score": 1,
+    "score": 9,
     "createdUtc": 1662293133,
     "body": "What should we make of anti-white propaganda like [this](https://www.youtube.com/watch?v=hvNNtBmA3SQ)?",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in1mcoe/"
@@ -57,7 +66,7 @@
     "kind": "t1",
     "id": "in1j9vg",
     "author": "bl1y",
-    "score": 1,
+    "score": 12,
     "createdUtc": 1662291104,
     "body": "If the US were competent at nation building (meaning we could overthrow dictators and actually establish lasting liberal democracies), would we have a moral obligation to do it?",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in1j9vg/"
