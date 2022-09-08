@@ -12,7 +12,7 @@
     "kind": "t1",
     "id": "in9ktm4",
     "author": "GibonFrog",
-    "score": 3,
+    "score": 4,
     "createdUtc": 1662432058,
     "body": "Starting PhD program in neurosci in 1 week. General advice is wanted, but I have one specific question: how do I build a close knit group of friends? I am a little scared bc i am 21 and 2 years younger than anyone in my cohort of 20 ppl. I still like to hang out with my undergrad friends (moving away 400 miles) and do undergrad things (getting very very wasted etc).",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in9ktm4/"
@@ -21,7 +21,7 @@
     "kind": "t1",
     "id": "in4d1jz",
     "author": "DevonAndChris",
-    "score": 18,
+    "score": 20,
     "createdUtc": 1662336019,
     "body": "I have had this sitting for a week but it never seemed to fit in the small-scale or friday fun or wednesday wellness.\n\nSo I guess the question is \"how evil can a product be?\"\n\n\nhttps://twitter.com/RayRedacted/status/1562914396732801025?s=20&amp;t=YTSBi61pjYTqsfkgBKOA3Q\n\nShort version: A consumer can buy a 30 TB hard drive off of Alibaba or Walmart's website (which is a reseller using them as a storefront).\n\nThe capacity is fake. Someone wrote hacked firmware so that two flash drives have (each) 512MB of actual storage self-report as 15TB. When you go to use it, the hacked firmware pretends to write the files and creates the whole directory structure. The directory structure is the only permanent part. The file contents start getting overwritten once you put in too much data. Someone could buy this and take a while to realize that their data is dead.",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in4d1jz/"
@@ -30,7 +30,7 @@
     "kind": "t1",
     "id": "in38d61",
     "author": "EdenicFaithful",
-    "score": 8,
+    "score": 7,
     "createdUtc": 1662317987,
     "body": "So, what are you reading?\n\nI'm starting Minsky's *Society of Mind*, a classic AI text about building minds from smaller, mindless components. The current zeitgeist seems to be moving away from classic AI, but eventually we'll need better understanding of where precisely our machine-learning models fit in the broader scheme of knowledge. \"Shut up and scale\" doesn't seem entirely satisfactory. Maybe going over some slightly dust-covered ideas might spark some useful thinking. The book itself seems like a mix of aesthetic quirks and precision, and I seem to be in the mood for that.",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in38d61/"
@@ -75,7 +75,7 @@
     "kind": "t1",
     "id": "in1j9vg",
     "author": "bl1y",
-    "score": 12,
+    "score": 13,
     "createdUtc": 1662291104,
     "body": "If the US were competent at nation building (meaning we could overthrow dictators and actually establish lasting liberal democracies), would we have a moral obligation to do it?",
     "permalink": "/r/TheMotte/comments/x5fpqj/smallscale_question_sunday_for_september_04_2022/in1j9vg/"
