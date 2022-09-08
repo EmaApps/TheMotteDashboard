@@ -1,6 +1,6 @@
 # Dashboard for r/TheMotte
 
-Delineate the various sticky threads in [r/TheMotte](https://old.reddit.com/r/TheMotte) to present an unified and easy-to-glance view of its content. An atom feed is also provided for reading in the likes of [Mailbrew](https://www.srid.ca/tdm/mailbrew). 
+Delineate the various sticky threads in [r/TheMotte](https://old.reddit.com/r/TheMotte) to present a unified and easy-to-glance view of its content. An atom feed is also provided for reading in the likes of [Mailbrew](https://www.srid.ca/tdm/mailbrew). 
 
 This is a no-frills statically generated site, powered by [Ema](https://ema.srid.ca/).
 
