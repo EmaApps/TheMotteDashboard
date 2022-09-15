@@ -30,7 +30,7 @@
     "kind": "t1",
     "id": "imw006q",
     "author": "pmmecutepones",
-    "score": 8,
+    "score": 7,
     "createdUtc": 1662178782,
     "body": "Men torture themselves doing pullups, because no one is nice enough to give them the upsies they truly want.",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imw006q/"
@@ -48,7 +48,7 @@
     "kind": "t1",
     "id": "imv9rg4",
     "author": "WhiningCoil",
-    "score": 6,
+    "score": 8,
     "createdUtc": 1662165223,
     "body": "So I ordered a [NuXT](https://monotech.fwscart.com/NuXT_v20_MicroATX_Turbo_XT_10MHz_832K_XTIDE_MultiIO_SVGA/p6083514_19777986.aspx).  It hasn't shipped yet.  But I like to be able to code on every piece of hardware I own.  So I began noodling around, trying to set up a cross coding environment today.\n\nI started with Visual Studio Code since it's crazy flexible.  Then I set up a bunch of task to compile my ASM files using NASM, using the CPU 8086 directive and outputting as OBJ files which need to be linked.  I'm under the impression 16-bit code is the default with this arrangement.  I found a free linker called ALINK which then links the OBJ files into an EXE.  Then I set up, in kind of a janky way, for the Run command to launch DOSBOX and execute it's debug command on my exe.\n\nI still want to find a way to export my breakpoints from Visual Studio Code and import them into DOSBOX.  I see that this debug version of DOSBOX I have can import breakpoints, and NASM spits out dbg files which I **think** I can parse for the segment:offset's I'll need to breakpoint at labels in DOSBOX.  I just am not sure off the top of my head how to export the breakpoint lines from Visual Studio Code.  Oh well, some day.\n\nAnyways, it was a fun day.  Threw together a pretty simple number guessing game program.  It's a good way to get a grip on the basics.  Reading the keyboard, processing input, converting an ascii number to binary, generating a random number, some basic math, printing to the screen.  Then cause why not, I started fucking around with linking multiple ASM files, with GLOBAL and EXTERN'd functions.  Did some far calls across memory segments.  Wasn't as bad as I thought it would be.\n\nProbably start fucking around with EGA graphics and ADLIB sound next.",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imv9rg4/"
@@ -66,7 +66,7 @@
     "kind": "t1",
     "id": "imujvwi",
     "author": "stolen_brawnze",
-    "score": 17,
+    "score": 15,
     "createdUtc": 1662153437,
     "body": "A game designer has sparked controversy after submitting an image created by an AI text-to-image generator to a state art competition and [taking home first prize.](https://www.theverge.com/2022/9/1/23332684/ai-generated-artwork-wins-state-fair-competition-colorado)",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imujvwi/"
@@ -75,7 +75,7 @@
     "kind": "t1",
     "id": "imtqbwo",
     "author": "FiveHourMarathon",
-    "score": 8,
+    "score": 7,
     "createdUtc": 1662141446,
     "body": "Probably better for WW or SQS, but to avoid ending up like u/orthoxerox...\n\nFor all our optimization/nootropics bros, what's the best way to adjust my early-bird sleep schedule to go out partying on one night or two and then go right back to my standard sleep schedule?\n\nI'm an early bird, I basically go to sleep by 10:30 at the latest and get up between 4:30 and 5:00 every day. Getting up early is important to me, I like it, I function well that way from years of farm work and crew practice growing up. But as I'm getting into middle age, I find it is getting hard for me to deal with days when I'm at a wedding or a party or a gala or whatever and I want to stay up later and find my body failing me. I'm curious if there's any scientifically supported evidence for how to handle it beyond pounding a 5 hour energy a couple times in a night.",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imtqbwo/"
@@ -84,7 +84,7 @@
     "kind": "t1",
     "id": "imt7ywh",
     "author": "[deleted]",
-    "score": 11,
+    "score": 10,
     "createdUtc": 1662134311,
     "body": "[deleted]",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imt7ywh/"
@@ -111,7 +111,7 @@
     "kind": "t1",
     "id": "imscl2q",
     "author": "Indi008",
-    "score": 11,
+    "score": 12,
     "createdUtc": 1662120955,
     "body": "Ooh fun yay :) \n\nI wrote some books...\nhttps://www.royalroad.com/fiction/57409/spliced\n\nand some short stories:\nhttps://www.royalroad.com/fiction/58017/the-dumping-ground\n\nAND some poetry:\nhttps://www.royalroad.com/fiction/57952/nothing-here-but-hot-air\n\nFree to read, and somewhat unrelated to this sub, but hey it fits the fun theme, and I'm somewhat trying to write rational fantasy if there is such a thing. Not sure I quite achieved that.\n\nAnyone else here a \"writer\" who studied science or engineering with the intent of writing technically accurate fiction only to find it's much harder than you think? I never know quite enough, and when I do, no one thinks it's a real thing. I once wrote a story about a mechanic and an actual issue I faced with my car and people thought it wasn't realistic, but my complete fantasy stories are apparently completely believable.\n\nEdit: got a joke for y'all...\n\nWhy did the cat fall off the roof?\n\n\n\n.\n.\n.\n.\n\n\n\nBecause it lost it's mu",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imscl2q/"
@@ -120,7 +120,7 @@
     "kind": "t1",
     "id": "imru9vu",
     "author": "orthoxerox",
-    "score": 15,
+    "score": 16,
     "createdUtc": 1662108310,
     "body": "I should start writing down my Friday Fun ideas. They always come to me on Saturday nights, when the next SQS sticky is just around the corner, so I never post them, saving them for the next FF sticky. Now it's Friday morning, and my head is devoid of ideas beyond going shopping for a pull-up bar and discount male fashion.",
     "permalink": "/r/TheMotte/comments/x3t1mp/friday_fun_thread_for_september_02_2022/imru9vu/"
